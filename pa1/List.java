@@ -1,4 +1,4 @@
-private class Node{
+class Node{
     int data;
     Node next;
 
@@ -7,7 +7,7 @@ private class Node{
         this.next = null;
     }
 
-    public string toString(){
+    public String toString(){
         return String.valueOf(data);
     }
 }
@@ -19,7 +19,7 @@ class List{
     int size;
     List(){ // Creates a new empty list.
          this.front = this.back = this.cursor = null;
-         size = 0;
+         this.size = 0;
     }       
     // Access functions
     int length(){       // Returns the number of elements in this List.
@@ -53,7 +53,7 @@ class List{
             if(this.size!=L.size){
                     return false;
             }
-            for(int i = 0, i < this.size, i++){
+            for(int i = 0; i < size; i++){
                 if(temp.data!=temp2.data){
                     return false;
                 }
@@ -88,7 +88,7 @@ class List{
             if(this.cursor==null){
                 return;
             }
-            else if(this.cusor==this.front){
+            else if(this.cursor==this.front){
                 this.cursor = null;
                 return;
             }
@@ -105,7 +105,7 @@ class List{
                     // undefined, if cursor is undefined does nothing.
     void moveNext(){
             if(this.cursor == this.back){
-                this.cursor == null
+                this.cursor = null;
                 return;
             }
             else if(this.cursor == null){
@@ -186,14 +186,14 @@ class List{
                     // Pre: length()>0, index()>=0
                     // Other methods
     public String toString(){
-
+        return " ";
     }               // Overrides Object's toString method. Returns a String
                     // representation of this List consisting of a space
                     // separated sequence of integers, with front on left.
     List copy(){
-
+        List newList = new List();
+        return newList;
     }               // Returns a new List representing the same integer sequence as this
                     // List. The cursor in the new list is undefined, regardless of the
                     // state of the cursor in this List. This List is unchanged.
-}
 }

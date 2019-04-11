@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 class Lex{
-    public static void main(String[]args){
+    public static void main(String[]args)throws IOException{
         PrintWriter out;
         Scanner in;
         String line;
@@ -13,19 +13,21 @@ class Lex{
             System.exit(1);
         }
         in = new Scanner(new File(args[0]));
-        out = new PrintWriter(new FileWriter(args[1]));
+        FileWriter output = new FileWriter(new File(args[1]));
+        out = new PrintWriter(output);
         while(in.hasNextLine()){
             lineNumber++;
             line = in.nextLine() + " ";
             token = line.split("\\s+");
             n = token.length;
-            for(i = 0, i<n, i++){
+            for(i = 0; i < n; i++){
                 out.println(token[i]);
             }
             out.println();
         }
         
         in.close();
+        output.close();
         out.close();
     }
 }
