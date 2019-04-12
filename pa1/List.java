@@ -165,7 +165,7 @@ class List{
         if(this.index < 0 || this.size == 0){
             return;
         }
-        else if(this.index==0){
+        else if(this.index == 0){
                 prepend(data);
                 this.size++;
                 return;
@@ -174,7 +174,7 @@ class List{
             Node temp = new Node(data);
             Node temp2 = this.front;
             while(temp2.next!=this.cursor){
-                temp = temp.next;
+                temp2 = temp2.next;
             }
             temp2.next = temp;
             temp.next = this.cursor;
