@@ -202,10 +202,11 @@ class List{
     }               // Inserts new element after cursor.
                     // Pre: length()>0, index()>=0
     void deleteFront(){
-        if(size==0){
+        if(size == 0){
             return;
         }
         this.front = this.front.next;
+        size--;
         return;
     }               // Deletes the front element. Pre: length()>0
     void deleteBack(){
@@ -218,11 +219,12 @@ class List{
         }
         deltemp.next = null;
         this.back = deltemp;
+        size--;
         return;
     }               // Deletes the back element. Pre: length()>0
 
     void delete(){
-        if(this.index == -1 || size == 0){
+        if(this.index < 0 || size == 0){
             return;
         }
         else{
@@ -231,8 +233,9 @@ class List{
                 temp = temp.next;
             }
             temp.next = this.cursor.next;
-            this.cursor = null;
+            this.cursor = this.cursor.next = null;
             this.index = -1;
+            size--;
             return;
         }
     }               // Deletes cursor element, making cursor undefined.
@@ -240,13 +243,16 @@ class List{
                     // Other methods
     public String toString(){
         Node temp = this.front;
-        int[] list = new int[this.size];
-        while(temp != null){
-            for(int i = 0; i < size; i++){
-                list[i] = temp.data;
-            }
+        String[] output_A = new String[this.size];
+        String output_S = "";
+        for(int i = 0; i < this.size; i++){
+            output_A[i] = String.valueOf(temp.data);
+            temp = temp.next;
         }
-        return " ";
+        for(int j = 0; j < output_A.length; j++){
+            output_S = output_S + output_A[j] + " ";
+        }
+        return output_S;
     }               // Overrides Object's toString method. Returns a String
                     // representation of this List consisting of a space
                     // separated sequence of integers, with front on left.
