@@ -1,1 +1,6 @@
-TEMP
+In this program, Lex.java takes in two input files from the command line, reads in
+strings of words from the first file, and sorts the alphabetically and returns it
+to the given output file. The list of words is put into an array of Strings in Lex.java, but
+then sent to List.java to sort the array without tampering with the orginal array. List.java
+has many functions to help with the sorting process, including a cursor node to hlep keep track of
+where you want to insert the current array index.
