@@ -17,9 +17,11 @@ class List{
     Node back;
     Node cursor;
     int size;
+    int index;
     List(){ // Creates a new empty list.
          this.front = this.back = this.cursor = null;
-         this.size = 0;
+         this.size  = 0;
+         this.index = -1;
     }       
     // Access functions
     int length(){       // Returns the number of elements in this List.
@@ -30,7 +32,7 @@ class List{
                     return -1;
             }
             else{
-                return this.cursor.data;
+                return this.index;
             }           
         }
     int front(){
@@ -40,7 +42,7 @@ class List{
             return back.data;
         }           // Returns back element. Pre: length()>0
     int get(){
-            if(this.cursor==null||size==0){
+            if(this.index == -1||size == 0){
                 return -1;
             }
             else{
@@ -67,12 +69,15 @@ class List{
                     // Manipulation procedures
     void clear(){
             this.front = this.back = this.cursor = null;
+            this.size = 0;
+            this.index = -1;
         }            // Resets this List to its original empty state.
     void moveFront(){
             if(size==0){
                 return;
             }
             this.cursor = this.front;
+            this.index = 0;
             return;
         }           // If List is non-empty, places the cursor under the front element,
                     // otherwise does nothing.
@@ -81,6 +86,7 @@ class List{
                 return;
             }
             this.cursor = this.back;
+            this.index = size-1;
             return;
     }               // If List is non-empty, places the cursor under the back element,
                     // otherwise does nothing.
@@ -90,6 +96,7 @@ class List{
             }
             else if(this.cursor==this.front){
                 this.cursor = null;
+                this.index = -1;
                 return;
             }
             else{
@@ -98,6 +105,7 @@ class List{
                     temp = temp.next;
                 }
                 this.cursor = temp;
+                this.index--;
                 return;
             }
     }               // If cursor is defined and not at front, moves cursor one step toward
@@ -106,6 +114,7 @@ class List{
     void moveNext(){
             if(this.cursor == this.back){
                 this.cursor = null;
+                this.index = -1;
                 return;
             }
             else if(this.cursor == null){
@@ -113,6 +122,7 @@ class List{
             }
             else{
                 this.cursor = this.cursor.next;
+                this.index++;
                 return;
             }
     }               // If cursor is defined and not at back, moves cursor one step toward
@@ -122,14 +132,14 @@ class List{
             if(size == 0){
                 Node temp = new Node(data);
                 this.front = this.back = temp;
-                size++;
+                this.size++;
                 return;
             }
             else{
                 Node temp = new Node(data);
                 temp.next = this.front;
                 this.front = temp;
-                size++;
+                this.size++;
                 return;
             }
     }                // Insert new element into this List. If List is non-empty,
@@ -138,26 +148,57 @@ class List{
             if(size==0){
                 Node temp = new Node(data);
                 this.front = this.back = temp;
-                size++;
+                this.size++;
                 return;
             }
             else{
                 Node temp = new Node(data);
                 this.back.next = temp;
                 this.back = temp;
-                size++;
+                this.size++;
                 return;
             }
 
     }                // Insert new element into this List. If List is non-empty,
                     // insertion takes place after back element.
     void insertBefore(int data){
-
-        size++;
+        if(this.index < 0 || this.size == 0){
+            return;
+        }
+        else if(this.index==0){
+                prepend(data);
+                this.size++;
+                return;
+        }
+        else{
+            Node temp = new Node(data);
+            Node temp2 = this.front;
+            while(temp2.next!=this.cursor){
+                temp = temp.next;
+            }
+            temp2.next = temp;
+            temp.next = this.cursor;
+            this.size++;
+            return;
+        }
     }               // Insert new element before cursor.
                     // Pre: length()>0, index()>=0
     void insertAfter(int data){
-        size++;
+        if(this.index < 0 || this.size == 0){
+            return;
+        }
+        else if(this.index == size-1){
+            append(data);
+            this.size++;
+            return;
+        }
+        else{
+            Node temp = new Node(data);
+            temp.next = this.cursor.next;
+            this.cursor.next = temp;
+            this.size++;
+            return;
+        }
     }               // Inserts new element after cursor.
                     // Pre: length()>0, index()>=0
     void deleteFront(){
@@ -181,17 +222,45 @@ class List{
     }               // Deletes the back element. Pre: length()>0
 
     void delete(){
-            
+        if(this.index == -1 || size == 0){
+            return;
+        }
+        else{
+            Node temp = this.front;
+            while(temp.next!=this.cursor){
+                temp = temp.next;
+            }
+            temp.next = this.cursor.next;
+            this.cursor = null;
+            this.index = -1;
+            return;
+        }
     }               // Deletes cursor element, making cursor undefined.
                     // Pre: length()>0, index()>=0
                     // Other methods
     public String toString(){
+        Node temp = this.front;
+        int[] list = new int[this.size];
+        while(temp != null){
+            for(int i = 0; i < size; i++){
+                list[i] = temp.data;
+            }
+        }
         return " ";
     }               // Overrides Object's toString method. Returns a String
                     // representation of this List consisting of a space
                     // separated sequence of integers, with front on left.
     List copy(){
         List newList = new List();
+        newList.front = this.front;
+        Node temp = this.front;
+        Node newTemp = newList.front;
+        newList.size = this.size;
+        while(temp != null){
+            temp = temp.next;
+            newTemp.next = temp;
+            newTemp = newTemp.next;
+        }
         return newList;
     }               // Returns a new List representing the same integer sequence as this
                     // List. The cursor in the new list is undefined, regardless of the

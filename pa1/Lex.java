@@ -20,12 +20,14 @@ class Lex{
             line = in.nextLine() + " ";
             token = line.split("\\s+");
             n = token.length;
-            for(i = 0; i < n; i++){
-                out.println(token[i]);
+            String[] a_list = new String[n]; 
+            for(i = 0; i < n-1; i++){
+                for(int j = 1; j < n; j++){
+
+                }
+               
             }
-            out.println();
         }
-        
         in.close();
         output.close();
         out.close();
