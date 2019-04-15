@@ -1,3 +1,10 @@
+
+Zachary Dutra
+zdutra
+1581789
+pa1
+
+
 In this program, Lex.java takes in two input files from the command line, reads in
 strings of words from the first file, and sorts the alphabetically and returns it
 to the given output file. The list of words is put into an array of Strings in Lex.java, but

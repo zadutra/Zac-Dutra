@@ -1,3 +1,10 @@
+/*
+Zachary Dutra
+zdutra
+1581789
+pa1
+*/
+
 class Node{
     int data;
     Node next;

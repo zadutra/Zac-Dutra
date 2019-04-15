@@ -7,7 +7,12 @@
 #       https://classes.soe.ucsc.edu/cmps012b/Summer18/lab1.pdf
 #
 #------------------------------------------------------------------------------ 
-
+#
+#Zachary Dutra
+#zdutra
+#1581789
+#pa1
+#
 MAINCLASS  = Lex
 JAVAC      = javac 
 JAVASRC    = $(wildcard *.java)
