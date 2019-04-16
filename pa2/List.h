@@ -1,63 +1,70 @@
 //-----------------------------------------------------------------------------
-// Queue.h
-// Header file for Queue ADT
+// List.h
+// Header file for List ADT
 //-----------------------------------------------------------------------------
 
-#ifndef _QUEUE_H_INCLUDE_
-#define _QUEUE_H_INCLUDE_
+#ifndef _List_H_INCLUDE_
+#define _List_H_INCLUDE_
 
 
 // Exported type --------------------------------------------------------------
-typedef struct QueueObj* Queue;
+typedef struct ListObj* List;
 
 
 // Constructors-Destructors ---------------------------------------------------
 
-// newQueue()
-// Returns reference to new empty Queue object. 
-Queue newQueue(void);
+// newList()
+// Returns reference to new empty List object. 
+List newList(void);
 
-// freeQueue()
-// Frees all heap memory associated with Queue *pQ, and sets *pQ to NULL.
-void freeQueue(Queue* pQ);
+// freeList()
+// Frees all heap memory associated with List *pL, and sets *pL to NULL.
+void freeList(List* pL);
 
 
 // Access functions -----------------------------------------------------------
 
-// getFront()
-// Returns the value at the front of Q.
+// Front()
+// Returns the value at the front of L.
 // Pre: !isEmpty(Q)
-int getFront(Queue Q);
+int Front(List L);
 
-// getLength()
-// Returns the length of Q.
-int getLength(Queue Q);
+// Length()
+// Returns the length of L.
+int Length(List L);
 
-// isEmpty()
-// Returns true (1) if Q is empty, otherwise returns false (0)
-int isEmpty(Queue Q);
+// index()
+// Returns current List index
+int index(List L);
 
+// get()
+// Returns value at List element
+int get(List L);
+
+//back()
+//Returns value at the back of the List
+int back(List L);
+
+// equals()
+// returns true (1) if A is identical to B, false (0) otherwise
+int equals(List A, List B);
 
 // Manipulation procedures ----------------------------------------------------
 
 // Enqueue()
-// Places new data element at the end of Q
-void Enqueue(Queue Q, int data);
+// Places new data element at the end of L
+void Enqueue(List L, int data);
 
 // Dequeue()
 // Deletes element at front of Q
 // Pre: !isEmpty(Q)
-void Dequeue(Queue Q);
+void Dequeue(List L);
 
 
 // Other Functions ------------------------------------------------------------
 
-// printQueue()
-// Prints data elements in Q on a single line to stdout.
-void printQueue(Queue Q);
-
-// equals()
-// returns true (1) if A is identical to B, false (0) otherwise
-int equals(Queue A, Queue B);
+// printList()
+// Prints data elements in L on a single line to stdout.
+void printList(List L);
 
 #endif

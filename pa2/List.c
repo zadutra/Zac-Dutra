@@ -1,6 +1,9 @@
 //-----------------------------------------------------------------------------
-// Queue.c
-// Implementation file for Queue ADT
+// List.c
+// Zachary Dutra
+// zdutra
+// 1581789
+// pa2
 //-----------------------------------------------------------------------------
 
 #include<stdio.h>
@@ -19,11 +22,11 @@ typedef struct NodeObj{
 typedef NodeObj* Node;
 
 // private QueueObj type
-typedef struct QueueObj{
+typedef struct ListObj{
    Node front;
    Node back;
    int length;
-} QueueObj;
+} ListObj;
 
 
 // Constructors-Destructors ---------------------------------------------------
@@ -48,26 +51,26 @@ void freeNode(Node* pN){
    }
 }
 
-// newQueue()
-// Returns reference to new empty Queue object.
-Queue newQueue(void){
-   Queue Q;
-   Q = malloc(sizeof(QueueObj));
-   Q->front = Q->back = NULL;
-   Q->length = 0;
-   return(Q);
+// newList()
+// Returns reference to new empty List object.
+List newList(void){
+   List L;
+   L = malloc(sizeof(ListObj));
+   L->front = L->back = NULL;
+   L->length = 0;
+   return(L);
 }
 
 
-// freeQueue()
-// Frees all heap memory associated with Queue *pQ, and sets *pQ to NULL.S
-void freeQueue(Queue* pQ){
-   if(pQ!=NULL && *pQ!=NULL) { 
-      while( !isEmpty(*pQ) ) { 
-         Dequeue(*pQ); 
+// freeList()
+// Frees all heap memory associated with List *pL, and sets *pL to NULL.S
+void freeList(List* pL){
+   if(pL!=NULL && *pL!=NULL) { 
+      while( !isEmpty(*pL) ) { 
+         Dequeue(*pL); 
       }
-      free(*pQ);
-      *pQ = NULL;
+      free(*pL);
+      *pL = NULL;
    }
 }
 
@@ -75,114 +78,52 @@ void freeQueue(Queue* pQ){
 // Access functions -----------------------------------------------------------
 
 // getFront()
-// Returns the value at the front of Q.
-// Pre: !isEmpty(Q)
-int getFront(Queue Q){
-   if( Q==NULL ){
-      printf("Queue Error: calling getFront() on NULL Queue reference\n");
+// Returns the value at the front of L.
+// Pre: !isEmpty(L)
+int Front(List L){
+   if( L == NULL ){
+      printf("List Error: calling getFront() on NULL List reference\n");
       exit(1);
    }
-   if( isEmpty(Q) ){
-      printf("Queue Error: calling getFront() on an empty Queue\n");
+   if( isEmpty(ListObj) ){
+      printf("List Error: calling getFront() on NULL List reference\n");
       exit(1);
    }
-   return(Q->front->data);
+   return(L->front->data);
+}
+//back()
+//Returns value at the back of the List
+int back(List L){
+   if( L == NULL ){
+      printf("List Error: calling back() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(ListObj) ){
+      printf("List Error: calling back() on NULL List reference\n");
+      exit(1);
+   }
+   return(L->back->data);
 }
 
-// getLength()
-// Returns the length of Q.
-int getLength(Queue Q){
-   if( Q==NULL ){
-      printf("Queue Error: calling getLength() on NULL Queue reference\n");
+// Length()
+// Returns the length of L.
+int Length(List L){
+   if( L==NULL ){
+      printf("List Error: calling getLength() on NULL List reference\n");
       exit(1);
    }
-   return(Q->length);
-}
-
-// isEmpty()
-// Returns true (1) if Q is empty, otherwise returns false (0)
-int isEmpty(Queue Q){
-   if( Q==NULL ){
-      printf("Queue Error: calling isEmpty() on NULL Queue reference\n");
-      exit(1);
-   }
-   return(Q->length==0);
-}
-
-
-// Manipulation procedures ----------------------------------------------------
-
-// Enqueue()
-// Places new data element at the end of Q
-void Enqueue(Queue Q, int data)
-{
-   Node N = newNode(data);
-
-   if( Q==NULL ){
-      printf("Queue Error: calling Enqueue() on NULL Queue reference\n");
-      exit(1);
-   }
-   if( isEmpty(Q) ) { 
-      Q->front = Q->back = N; 
-   }else{ 
-      Q->back->next = N; 
-      Q->back = N; 
-   }
-   Q->length++;
-}
-
-// Dequeue()
-// Deletes element at front of Q
-// Pre: !isEmpty(Q)
-void Dequeue(Queue Q){
-   Node N = NULL;
-
-   if( Q==NULL ){
-      printf("Queue Error: calling Dequeue() on NULL Queue reference\n");
-      exit(1);
-   }
-   if( isEmpty(Q) ){
-      printf("Queue Error: calling Dequeue on an empty Queue\n");
-      exit(1);
-   }
-   N = Q->front;
-   if( getLength(Q)>1 ) { 
-      Q->front = Q->front->next; 
-   }else{ 
-      Q->front = Q->back = NULL; 
-   }
-   Q->length--;
-   freeNode(&N);
-}
-
-
-// Other Functions ------------------------------------------------------------
-
-// printQueue()
-// Prints data elements in Q on a single line to stdout.
-void printQueue(Queue Q){
-   Node N = NULL;
-
-   if( Q==NULL ){
-      printf("Queue Error: calling printQueue() on NULL Queue reference\n");
-      exit(1);
-   }
-
-   for(N = Q->front; N != NULL; N = N->next){
-      printf("%d ", N->data);
-   }
-   printf("\n");
+   return(L->length);
 }
 
 // equals()
 // returns true (1) if A is identical to B, false (0) otherwise
-int equals(Queue A, Queue B){
+int equals(List A, List B){
    int eq = 0;
    Node N = NULL;
    Node M = NULL;
 
    if( A==NULL || B==NULL ){
-      printf("Queue Error: calling equals() on NULL Queue reference\n");
+      printf("List Error: calling equals() on NULL List reference\n");
       exit(1);
    }
 
@@ -196,3 +137,70 @@ int equals(Queue A, Queue B){
    }
    return eq;
 }
+
+
+// Manipulation procedures ----------------------------------------------------
+
+// Enqueue()
+// Places new data element at the end of L
+void Enqueue(List L, int data)
+{
+   Node N = newNode(data);
+
+   if( L==NULL ){
+      printf("List Error: calling Enqueue() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(Q) ) { 
+      L->front = L->back = N; 
+   }else{ 
+      L->back->next = N; 
+      L->back = N; 
+   }
+   L->length++;
+}
+
+// Dequeue()
+// Deletes element at front of L
+// Pre: !isEmpty(L)
+void Dequeue(List L){
+   Node N = NULL;
+
+   if( L==NULL ){
+      printf("List Error: calling Dequeue() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(L) ){
+      printf("List Error: calling Dequeue on an empty List\n");
+      exit(1);
+   }
+   N = L->front;
+   if( getLength(L)>1 ) { 
+      L->front = L->front->next; 
+   }else{ 
+      L->front = L->back = NULL; 
+   }
+   L->length--;
+   freeNode(&L);
+}
+
+
+// Other Functions ------------------------------------------------------------
+
+// printList()
+// Prints data elements in L on a single line to stdout.
+void printList(List L){
+   Node N = NULL;
+
+   if( L==NULL ){
+      printf("List Error: calling printList() on NULL List reference\n");
+      exit(1);
+   }
+
+   for(N = L->front; N != NULL; N = N->next){
+      printf("%d ", N->data);
+   }
+   printf("\n");
+}
+
+
