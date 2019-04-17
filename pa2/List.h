@@ -87,12 +87,28 @@ void moveNext(List L);
 // Pre: !isEmpty(L)
 void deleteFront(List L);
 
+// deleteBack()
+// Deletes element at back of L
+// Pre: !isEmpty(L)
+void deleteBack(List L);
+
+//delete()
+//deletes current cursor node
+void delete(List L);
+
+//insertBefore()
+//inserts new element before the cursor
+void insertBefore(List L, int data);
+
+//insertAfter()
+//insert new element after the cursor
+void insertAfter(List L, int data);
 
 // Other Functions ------------------------------------------------------------
 
 // printList()
 // Prints data elements in L on a single line to stdout.
-void printList(List L);
+void printList(FILE* out, List L);
 
 //copyList()
 //returns a new list and copies input list to new list

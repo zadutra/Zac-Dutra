@@ -8,7 +8,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include "Queue.h"
+#include "List.h"
 
 // structs --------------------------------------------------------------------
 
@@ -26,8 +26,8 @@ typedef struct ListObj{
    Node front;
    Node back;
    Node cursor;
-   int length = 0;
-   int index = -1;
+   int length;
+   int index;
 } ListObj;
 
 
@@ -60,6 +60,7 @@ List newList(void){
    L = malloc(sizeof(ListObj));
    L->front = L->back = L->cursor = NULL;
    L->length = 0;
+   L->index = -1;
    return(L);
 }
 
@@ -84,11 +85,11 @@ void freeList(List* pL){
 // Pre: !isEmpty(L)
 int front(List L){
    if( L == NULL ){
-      printf("List Error: calling getFront() on NULL List reference\n");
+      printf("List Error: calling front() on NULL List reference\n");
       exit(1);
    }
-   if( isEmpty(ListObj) ){
-      printf("List Error: calling getFront() on NULL List reference\n");
+   if( isEmpty(L) ){
+      printf("List Error: calling front() on empty List reference\n");
       exit(1);
    }
    return(L->front->data);
@@ -101,8 +102,8 @@ int back(List L){
       printf("List Error: calling back() on NULL List reference\n");
       exit(1);
    }
-   if( isEmpty(ListObj) ){
-      printf("List Error: calling back() on NULL List reference\n");
+   if( isEmpty(L) ){
+      printf("List Error: calling back() on empty List reference\n");
       exit(1);
    }
    return(L->back->data);
@@ -112,10 +113,28 @@ int back(List L){
 // Returns the length of L.
 int length(List L){
    if( L==NULL ){
-      printf("List Error: calling getLength() on NULL List reference\n");
+      printf("List Error: calling length() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(L) ){
+      printf("List Error: calling length() on empty List reference\n");
       exit(1);
    }
    return(L->length);
+}
+
+//index()
+//Returns current List index
+int index (List L){
+   if( L==NULL ){
+      printf("List Error: calling index() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(L) ){
+      printf("List Error: calling index() on empty List reference\n");
+      exit(1);
+   }
+      return (L->index);
 }
 
 // get()
@@ -126,9 +145,9 @@ int get(List L){
       exit(1);
    }
    else if( L->cursor == NULL){
-      return -1
+      return -1;
    }
-   return L->cursor->data;
+   return (L->cursor->data);
 }
 
 // equals()
@@ -186,7 +205,7 @@ void append(List L, int data)
       printf("List Error: calling Enqueue() on NULL List reference\n");
       exit(1);
    }
-   if( isEmpty(Q) ) { 
+   if( isEmpty(L) ) { 
       L->front = L->back = N; 
    }else{ 
       L->back->next = N; 
@@ -205,7 +224,7 @@ void prepend(List L, int data)
       printf("List Error: calling Enqueue() on NULL List reference\n");
       exit(1);
    }
-   if( isEmpty(Q) ) { 
+   if( isEmpty(L) ) { 
       L->front = L->back = N; 
    }else{ 
       N->next = L->front;
@@ -329,7 +348,7 @@ void deleteFront(List L){
       exit(1);
    }
    N = L->front;
-   if( getLength(L)>1 ) { 
+   if( length(L)>1 ) { 
       L->front = L->front->next; 
    }else{ 
       L->front = L->back = NULL; 
@@ -352,8 +371,8 @@ void deleteBack(List L){
       printf("List Error: calling deleteBack() on an empty List\n");
       exit(1);
    }
-   if( getLength(L)>1 ) { 
-      while(N-> != L->back){
+   if( length(L)>1 ) { 
+      while(N->next != L->back){
          N = N->next;
       }
       L->back = N;
@@ -387,7 +406,7 @@ void delete(List L){
 // Other Functions ------------------------------------------------------------
 
 // printList()
-// Prints data elements in L on a single line to stdout.
+// Prints data elements in L on a single line to out.
 void printList(FILE* out, List L){
    Node N = NULL;
 
@@ -397,9 +416,9 @@ void printList(FILE* out, List L){
    }
 
    for(N = L->front; N != NULL; N = N->next){
-      out.fprintf("%d ", N->data);
+      fprintf(out, "%d ", N->data);
    }
-   out.fprintf("\n");
+   fprintf(out, "\n");
 }
 
 //copyList()

@@ -17,7 +17,7 @@ int main(int argc, char * argv[]){
    int n, count=0;
    FILE *in, *out;
    char line[MAX_LEN];
-   char tokenlist[MAX_LEN];
+   char in_list[MAX_LEN];
    char* token;
 
    // check command line for correct number of arguments
@@ -39,20 +39,20 @@ int main(int argc, char * argv[]){
    }
 
    /* read each line of input file, then count and print tokens */
-   while( fgets(line, MAX_LEN, in) != NULL)  {
+   while( fscanf(in, " %s", line) ) {
       count++;
       n = 0;
       token = strtok(line, " \n");
-      tokenlist[0] = '\0';
+      
       while( token!=NULL ){
-         strcat(tokenlist, "   ");
-         strcat(tokenlist, token);
-         strcat(tokenlist, "\n");
+         strcat(in_list, "   ");
+         strcat(in_list, token);
+         strcat(in_list, "\n");
          n++;
          token = strtok(NULL, " \n");
       }
       fprintf(out, "line %d contains %d token%s: \n", count, n, n==1?"":"s");
-      fprintf(out, "%s\n", tokenlist);
+      fprintf(out, "%s\n", in_list);
    }
 
    /* close files */
