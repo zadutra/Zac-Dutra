@@ -25,7 +25,9 @@ typedef NodeObj* Node;
 typedef struct ListObj{
    Node front;
    Node back;
-   int length;
+   Node cursor;
+   int length = 0;
+   int index = -1;
 } ListObj;
 
 
@@ -56,7 +58,7 @@ void freeNode(Node* pN){
 List newList(void){
    List L;
    L = malloc(sizeof(ListObj));
-   L->front = L->back = NULL;
+   L->front = L->back = L->cursor = NULL;
    L->length = 0;
    return(L);
 }
@@ -67,7 +69,7 @@ List newList(void){
 void freeList(List* pL){
    if(pL!=NULL && *pL!=NULL) { 
       while( !isEmpty(*pL) ) { 
-         Dequeue(*pL); 
+         deleteFront(*pL); 
       }
       free(*pL);
       *pL = NULL;
@@ -80,7 +82,7 @@ void freeList(List* pL){
 // getFront()
 // Returns the value at the front of L.
 // Pre: !isEmpty(L)
-int Front(List L){
+int front(List L){
    if( L == NULL ){
       printf("List Error: calling getFront() on NULL List reference\n");
       exit(1);
@@ -91,6 +93,7 @@ int Front(List L){
    }
    return(L->front->data);
 }
+
 //back()
 //Returns value at the back of the List
 int back(List L){
@@ -107,12 +110,25 @@ int back(List L){
 
 // Length()
 // Returns the length of L.
-int Length(List L){
+int length(List L){
    if( L==NULL ){
       printf("List Error: calling getLength() on NULL List reference\n");
       exit(1);
    }
    return(L->length);
+}
+
+// get()
+// returns data at current cursor node
+int get(List L){
+   if( L==NULL ){
+      printf("List Error: calling get() on NULL List reference\n");
+      exit(1);
+   }
+   else if( L->cursor == NULL){
+      return -1
+   }
+   return L->cursor->data;
 }
 
 // equals()
@@ -138,12 +154,31 @@ int equals(List A, List B){
    return eq;
 }
 
+// isEmpty()
+// Returns true (1) if Q is empty, otherwise returns false (0)
+int isEmpty(List L){
+   if( L==NULL ){
+      printf("List Error: calling isEmpty() on NULL List reference\n");
+      exit(1);
+   }
+   return(L->length==0);
+}
+
 
 // Manipulation procedures ----------------------------------------------------
 
-// Enqueue()
+//clear()
+//resets input list on initial values
+void clear(List L){
+   L->front = L->back = L->cursor= NULL;
+   L->index = -1;
+   L->length = 0;
+   return;
+}
+
+// append()
 // Places new data element at the end of L
-void Enqueue(List L, int data)
+void append(List L, int data)
 {
    Node N = newNode(data);
 
@@ -160,18 +195,137 @@ void Enqueue(List L, int data)
    L->length++;
 }
 
-// Dequeue()
+// prepend()
+// Places new data element at the beginning of L
+void prepend(List L, int data)
+{
+   Node N = newNode(data);
+
+   if( L==NULL ){
+      printf("List Error: calling Enqueue() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(Q) ) { 
+      L->front = L->back = N; 
+   }else{ 
+      N->next = L->front;
+      L->front = N; 
+   }
+   L->length++;
+}
+//moveFront()
+// moves cursor to the front
+void moveFront(List L){
+   if(L->length==0){
+      return;
+   }
+   else{
+      L->cursor = L->front;
+      L->index = 0;
+      return;
+   }
+}
+
+//moveBack()
+//moves cursor to the back
+void moveBack(List L){
+   if(L->length==0){
+      return;
+   }
+   else{
+      L->cursor = L->back;
+      L->index = L->length - 1;
+      return;
+   }
+}
+
+//movePrev()
+//moves cursor to previous element
+void movePrev(List L){
+   if(L->cursor == L->front){
+      L->cursor = NULL;
+      L->index = -1;
+      return;
+   }
+   else{
+      Node N = L->front;
+      while(N->next != L->cursor){
+         N = N->next;
+      }
+      L->cursor = N;
+      L->index = L->index - 1;
+      return;
+   }
+}
+
+//moveNext()
+//moves cursor to next element
+void moveNext(List L){
+   if(L->cursor == L->back){
+      L->cursor = NULL;
+      L->index = -1;
+      return;
+   }
+   else{
+      L->cursor = L->cursor->next;
+      L->index = L->index + 1;
+      return;
+   }
+}
+
+//insertBefore()
+//inserts new element before the cursor
+void insertBefore(List L, int data){
+   if(L->length == 0){
+      prepend(L, data);
+      return;
+   }
+   else if (L->cursor == NULL) {
+      return;
+   }
+   else{
+      Node N = newNode(data);
+      Node temp = L->front;
+      while(temp->next != L->cursor){
+         temp = temp->next;
+      }
+      temp->next = N;
+      N->next = L->cursor;
+      L->length = L->length + 1;
+      return;
+   }
+}
+
+//insertAfter()
+//insert new element after the cursor
+void insertAfter(List L, int data){
+   if(L->length == 0){
+      prepend(L, data);
+      return;
+   }
+   else if (L->cursor == NULL) {
+      return;
+   }
+   else{
+      Node N = newNode(data);
+      N->next = L->cursor->next;
+      L->cursor->next = N;
+      L->length = L->length + 1;
+      return;
+   }
+}
+// deleteFront()
 // Deletes element at front of L
 // Pre: !isEmpty(L)
-void Dequeue(List L){
+void deleteFront(List L){
    Node N = NULL;
 
    if( L==NULL ){
-      printf("List Error: calling Dequeue() on NULL List reference\n");
+      printf("List Error: calling deleteFront() on NULL List reference\n");
       exit(1);
    }
    if( isEmpty(L) ){
-      printf("List Error: calling Dequeue on an empty List\n");
+      printf("List Error: calling deleteFront() on an empty List\n");
       exit(1);
    }
    N = L->front;
@@ -181,7 +335,52 @@ void Dequeue(List L){
       L->front = L->back = NULL; 
    }
    L->length--;
-   freeNode(&L);
+   freeNode(&N);
+}
+
+// deleteBack()
+// Deletes element at back of L
+// Pre: !isEmpty(L)
+void deleteBack(List L){
+   Node N = L->front;
+
+   if( L==NULL ){
+      printf("List Error: calling deleteBack() on NULL List reference\n");
+      exit(1);
+   }
+   if( isEmpty(L) ){
+      printf("List Error: calling deleteBack() on an empty List\n");
+      exit(1);
+   }
+   if( getLength(L)>1 ) { 
+      while(N-> != L->back){
+         N = N->next;
+      }
+      L->back = N;
+   }else{ 
+      L->front = L->back = NULL; 
+   }
+   L->length--;
+   freeNode(&N);
+}
+
+//delete()
+//deletes current cursor node
+void delete(List L){
+      if(L->cursor==NULL){
+         return;
+      }
+      else{
+         Node N = L->front;
+         while(N->next != L->cursor){
+            N = N-> next;
+         }
+         N->next = L->cursor->next;
+         L->cursor = NULL;
+         L->index = -1;
+         L->length = L->length - 1;
+         return;
+      }
 }
 
 
@@ -189,7 +388,7 @@ void Dequeue(List L){
 
 // printList()
 // Prints data elements in L on a single line to stdout.
-void printList(List L){
+void printList(FILE* out, List L){
    Node N = NULL;
 
    if( L==NULL ){
@@ -198,9 +397,23 @@ void printList(List L){
    }
 
    for(N = L->front; N != NULL; N = N->next){
-      printf("%d ", N->data);
+      out.fprintf("%d ", N->data);
    }
-   printf("\n");
+   out.fprintf("\n");
 }
 
-
+//copyList()
+//returns a new list and copies input list to new list
+List copyList(List L){
+   List new_list = newList();
+   new_list->front = L->front;
+   Node temp = L->front;
+   Node newTemp = new_list->front;
+   new_list->length = L->length;
+   while(temp != NULL){
+      temp = temp->next;
+      newTemp->next = temp;
+      newTemp = newTemp->next;
+   }
+   return new_list;
+}

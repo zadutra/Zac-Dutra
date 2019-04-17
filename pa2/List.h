@@ -27,11 +27,11 @@ void freeList(List* pL);
 // Front()
 // Returns the value at the front of L.
 // Pre: !isEmpty(Q)
-int Front(List L);
+int front(List L);
 
 // Length()
 // Returns the length of L.
-int Length(List L);
+int length(List L);
 
 // index()
 // Returns current List index
@@ -49,16 +49,43 @@ int back(List L);
 // returns true (1) if A is identical to B, false (0) otherwise
 int equals(List A, List B);
 
+//isEmpty()
+//returns true(1) if Q is empty, otherwise returns false(0)
+int isEmpty(List L);
 // Manipulation procedures ----------------------------------------------------
 
-// Enqueue()
-// Places new data element at the end of L
-void Enqueue(List L, int data);
+//clear()
+//resets input list on initial values
+void clear(List L);
 
-// Dequeue()
-// Deletes element at front of Q
-// Pre: !isEmpty(Q)
-void Dequeue(List L);
+// append()
+// Places new data element at the end of L
+void append(List L, int data);
+
+//prepend()
+// places new data element at the beginning lf L
+void prepend(List L, int data);
+
+//moveFront()
+// moves cursor to the front
+void moveFront(List L);
+
+//moveBack()
+//moves cursor to the back
+void moveBack(List L);
+
+//movePrev()
+//moves cursor to previous element
+void movePrev(List L);
+
+//moveNext()
+//moves cursor to next element
+void moveNext(List L);
+
+// deleteFront()
+// Deletes element at front of L
+// Pre: !isEmpty(L)
+void deleteFront(List L);
 
 
 // Other Functions ------------------------------------------------------------
@@ -66,5 +93,9 @@ void Dequeue(List L);
 // printList()
 // Prints data elements in L on a single line to stdout.
 void printList(List L);
+
+//copyList()
+//returns a new list and copies input list to new list
+List copyList(List L);
 
 #endif
