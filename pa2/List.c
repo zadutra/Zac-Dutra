@@ -117,8 +117,7 @@ int length(List L){
       exit(1);
    }
    if( isEmpty(L) ){
-      printf("List Error: calling length() on empty List reference\n");
-      exit(1);
+      return 0;
    }
    return(L->length);
 }

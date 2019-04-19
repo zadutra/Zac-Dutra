@@ -9,16 +9,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "List.h"
 
-#define MAX_LEN 160
+#define MAX_LEN 250
 
 int main(int argc, char * argv[]){
 
-   int n, count=0;
+   int n, linecount=0;
    FILE *in, *out;
    char line[MAX_LEN];
    char in_list[MAX_LEN];
    char* token;
+   // int compare, count = 0;
+   // int j = 0;
 
    // check command line for correct number of arguments
    if( argc != 3 ){
@@ -39,22 +42,43 @@ int main(int argc, char * argv[]){
    }
 
    /* read each line of input file, then count and print tokens */
-   while( fscanf(in, " %s", line) ) {
-      count++;
+   while( fgets(line, MAX_LEN, in) != NULL)  {
+      linecount++;
       n = 0;
       token = strtok(line, " \n");
       
-      while( token!=NULL ){
-         strcat(in_list, "   ");
-         strcat(in_list, token);
-         strcat(in_list, "\n");
+      while( token != NULL ){
+         strcat((in_list+n), token);
+         strcat((in_list+n), "\n");
          n++;
          token = strtok(NULL, " \n");
       }
-      fprintf(out, "line %d contains %d token%s: \n", count, n, n==1?"":"s");
-      fprintf(out, "%s\n", in_list);
    }
-
+   fprintf(out,"%s", in_list+1);
+   List Lex_list = newList();
+   prepend(Lex_list, 0);
+   moveFront(Lex_list);
+  /* while(count < linecount){
+     // compare = strcmp(in_list[j], in_list[get(Lex_list)]);
+      if(compare <= 0){
+         insertBefore(Lex_list, j);
+         j++;
+         count++;
+         moveFront(Lex_list);
+         continue;
+      }
+      else if(compare > 0 && get(Lex_list)!= back(Lex_list)){
+         moveNext(Lex_list);
+         continue;
+      }
+      else{
+         append(Lex_list, j);
+         j++;
+         count++;
+         moveFront(Lex_list);
+      }
+   }
+*/
    /* close files */
    fclose(in);
    fclose(out);
