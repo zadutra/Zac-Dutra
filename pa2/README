@@ -1,1 +1,10 @@
-temp
+Zachary Dutra
+zdutra
+1581789
+pa2
+
+Just like pa1, this program takes in a list of strings from the input text file,
+and sorts them alphabetically into a list, without changing the order of the input array.
+Unline pa1, this program is entirely in C rather than java. This program requires the list.h
+header file, which outline all the functions in list.c, which is just one ofthe differences between Java and C
+demonstrated in this program.

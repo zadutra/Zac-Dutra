@@ -294,7 +294,7 @@ void moveNext(List L){
 //insertBefore()
 //inserts new element before the cursor
 void insertBefore(List L, int data){
-   if(L->length == 0){
+   if(L->length == 0 || L->cursor == L->front){
       prepend(L, data);
       return;
    }
@@ -309,7 +309,7 @@ void insertBefore(List L, int data){
       }
       temp->next = N;
       N->next = L->cursor;
-      L->length = L->length + 1;
+      L->length++;
       return;
    }
 }
@@ -328,7 +328,7 @@ void insertAfter(List L, int data){
       Node N = newNode(data);
       N->next = L->cursor->next;
       L->cursor->next = N;
-      L->length = L->length + 1;
+      L->length++;
       return;
    }
 }

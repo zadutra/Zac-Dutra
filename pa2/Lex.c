@@ -15,15 +15,15 @@
 
 int main(int argc, char * argv[]){
 
-  // int linecount =0;
+   int count = 0;
+   int compare = 0;
    FILE *in, *out;
    char line[MAX_LEN];
-   char tokenlist[MAX_LEN];
    char* token;
    char** in_list = (char**) calloc(MAX_LEN, sizeof(char));
-   //char* token;
    // int compare, count = 0;
-   int n, charCount = 0;
+   int n = 1;
+   int linecount = 0;
 
    // check command line for correct number of arguments
    if( argc != 3 ){
@@ -44,43 +44,40 @@ int main(int argc, char * argv[]){
    }
 
    /* read each line of input file, then count and print tokens */
-   while( fgets(line, MAX_LEN, in) != NULL)  {
-      n = 0;
+   for(int j = 0; fgets(line, MAX_LEN, in) != NULL; j++)  {
+      linecount++;
       token = strtok(line, " \n");
-      tokenlist[0] = '\0';
-      int length = strlen(line);
-      for(int i = 0; i < length; i++){
-         token = &line[i];
-         charCount++;
-      }
+      int length = strlen(token);
+      in_list[j] = calloc(length, sizeof(char*));
+      strcpy(in_list[j], token);
    }
-   //fprintf(out, "%d",n);
-   //fprintf(out, "%d",linecount);
-   fprintf(out,"%s", in_list);
    List Lex_list = newList();
    prepend(Lex_list, 0);
    moveFront(Lex_list);
-  /* while(count < linecount){
-     // compare = strcmp(in_list[j], in_list[get(Lex_list)]);
+   while(n < linecount){
+      compare = strcmp(in_list[n], in_list[get(Lex_list)]);
       if(compare <= 0){
-         insertBefore(Lex_list, j);
-         j++;
+         insertBefore(Lex_list, n);
+         n++;
          count++;
          moveFront(Lex_list);
          continue;
       }
-      else if(compare > 0 && get(Lex_list)!= back(Lex_list)){
+      else if(compare > 0 && get(Lex_list) != back(Lex_list)){
          moveNext(Lex_list);
          continue;
       }
       else{
-         append(Lex_list, j);
-         j++;
+         append(Lex_list, n);
+         n++;
          count++;
          moveFront(Lex_list);
       }
    }
-*/
+   for(int i = 0; i < n; i++){
+      fprintf(out,"%s\n", in_list[get(Lex_list)]);
+      moveNext(Lex_list);
+   }
    /* close files */
    fclose(in);
    fclose(out);
