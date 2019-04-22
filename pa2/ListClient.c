@@ -49,6 +49,11 @@ int main(int argc, char* argv[]){
    printList(stdout,A);
    printf("\n");
    printf("%d\n", length(A));
+   deleteFront(A);
+   printList(stdout,A);
+   deleteBack(A);
+   printList(stdout,A);
+
    clear(A);
    printf("%d\n", length(A));
 

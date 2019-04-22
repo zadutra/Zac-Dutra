@@ -349,11 +349,13 @@ void deleteFront(List L){
    N = L->front;
    if( length(L)>1 ) { 
       L->front = L->front->next; 
-   }else{ 
+   }
+   else{ 
       L->front = L->back = NULL; 
    }
    L->length--;
    freeNode(&N);
+   return;
 }
 
 // deleteBack()
@@ -374,12 +376,18 @@ void deleteBack(List L){
       while(N->next != L->back){
          N = N->next;
       }
+      N->next = NULL;
       L->back = N;
-   }else{ 
-      L->front = L->back = NULL; 
+      L->length--;
+      freeNode(&N);
+      return;
    }
-   L->length--;
-   freeNode(&N);
+   else{ 
+      L->front = L->back = NULL; 
+       L->length--;
+      freeNode(&N);
+      return;
+   }
 }
 
 //delete()
