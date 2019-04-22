@@ -613,16 +613,3 @@ class ModelListTest {
     System.out.printf("\nThis gives you a score of %d out of %d for this component of the assignment\n\n", totalPoints, maxScore);
   }
 }
-
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
