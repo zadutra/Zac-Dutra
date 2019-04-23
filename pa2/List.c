@@ -326,6 +326,10 @@ void insertAfter(List L, int data){
       prepend(L, data);
       return;
    }
+   else if(L->cursor == L->back){
+      append(L, data);
+      return;
+   }
    else if (L->cursor == NULL) {
       return;
    }
