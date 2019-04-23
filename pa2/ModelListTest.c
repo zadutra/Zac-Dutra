@@ -210,6 +210,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         append(A, 176);
         append(A, 3214);
         moveFront(A);
+        printf("moveFront");
         if (index(A) != 0) return 1;
         return 0;
       }
@@ -221,6 +222,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         append(A, 176);
         append(A, 3214);
         moveBack(A);
+        printf("moveBack");
         if (index(A) != 4) return 1;
         return 0;
       }
@@ -238,6 +240,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         moveNext(A);
         moveNext(A);
         moveNext(A);
+        printf("moveNext");
         if (index(A) != -1) return 2;
         return 0;
       }
@@ -251,6 +254,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         if (index(A) != 1) return 1;
         movePrev(A);
         movePrev(A);
+        printf("movePrev");
         if (index(A) != -1) return 2;
         return 0;
       }
@@ -270,6 +274,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         if (index(A) != 3) return 2;
         moveFront(A);
         movePrev(A);
+        printf("append");
         if (index(A) != -1) return 3;
         return 0;
       }
@@ -292,6 +297,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         if (index(A) != 6) return 2;
         moveFront(A);
         movePrev(A);
+        printf("prepend");
         if (index(A) != -1) return 3;
         return 0;
       }
@@ -309,6 +315,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         if (index(A) != 6) return 1;
         insertAfter(A, 345);
         moveBack(A);
+        printf("insert after");
         if (index(A) != 7) return 2;
         return 0;
       }
@@ -326,6 +333,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         prepend(A, 3498);
         moveFront(A);
         insertBefore(A, 67);
+        printf("insertBefore");
         if (index(A) != 1) return 2;
         return 0;
       }
@@ -342,6 +350,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         if (index(A) != -1) return 1;
         moveBack(A);
         deleteFront(A);
+        printf("deleteFront");
         if (index(A) != 3) return 2;
         return 0;
       }
@@ -359,6 +368,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         moveFront(A);
         deleteBack(A);
         moveNext(A);
+        printf("deleteBack");
         if (index(A) != 1) return 2;
         return 0;
       }
@@ -383,6 +393,7 @@ uint8_t runTest(List *pA, List *pB, int test) {
         moveFront(A);
         if (index(A) != 0) return 4;
         delete(A);
+        printf("delete");
         if (index(A) != -1) return 5;
         return 0;
       }
