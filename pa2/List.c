@@ -210,9 +210,6 @@ void append(List L, int data)
       L->back = N; 
    }
    L->length++;
-   if(L->index != -1){
-      L->index++;
-   }
    return;
 }
 
@@ -337,7 +334,6 @@ void insertAfter(List L, int data){
       N->next = L->cursor->next;
       L->cursor->next = N;
       L->length++;
-      L->index++;
       return;
    }
 }
