@@ -174,7 +174,6 @@ class List{
         }
         else if(this.index == 0){
                 prepend(data);
-                this.size++;
                 return;
         }
         else{
@@ -213,7 +212,7 @@ class List{
             return;
         }
         this.front = this.front.next;
-        size--;
+        this.size--;
         return;
     }               // Deletes the front element. Pre: length()>0
     void deleteBack(){

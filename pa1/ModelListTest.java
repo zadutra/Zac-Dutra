@@ -110,6 +110,7 @@ class ModelListTest {
     try {
       if (test == Empty_length) {
         A = new List();
+        System.out.println("test1");
         if (A.length() != 0) return 1;
       } else if (test == Append_length) {
         A = new List();
@@ -117,6 +118,7 @@ class ModelListTest {
         A.append(2);
         A.append(3);
         A.append(5);
+        System.out.println("test2");
         if (A.length() != 4) return 1;
       } else if (test == Prepend_length) {
         A = new List();
@@ -124,6 +126,7 @@ class ModelListTest {
         A.prepend(4);
         A.prepend(2);
         A.prepend(1);
+        System.out.println("test3");
         if (A.length() != 4) return 1;
       } else if (test == InsertAfter_length) {
         A = new List();
@@ -133,6 +136,7 @@ class ModelListTest {
         A.append(5);
         A.moveFront();
         A.insertAfter(12);
+        System.out.println("test4");
         if (A.length() != 5) return 1;
       } else if (test == InsertBefore_length) {
         A = new List();
@@ -142,6 +146,7 @@ class ModelListTest {
         A.prepend(1);
         A.moveFront();
         A.insertBefore(115);
+        System.out.println("test5");
         if (A.length() != 5) return 1;
       } else if (test == DeleteFront_length) {
         A = new List();
@@ -153,6 +158,7 @@ class ModelListTest {
         A.moveFront();
         A.insertBefore(115);
         A.deleteFront();
+        System.out.println("test6");
         if (A.length() != 3) return 1;
       } else if (test == DeleteBack_length) {
         A = new List();
@@ -164,6 +170,7 @@ class ModelListTest {
         A.moveFront();
         A.insertAfter(12);
         A.deleteBack();
+        System.out.println("test7");
         if (A.length() != 3) return 1;
       } else if (test == Delete_length) {
         A = new List();
@@ -176,9 +183,11 @@ class ModelListTest {
         A.moveFront();
         A.insertAfter(12);
         A.delete();
+        System.out.println("test8");
         if (A.length() != 3) return 1;
       } else if (test == EmptyList_index) {
         A = new List();
+        System.out.println("test9");
         if (A.index() != -1) return 1;
       } else if (test == MoveFront_index) {
         A = new List();
@@ -188,6 +197,7 @@ class ModelListTest {
         A.append(176);
         A.append(3214);
         A.moveFront();
+        System.out.println("test10");
         if (A.index() != 0) return 1;
       } else if (test == MoveBack_index) {
         A = new List();
@@ -197,6 +207,7 @@ class ModelListTest {
         A.append(176);
         A.append(3214);
         A.moveBack();
+        System.out.println("test11");
         if (A.index() != 4) return 1;
       } else if (test == MoveNext_index) {
         A = new List();
@@ -208,10 +219,12 @@ class ModelListTest {
         A.moveFront();
         A.moveNext();
         A.moveNext();
+        System.out.println("test12");
         if (A.index() != 2) return 1;
         A.moveNext();
         A.moveNext();
         A.moveNext();
+        System.out.println("test13");
         if (A.index() != -1) return 2;
       } else if (test == MovePrev_index) {
         A = new List();
@@ -220,9 +233,11 @@ class ModelListTest {
         A.append(3214);
         A.moveBack();
         A.movePrev();
+        System.out.println("test14");
         if (A.index() != 1) return 1;
         A.movePrev();
         A.movePrev();
+        System.out.println("test15");
         if (A.index() != -1) return 2;
       } else if (test == Append_index) {
         A = new List();
@@ -233,13 +248,16 @@ class ModelListTest {
         A.append(45);
         A.append(51);
         A.append(3214);
+        System.out.println("test16");
         if (A.index() != 2) return 1;
         A.moveBack();
         A.movePrev();
         A.movePrev();
+        System.out.println("test17");
         if (A.index() != 3) return 2;
         A.moveFront();
         A.movePrev();
+        System.out.println("test18");
         if (A.index() != -1) return 3;
       } else if (test == Prepend_index) {
         A = new List();
@@ -252,14 +270,17 @@ class ModelListTest {
         A.prepend(3214);
         A.prepend(314);
         A.prepend(324);
+        System.out.println("test19");
         if (A.index() != 5) return 1;
         A.moveBack();
         A.movePrev();
         A.prepend(234);
         A.movePrev();
+        System.out.println("test20");
         if (A.index() != 6) return 2;
         A.moveFront();
         A.movePrev();
+        System.out.println("test21");
         if (A.index() != -1) return 3;
       } else if (test == InsertAfter_index) {
         A = new List();
@@ -272,9 +293,11 @@ class ModelListTest {
         A.moveBack();
         A.insertAfter(75);
         A.moveNext();
+        System.out.println("test22");
         if (A.index() != 6) return 1;
         A.insertAfter(345);
         A.moveBack();
+        System.out.println("test23");
         if (A.index() != 7) return 2;
       } else if (test == InsertBefore_index) {
         A = new List();
@@ -284,12 +307,14 @@ class ModelListTest {
         A.prepend(3674);
         A.moveBack();
         A.insertBefore(435);
+        System.out.println("test24");
         if (A.index() != 4) return 1;
         A.prepend(324);
         A.prepend(33464);
         A.prepend(3498);
         A.moveFront();
         A.insertBefore(67);
+        System.out.println("test25");
         if (A.index() != 1) return 2;
       } else if (test == DeleteFront_index) {
         A = new List();
@@ -301,9 +326,11 @@ class ModelListTest {
         A.prepend(1);
         A.moveFront();
         A.deleteFront();
+        System.out.println("test26");
         if (A.index() != -1) return 1;
         A.moveBack();
         A.deleteFront();
+        System.out.println("test27");
         if (A.index() != 3) return 2;
       } else if (test == DeleteBack_index) {
         A = new List();
@@ -315,10 +342,12 @@ class ModelListTest {
         A.prepend(1);
         A.moveBack();
         A.deleteBack();
+        System.out.println("test28");
         if (A.index() != -1) return 1;
         A.moveFront();
         A.deleteBack();
         A.moveNext();
+        System.out.println("test29");
         if (A.index() != 1) return 2;
       } else if (test == Delete_index) {
         A = new List();
@@ -327,20 +356,25 @@ class ModelListTest {
         A.prepend(43);
         A.moveBack();
         A.delete();
+        System.out.println("test30");
         if (A.index() != -1) return 1;
         A.prepend(2);
         A.prepend(8);
         A.prepend(1);
         A.moveBack();
+        System.out.println("test31");
         if (A.index() != 4) return 2;
         A.delete();
         A.moveBack();
+        System.out.println("test32");
         if (A.index() != 3) return 3;
         A.moveFront();
         A.delete();
         A.moveFront();
+        System.out.println("test33");
         if (A.index() != 0) return 4;
         A.delete();
+        System.out.println("test34");
         if (A.index() != -1) return 5;
       } else if (test == Append_equals) {
         A = new List();
@@ -348,8 +382,10 @@ class ModelListTest {
         A.append(1);
         B.append(1);
         A.append(2);
+        System.out.println("test35");
         if (A.equals(B)) return 1;
         B.append(2);
+        System.out.println("test36");
         if (!A.equals(B)) return 2;
       } else if (test == Prepend_equals) {
         A = new List();
@@ -357,8 +393,10 @@ class ModelListTest {
         A.prepend(1);
         B.prepend(1);
         A.prepend(2);
+        System.out.println("test37");
         if (A.equals(B)) return 1;
         B.prepend(2);
+        System.out.println("test38");
         if (!A.equals(B)) return 2;
       } else if (test == InsertAfter_equals) {
         A = new List();
@@ -368,10 +406,12 @@ class ModelListTest {
         A.append(2);
         B.moveFront();
         B.insertAfter(2);
+        System.out.println("test39");
         if (!A.equals(B)) return 1;
         B.append(3);
         A.moveBack();
         A.insertAfter(3);
+        System.out.println("test40");
         if (!A.equals(B)) return 2;
       } else if (test == InsertBefore_equals) {
         A = new List();
@@ -381,10 +421,12 @@ class ModelListTest {
         A.prepend(2);
         B.moveFront();
         B.insertBefore(2);
+        System.out.println("test41");
         if (!A.equals(B)) return 1;
         B.prepend(3);
         A.moveFront();
         A.insertBefore(3);
+        System.out.println("test42");
         if (!A.equals(B)) return 2;
       } else if (test == DeleteFront_equals) {
         A = new List();
@@ -394,13 +436,16 @@ class ModelListTest {
         A.append(2);
         B.append(2);
         A.deleteFront();
+        System.out.println("test43");
         if (A.equals(B)) return 1;
         B.deleteFront();
+        System.out.println("test44");
         if (!A.equals(B)) return 2;
         A.prepend(3);
         B.prepend(3);
         A.deleteFront();
         B.deleteFront();
+        System.out.println("test45");
         if (!A.equals(B)) return 3;
       } else if (test == DeleteBack_equals) {
         A = new List();
@@ -410,13 +455,16 @@ class ModelListTest {
         A.prepend(2);
         B.prepend(2);
         A.deleteBack();
+        System.out.println("test46");
         if (A.equals(B)) return 1;
         B.deleteBack();
+        System.out.println("test47");
         if (!A.equals(B)) return 2;
         A.append(3);
         B.append(3);
         A.deleteBack();
         B.deleteBack();
+        System.out.println("test48");
         if (!A.equals(B)) return 3;
       } else if (test == Delete_equals) {
         A = new List();
@@ -427,9 +475,11 @@ class ModelListTest {
         B.prepend(2);
         A.moveBack();
         A.delete();
+        System.out.println("test49");
         if (A.equals(B)) return 1;
         B.moveBack();
         B.delete();
+        System.out.println("test50");
         if (!A.equals(B)) return 2;
         A.append(3);
         B.append(3);
@@ -437,10 +487,12 @@ class ModelListTest {
         A.delete();
         B.moveBack();
         B.delete();
+        System.out.println("test51");
         if (!A.equals(B)) return 3;
       } else if (test == Empty_clear) {
         A = new List();
         A.clear();
+        System.out.println("test52");
         if (A.index() != -1 || A.length() != 0) return 1;
       } else if (test == NonEmpty_clear) {
         A = new List();
@@ -448,6 +500,7 @@ class ModelListTest {
         A.prepend(2);
         A.moveFront();
         A.clear();
+        System.out.println("test53");
         if (A.index() != -1 || A.length() != 0) return 1;
       } else if (test == Set_get) {
         A = new List();
@@ -455,12 +508,14 @@ class ModelListTest {
         A.prepend(2);
         A.deleteFront();
         A.moveBack();
+        System.out.println("test54");
         if (A.get() != 1) return 1;
       } else if (test == Set_front) {
         A = new List();
         A.append(1);
         A.prepend(5);
         A.moveBack();
+        System.out.println("test55");
         if (A.front() != 5) return 1;
       } else if (test == NonEmpty_front) {
         A = new List();
@@ -471,12 +526,14 @@ class ModelListTest {
         A.insertBefore(43);
         A.deleteFront();
         A.delete();
+        System.out.println("test56");
         if (A.front() != 5) return 1;
       } else if (test == Set_back) {
         A = new List();
         A.prepend(1);
         A.append(5);
         A.moveFront();
+        System.out.println("test57");
         if (A.back() != 5) return 1;
       } else if (test == NonEmpty_back) {
         A = new List();
@@ -487,10 +544,12 @@ class ModelListTest {
         A.insertAfter(43);
         A.deleteBack();
         A.delete();
+        System.out.println("test58");
         if (A.back() != 5) return 1;
       } else if (test == Empty_copy) {
         A = new List();
         B = A.copy();
+        System.out.println("test59");
         if (!A.equals(B)) return 1;
       } else if (test == NonEmpty_copy) {
         A = new List();
@@ -498,9 +557,11 @@ class ModelListTest {
         A.prepend(1);
         A.moveFront();
         B = A.copy();
+        System.out.println("test60");
         if (A.index() != 0 || !A.equals(B)) return 1;
       } else if (test == Empty_toString) {
         A = new List();
+        System.out.println("test61");
         if (!A.toString().trim().equals("")) return 1;
       } else if (test == NonEmpty_toString) {
         A = new List();
@@ -509,6 +570,7 @@ class ModelListTest {
         A.deleteBack();
         A.append(7);
         A.append(1);
+        System.out.println("test62");
         if (!A.toString().trim().equals("5 7 1")) return 1;
       }
     } catch (Exception e) {
