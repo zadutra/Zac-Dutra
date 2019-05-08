@@ -60,17 +60,19 @@ class Matrix{
             if(P.cursor == null || Q.cursor == null){
                 break;
             }
-            if(P.getColumn() > Q.getColumn()){
+            Entry p = (Entry) P.get();
+            Entry q = (Entry) Q.get();
+            if(p.column > q.column){
                 Q.moveNext();
                 i--;
                 continue;
             }
-            else if(Q.getColumn() > P.getColumn()){
+            else if(q.column > p.column){
                 P.moveNext();
                 i--;
                 continue;
             }
-            sum += P.getData() * Q.getData();
+            sum += p.data * q.data;
             P.moveNext();
             Q.moveNext();
         }
@@ -90,7 +92,8 @@ class Matrix{
         for(int i = 1; i <= this.size; i++){
             this.arrList[i].moveFront();
             for(int j = 1; j <= this.arrList[i].length(); j++){
-                newM.changeEntry(i, this.arrList[i].getColumn(), this.arrList[i].getData());
+                Entry temp = (Entry) this.arrList[i].get();
+                newM.changeEntry(i, temp.column, temp.data);
                 this.arrList[i].moveNext();
             }
         }
@@ -164,9 +167,9 @@ class Matrix{
             for(int i = 1; i <= this.size; i++){
                 this.arrList[i].moveFront();
                 for(int j = 0; j < this.arrList[i].length(); j++){
-                    
-                    double temp = x * this.arrList[i].getData();
-                    newM.changeEntry(i, this.arrList[i].getColumn(), temp);
+                    Entry T = (Entry) this.arrList[i].get();
+                    double temp = x * T.data;
+                    newM.changeEntry(i, T.column, temp);
                     this.arrList[i].moveNext();
                 }
                 this.arrList[i].moveFront();
@@ -199,7 +202,8 @@ class Matrix{
             for(int j = 0; j <= length; j++){
                 if(this.arrList[i].cursor == null){
                     if(M.arrList[i].cursor != null){ // if reached the end of this.List and M.List has not reached the end
-                        newM.changeEntry(i, M.arrList[i].getColumn(), M.arrList[i].getData());
+                        Entry temp = (Entry) M.arrList[i].get();
+                        newM.changeEntry(i, temp.column, temp.data);
                         M.arrList[i].moveNext();
                         continue;
                     }
@@ -210,7 +214,8 @@ class Matrix{
                 //opposite of previous statement
                 else if(M.arrList[i].cursor == null){
                     if(this.arrList[i].cursor != null){
-                        newM.changeEntry(i, this.arrList[i].getColumn(), this.arrList[i].getData());
+                        Entry temp = (Entry) this.arrList[i].get();
+                        newM.changeEntry(i, temp.column, temp.data);
                         this.arrList[i].moveNext();
                         continue;
                     }
@@ -218,22 +223,24 @@ class Matrix{
                         break;
                     }
                 }
+                Entry this_ent = (Entry) this.arrList[i].get();
+                Entry m_ent = (Entry) M.arrList[i].get();
                 //if there was a zero in this this.List, insert data from M.list
-                else if(this.arrList[i].getColumn() > M.arrList[i].getColumn()){
-                    newM.changeEntry(i, M.arrList[i].getColumn(), M.arrList[i].getData());
+                if(this_ent.column > m_ent.column){
+                    newM.changeEntry(i, m_ent.column, m_ent.data);
                     M.arrList[i].moveNext();
                     continue;
                 }
                 //opposite of previous
-                else if(this.arrList[i].getColumn() < M.arrList[i].getColumn()){
-                    newM.changeEntry(i, this.arrList[i].getColumn(), this.arrList[i].getData());
+                else if(this_ent.column < m_ent.column){
+                    newM.changeEntry(i, this_ent.column, this_ent.data);
                     this.arrList[i].moveNext();
                     continue;
                 }
                 //none of previous statements were true, add the two columns and insert
                 else{
-                    newVal = this.arrList[i].getData() + M.arrList[i].getData();
-                    newM.changeEntry(i, this.arrList[i].getColumn(), newVal);
+                    newVal = this_ent.data + m_ent.data;
+                    newM.changeEntry(i, this_ent.column, newVal);
                     this.arrList[i].moveNext();
                     M.arrList[i].moveNext();
                 }
@@ -264,11 +271,12 @@ class Matrix{
             this.arrList[i].moveFront();
             for(int j = 1; j <= this.arrList[i].length(); j++){
                 int count = 0;
-                while(this.arrList[i].getColumn() != j){
+                Entry temp = (Entry) this.arrList[i].get();
+                while(temp.column != j){
                     j++;
                     count++;
                 }
-                newM.changeEntry(j, i, this.arrList[i].getData());
+                newM.changeEntry(j, i, temp.data);
                 this.arrList[i].moveNext();
                 if( count > 0){
                     j = j - count;
@@ -286,8 +294,6 @@ class Matrix{
         }
         Matrix newM = new Matrix(this.size);
         Matrix temp = M.transpose();
-        int length;
-        double temp2 = 0;
         for(int k = 1; k <= this.size; k++){
             temp.arrList[k].moveFront();
         }
