@@ -215,14 +215,19 @@ class List{
         if(this.size == 0){
             return;
         }
-        if(size == 1){
-            this.back = null;
-            this.size--;
-            return;
-        }
         if(this.cursor == this.back){
             this.cursor = null;
             this.index = -1;
+        }
+        if(this.size == 1){
+            this.front = this.back = null;
+            this.size = 0;
+            return;
+        }
+        if(this.size == 2){
+            this.back = this.front;
+            this.size--;
+            return;
         }
         Node deltemp = this.front;
         while(deltemp.next!=this.back){
