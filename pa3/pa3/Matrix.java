@@ -1,3 +1,9 @@
+/*
+    Zachary Dutra
+    zdutra
+    1581789
+    pa3
+*/
 class Entry{
     int column;
     double data;
@@ -56,22 +62,22 @@ class Matrix{
         P.moveFront();
         Q.moveFront();
         for(int i = 0; i < P.length(); i++){
-            Entry p_ent = (Entry) P.get();
-            Entry q_ent = (Entry) Q.get();
             if(P.cursor == null || Q.cursor == null){
                 break;
             }
-            if(p_ent.column > q_ent.column){
+            Entry p = (Entry) P.get();
+            Entry q = (Entry) Q.get();
+            if(p.column > q.column){
                 Q.moveNext();
                 i--;
                 continue;
             }
-            else if(q_ent.column > p_ent.column){
+            else if(q.column > p.column){
                 P.moveNext();
                 i--;
                 continue;
             }
-            sum += p_ent.data * q_ent.data;
+            sum += p.data * q.data;
             P.moveNext();
             Q.moveNext();
         }
@@ -91,7 +97,7 @@ class Matrix{
         for(int i = 1; i <= this.size; i++){
             this.arrList[i].moveFront();
             for(int j = 1; j <= this.arrList[i].length(); j++){
-                Entry temp = (Entry)this.arrList[i].get();
+                Entry temp = (Entry) this.arrList[i].get();
                 newM.changeEntry(i, temp.column, temp.data);
                 this.arrList[i].moveNext();
             }
@@ -108,29 +114,45 @@ class Matrix{
             Entry temp = new Entry(j, x);
             arrList[i].prepend(temp);
             arrList[i].moveFront();
-            NNZ++;
+            this.NNZ++;
+            return;
+        }
+        else if(arrList[i].length() == 0 && x == 0){//if trying to insert zero to already empty List
             return;
         }
         else{
         arrList[i].moveFront();
+        Entry front_check = (Entry) arrList[i].get();
+        if(j < front_check.column){ //if the column of item being insrted is less than thr front item
+            if(x == 0){
+                return;
+            }
+            Entry temp = new Entry(j,x);
+            arrList[i].prepend(temp);
+            this.NNZ++;
+            return;
+        }
+        arrList[i].moveBack();
+        Entry back_check = (Entry) arrList[i].get();
+        if(j > back_check.column){ // if column of item being inserted is greater than back item
+            if(x == 0){
+                return;
+            }
+            Entry temp = new Entry(j,x);
+            arrList[i].append(temp);
+            this.NNZ++;
+            return;
+        }
+        arrList[i].moveFront();
         for(int k = 1; k <= this.size; k++){
-            if(this.arrList[i].get() == null && x != 0){
-                Entry insert = new Entry(j, x);
-                arrList[i].append(insert);
-                NNZ++;
-                return;
-            }
-            else if(this.arrList[i].get() == null && x == 0){
-                return;
-            }
-            Entry change = (Entry) this.arrList[i].get();
-            if(change.column == j){ //current entry exists, change data value
-                if(x == 0 && change.data != 0){//deletes current entry to make it zero
+            Entry temp3 = (Entry) arrList[i].get();
+            if(temp3.column == j){ //current entry exists, change data value
+                if(x == 0){//deletes current entry to make it zero
                     arrList[i].delete();
                     this.NNZ--;
                     return;
                 }
-                else if( x != 0 && change.data != 0){ //change current NNZ data to new data
+                else{ //change current NNZ data to new data
                     Entry temp = new Entry(j ,x);
                     arrList[i].insertBefore(temp);
                     arrList[i].movePrev();
@@ -138,7 +160,8 @@ class Matrix{
                     return;
                 }
             }
-            if(j > change.column){ //if entered this loop, that means the value at that column is 0
+            if(j < temp3.column){ //if entered this loop, that means the value at that column is 0
+                System.out.println("Enters zero loop");
                 if(x == 0){ //if trying to change to zero, do nothing
                     return;
                 }
@@ -149,14 +172,14 @@ class Matrix{
                         Entry temp2 = (Entry) arrList[i].get();
                         if( j < temp2.column){
                             arrList[i].insertBefore(temp);
-                            NNZ++;
+                            this.NNZ++;
                             return;
                         }
                         arrList[i].moveNext();
                     }
-                    // did not meet condidions of for loop, append newest addition
+                    // did not meet condidions of for-loop, append newest addition
                     arrList[i].append(temp);
-                    NNZ++;
+                    this.NNZ++;
                     return;
                 }
             }
@@ -231,23 +254,23 @@ class Matrix{
                         break;
                     }
                 }
-                //if there was a zero in this this.List, insert data from M.list
                 Entry this_ent = (Entry) this.arrList[i].get();
-                Entry M_ent = (Entry) M.arrList[i].get();
-                if(this_ent.column > M_ent.column){
-                    newM.changeEntry(i, M_ent.column, M_ent.data);
+                Entry m_ent = (Entry) M.arrList[i].get();
+                //if there was a zero in this this.List, insert data from M.list
+                if(this_ent.column > m_ent.column){
+                    newM.changeEntry(i, m_ent.column, m_ent.data);
                     M.arrList[i].moveNext();
                     continue;
                 }
                 //opposite of previous
-                else if(this_ent.column < M_ent.column){
+                else if(this_ent.column < m_ent.column){
                     newM.changeEntry(i, this_ent.column, this_ent.data);
                     this.arrList[i].moveNext();
                     continue;
                 }
                 //none of previous statements were true, add the two columns and insert
                 else{
-                    newVal = this_ent.data + M_ent.data;
+                    newVal = this_ent.data + m_ent.data;
                     newM.changeEntry(i, this_ent.column, newVal);
                     this.arrList[i].moveNext();
                     M.arrList[i].moveNext();
@@ -302,8 +325,6 @@ class Matrix{
         }
         Matrix newM = new Matrix(this.size);
         Matrix temp = M.transpose();
-        int length;
-        double temp2 = 0;
         for(int k = 1; k <= this.size; k++){
             temp.arrList[k].moveFront();
         }
@@ -323,8 +344,7 @@ class Matrix{
             if(arrList[i].length() == 0){
                 continue;
             }
-            Entry temp = (Entry) this.arrList[i].get();
-            output += i + ":" + temp.toString() + "\n";
+            output += i + ":" + arrList[i].toString() + "\n";
         }
         return output;
     }

@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ListTest",
+            "request": "launch",
+            "mainClass": "pa3.ListTest",
+            "projectName": "pa3_68a7c62"
+        }
+    ]
+}

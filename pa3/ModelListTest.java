@@ -472,6 +472,8 @@ class ModelListTest {
         B.moveFront();
         B.insertAfter(obj2);
         B.deleteFront();
+        System.out.println(A);
+        System.out.println(B);
         if (!A.equals(B)) return 5;
       } else if (test == DeleteBack_equals) {
         A = new List();

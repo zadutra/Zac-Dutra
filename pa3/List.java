@@ -59,7 +59,7 @@ class List{
                     return false;
             }
             for(int i = 0; i < size; i++){
-                if(temp.x !=temp2.x){
+                if(temp.x != temp2.x){
                     return false;
                 }
                 temp = temp.next;

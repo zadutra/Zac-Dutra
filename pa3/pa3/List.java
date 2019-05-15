@@ -51,19 +51,15 @@ class List{
     Object back(){
             return back.x;
         }           // Returns back element. Pre: length()>0
+    
     boolean equals(List L){
             Node temp = this.front;
             Node temp2 = L.front;
-            if(this.size != L.size){
+            if(this.size!=L.size){
                     return false;
             }
-            for(int i = 0; i < this.size; i++){
-                if(temp.x == null || temp2.x == null){
-                    return false;
-                }
-                System.out.println(temp.x);
-                System.out.println(temp2.x);
-                if(temp.x.equals(temp2.x) == false){
+            for(int i = 0; i < size; i++){
+                if(temp.x !=temp2.x){
                     return false;
                 }
                 temp = temp.next;
@@ -140,7 +136,7 @@ class List{
                 Node temp = new Node(x);
                 this.front = this.back = temp;
                 this.size++;
-                if(this.cursor != null){
+                if(this.index != -1){
                     this.index++;
                 }
                 return;
@@ -150,7 +146,7 @@ class List{
                 temp.next = this.front;
                 this.front = temp;
                 this.size++;
-                if(this.cursor != null){
+                if(this.index != -1){
                     this.index++;
                 }
                 return;
@@ -169,9 +165,6 @@ class List{
                 this.back.next = temp;
                 this.back = temp;
                 this.size++;
-                if(this.index != -1){
-                    this.index++;
-                }
                 return;
             }
 
@@ -194,7 +187,9 @@ class List{
             temp2.next = temp;
             temp.next = this.cursor;
             this.size++;
-            this.index++;
+            if(this.index != -1){
+                this.index++;
+            }
             return;
         }
     }               // Insert new element before cursor.
@@ -203,8 +198,13 @@ class List{
         if(this.index < 0 || this.size == 0){
             return;
         }
-        else if(this.cursor == this.back){
+        else if(this.index == this.size-1){
             append(x);
+            return;
+        }
+        if(this.size == 1){
+            Node temp = new Node(x);
+            temp = this.back;
             this.size++;
             return;
         }
@@ -221,50 +221,34 @@ class List{
         if(size == 0){
             return;
         }
-        if(size == 2){
-            if(this.cursor == this.front){
-                this.index = -1;
-                this.cursor = null;
-            }
-            this.front = this.back;
-            this.size--;
-            return;
-        }
-        if(this.cursor == this.front){
-            this.index = -1;
-            this.cursor = null;
-        }
         this.front = this.front.next;
         this.size--;
+        if(this.index != -1){
+            this.index--;
+        }
         return;
     }               // Deletes the front element. Pre: length()>0
     void deleteBack(){
-        if(size == 0){
+        if(this.size == 0){
             return;
         }
-        else if(size == 1){
-            if(this.cursor == this.back){
-                this.index = -1;
-                this.cursor = null;
-            }
-            this.back = null;
-            this.size--;
+        if(this.cursor == this.back){
+            this.cursor = null;
+            this.index = -1;
         }
-        else if(size == 2){
-            if(this.cursor == this.back){
-                this.index = -1;
-                this.cursor = null;
-            }
+        if(this.size == 1){
+            this.front = this.back = null;
+            this.size = 0;
+            return;
+        }
+        if(this.size == 2){
             this.back = this.front;
             this.size--;
+            return;
         }
         Node deltemp = this.front;
         while(deltemp.next!=this.back){
             deltemp = deltemp.next;
-        }
-        if(this.cursor == this.back){
-            this.index = -1;
-            this.cursor = null;
         }
         deltemp.next = null;
         this.back = deltemp;
@@ -317,7 +301,6 @@ class List{
 
     public String toString(){
         Node temp = this.front;
-        String[] output_A = new String[this.size];
         String output_S = "";
         for(int i = 0; i < this.size; i++){
             output_S += temp.x;
