@@ -212,6 +212,7 @@ void BFS(Graph G, int s){
       }
       moveFront(Queue);
    }
+   free(Queue);
 };
 /*** Other operations ***/
 void printGraph(FILE* out, Graph G){
