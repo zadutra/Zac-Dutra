@@ -186,6 +186,7 @@ void addArc(Graph G, int u, int v){
 };
 void BFS(Graph G, int s){
    List Queue = malloc(sizeof(int)*(G->order+1));
+   Queue = newList();
    G->source = s;
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
