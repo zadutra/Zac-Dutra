@@ -2,7 +2,8 @@
 #include<stdlib.h>
 #include "List.h"
 #include "Graph.h"
-
+#define NIL -1
+#define INF -2
 typedef struct NodeObj{
    int data;
    struct NodeObj* next;
@@ -80,7 +81,7 @@ void getPath(List L, Graph G, int u){
       append(L, u);
       return;
    }
-   else if(getParent(G, u) == -1){
+   else if(getParent(G, u) == NIL){
       printf("value not in graph\n");
       exit(1);
    }
@@ -110,7 +111,7 @@ void addEdge(Graph G, int u, int v){
       ++G->size;
    }
    //if new edge is bigger than current largest, append
-   else if((int)G->arrList[u]->back < v){
+   else if(back(G->arrList[u]) < v){
       append(G->arrList[u], v);
       moveFront(G->arrList[u]);
       ++G->size;
@@ -119,7 +120,7 @@ void addEdge(Graph G, int u, int v){
    else{
       moveFront(G->arrList[u]);
       for(int i = 1; i <= G->arrList[u]->length; i++){
-         if(v > (int)G->arrList[u]->cursor){
+         if(v > get(G->arrList[u])){
             insertBefore(G->arrList[u], v);
             moveFront(G->arrList[u]);
             ++G->size;
@@ -135,14 +136,14 @@ void addEdge(Graph G, int u, int v){
       moveFront(G->arrList[v]);
    }
    //if u is bigger than back element, append
-   else if((int)G->arrList[v]->back < u){
+   else if(back(G->arrList[v]) < u){
       append(G->arrList[v], u);
       moveFront(G->arrList[v]);
       }
    //go through list and when v > cursor, insertBefore
    else{
       for(int i = 0; i < G->arrList[v]->length; i++){
-         if(u > (int)G->arrList[v]->cursor){
+         if(u > get(G->arrList[v])){
             insertBefore(G->arrList[v], u);
             moveFront(G->arrList[v]);
             break;
@@ -165,7 +166,7 @@ void addArc(Graph G, int u, int v){
       ++G->size;
    }
    //if new edge is bigger than current largest, append
-   else if((int)G->arrList[u]->back < v){
+   else if(back(G->arrList[u]) < v){
       append(G->arrList[u], v);
       moveFront(G->arrList[u]);
       ++G->size;
@@ -173,7 +174,7 @@ void addArc(Graph G, int u, int v){
    //go through list and insertbefore
    else{
       for(int i = 0; i < G->arrList[u]->length; i++){
-         if(v > (int)G->arrList[u]->cursor){
+         if(v > get(G->arrList[u])){
             insertBefore(G->arrList[u], v);
             moveFront(G->arrList[u]);
             ++G->size;
@@ -188,12 +189,11 @@ void BFS(Graph G, int s){
    G->source = s;
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
-      G->dist[x] = -1;
-      G->parent[x] = -1;
+      G->dist[x] = INF;
+      G->parent[x] = NIL;
    }
    G->color[s] = 'g';
    G->dist[s] = 0;
-   G->parent[s] = -2;
    append(Queue, s);
    moveFront(Queue);
    while(!isEmpty(Queue)){
