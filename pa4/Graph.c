@@ -48,11 +48,10 @@ Graph newGraph(int n){
    return g;
 };
 void freeGraph(Graph* pG){
-   Graph T = *pG;
-   free(T->arrList);
-   free(T->parent);
-   free(T->color);
-   free(T->dist);
+   free((*pG)->arrList);
+   free((*pG)->parent);
+   free((*pG)->color);
+   free((*pG)->dist);
    free(*pG);
    return;
 };
