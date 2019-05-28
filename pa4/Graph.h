@@ -1,3 +1,9 @@
+
+#ifndef _Graph_H_INCLUDE
+#define _Graph_H_INCLUDE
+#include "List.h"
+
+typedef struct GraphObj* Graph;
 /*** Constructors-Destructors ***/
 Graph newGraph(int n);
 void freeGraph(Graph* pG);
@@ -15,3 +21,5 @@ void addArc(Graph G, int u, int v);
 void BFS(Graph G, int s);
 /*** Other operations ***/
 void printGraph(FILE* out, Graph G);
+
+#endif

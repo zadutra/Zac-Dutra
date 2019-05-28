@@ -24,6 +24,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"Graph.h"
+#include"List.h"
 
 int main(int argc, char* argv[]){
    int i, s, max, min, d, n=35;
@@ -34,6 +35,7 @@ int main(int argc, char* argv[]){
 
    // Build graph G 
    G = newGraph(n);
+   addEdge(G,1,2);
    for(i=1; i<n; i++){
       if( i%7!=0 ) addEdge(G, i, i+1);
       if( i<=28  ) addEdge(G, i, i+7);
