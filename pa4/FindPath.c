@@ -61,6 +61,7 @@ int main(int argc, char * argv[]){
       printList(out, GList);
       fprintf(out, "\n");
    }
+   freeGraph(&(G));
    /* close files */
    fclose(in);
    fclose(out);
