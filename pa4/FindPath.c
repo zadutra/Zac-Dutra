@@ -44,7 +44,7 @@ int main(int argc, char * argv[]){
       addEdge(G,V1,V2);
       }
    //print out the graph
-    fprintf(out, "\n", G);
+    printGraph(out, G);
    
    //now go through file and get pairs to search paths for
    List GList = newList();
