@@ -13,24 +13,34 @@
 int main(int argc, char * argv[]){
 int temp = 100;
 Graph A = newGraph(temp);
-//List L = newList();
-//List C = newList();
- for (uint8_t i = 1; i <= 100; i++)
-          if (getDist(A, i) != INF) return 1;
-        addArc(A, 64, 4);
-        addArc(A, 64, 3);
-        addArc(A, 42, 2);
-        addArc(A, 2, 64);
-        addArc(A, 4, 2);
-        addArc(A, 3, 42);
-        BFS(A, 64);
-        if (getDist(A, 64) != 0) return 2;
-        if (getDist(A, 2) != 2) return 3;
-        BFS(A, 4);
-        if (getDist(A, 42) != 4) return 4;
-        if (getDist(A, 43) != INF) return 5;
+List L = newList();
+List C = newList();
+  //UG getpath test 4
+  addEdge(A, 64, 4);
+        addEdge(A, 64, 3);
+        addEdge(A, 42, 2);
+        addEdge(A, 2, 64);
+        addEdge(A, 4, 2);
+        addEdge(A, 3, 42);
+        BFS(A, 3);
+        getPath(L, A, 64);
+        append(C, 3);
+        append(C, 64);
+        if (!equals(L, C)) return 1;
+        moveFront(L);
+        BFS(A, 2);
+        getPath(L, A, 2);
+        append(C, 2);
+        if (!equals(L, C)) return 2;
+        getPath(L, A, 99);
+        if (equals(L, C)) return 3;
+        clear(L);
+        clear(C);
+        append(C, NIL);
         BFS(A, 99);
-        if (getDist(A, 64) != INF){
-          printf("6");
+        getPath(L, A, 2);
+        if (!equals(C, L)){
+          printf("4");
         };
+        return 0;
 }

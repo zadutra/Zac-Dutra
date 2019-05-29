@@ -85,6 +85,7 @@ void getPath(List L, Graph G, int u){
    else if(getParent(G, u) == NIL){
       printf("value not in graph\n");
       clear(L);
+      append(L, NIL);
       return;
    }
    else{
@@ -107,6 +108,7 @@ void addEdge(Graph G, int u, int v){
    }
    addArc(G, u, v);
    addArc(G, v, u);
+   G->size--;
 };
 //adds a directional edge to u, not to v
 void addArc(Graph G, int u, int v){
@@ -119,13 +121,13 @@ void addArc(Graph G, int u, int v){
    if(length(G->arrList[u]) == 0){
       prepend(G->arrList[u], v);
       moveFront(G->arrList[u]);
-      ++G->size;
+      G->size++;
    }
    //if new edge is bigger than current largest, append
    else if(back(G->arrList[u]) < v){
       append(G->arrList[u], v);
       moveFront(G->arrList[u]);
-      ++G->size;
+      G->size++;
    }
    //go through list and insertbefore
    else{
@@ -133,7 +135,7 @@ void addArc(Graph G, int u, int v){
          if(v < get(G->arrList[u])){
             insertBefore(G->arrList[u], v);
             moveFront(G->arrList[u]);
-            ++G->size;
+            G->size++;
             break;
          }
          moveNext(G->arrList[u]);
