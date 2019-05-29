@@ -146,6 +146,8 @@ void BFS(Graph G, int s){
    G->source = s;
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
+      G->dist[x] = INF;
+      G->parent[x] = NIL;
    }
    G->color[s] = 'g';
    G->dist[s] = 0;
