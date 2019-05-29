@@ -37,13 +37,19 @@ Graph newGraph(int n){
    Graph g = malloc(sizeof(GraphObj));
    g->order = n;
    g->size = 0;
-   g->source = -10;
+   g->source = NIL;
    g->arrList = malloc(sizeof(ListObj)*(n+1));
    g->parent = malloc(sizeof(int)*(n+1));
    g->dist = malloc(sizeof(int)*(n+1));
    g->color = malloc(sizeof(char)*(n+1));
    for(int i = 1; i <= n+1; i++){
       g->arrList[i] = newList();
+   }
+   for(int i = 1; i <= n+1; i++){
+      g->dist[i] = INF;
+   }
+   for(int i = 1; i <= n+1; i++){
+      g->parent[i] = NIL;
    }
    return g;
 };
@@ -72,10 +78,6 @@ int getDist(Graph G, int u){
    return (int)(G->dist[u]);
 };
 void getPath(List L, Graph G, int u){
-   if(getSource(G) == -10){
-      printf("Calling getpath() on undefined source\n");
-      exit(1);
-   }
    if(u == getSource(G)){
       append(L, u);
       return;
