@@ -84,7 +84,8 @@ void getPath(List L, Graph G, int u){
    }
    else if(getParent(G, u) == NIL){
       printf("value not in graph\n");
-      exit(1);
+      clear(L);
+      return;
    }
    else{
       int temp = getParent(G, u);
@@ -145,8 +146,6 @@ void BFS(Graph G, int s){
    G->source = s;
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
-      G->dist[x] = INF;
-      G->parent[x] = NIL;
    }
    G->color[s] = 'g';
    G->dist[s] = 0;
