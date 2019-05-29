@@ -64,6 +64,11 @@ int main(int argc, char * argv[]){
       }
       BFS(G, V1);
       getPath(GList, G, V2);
+      if(getDist(G,V2) == INF){
+         fprintf(out, "The distance from %d to %d is infinity\n", V1, V2);
+         fprintf(out, "No %d-%d path exists", V1, V2);
+         continue;
+      }
       fprintf(out, "The distance from %d to %d is %d\n", V1, V2, getDist(G,V2));
       fprintf(out, "A shortest %d-%d path is: ", V1, V2);
       printList(out, GList);
