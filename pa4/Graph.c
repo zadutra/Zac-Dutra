@@ -72,7 +72,7 @@ int getDist(Graph G, int u){
    return (int)(G->dist[u]);
 };
 void getPath(List L, Graph G, int u){
-   if((int)G->source == -10){
+   if(getSource(G) == -10){
       printf("Calling getpath() on undefined source\n");
       exit(1);
    }
@@ -87,7 +87,7 @@ void getPath(List L, Graph G, int u){
    else{
       int temp = getParent(G, u);
       getPath(L, G, temp);
-      append(L, temp);
+      append(L, u);
    }
 };
 /*** Manipulation procedures ***/
@@ -98,6 +98,15 @@ void makeNull(Graph G){
    return;
 };
 void addEdge(Graph G, int u, int v){
+   if(u > G->order || v > G->order || u < 1 || v < 1){
+      printf("out of graph bounds");
+      return;
+   }
+   addArc(G, u, v);
+   addArc(G, v, u);
+};
+//adds a directional edge to u, not to v
+void addArc(Graph G, int u, int v){
    if(u > G->order || v > G->order || u < 1 || v < 1){
       printf("out of graph bounds");
       return;
@@ -117,63 +126,8 @@ void addEdge(Graph G, int u, int v){
    }
    //go through list and insertbefore
    else{
-      moveFront(G->arrList[u]);
-      for(int i = 1; i <= G->arrList[u]->length; i++){
-         if(v > get(G->arrList[u])){
-            insertBefore(G->arrList[u], v);
-            moveFront(G->arrList[u]);
-            ++G->size;
-            break;
-         }
-         moveNext(G->arrList[u]);
-      }
-   }
-   //add u to v List
-   //if list empty prepend
-   if(G->arrList[v]->length == 0){
-      prepend(G->arrList[v], u);
-      moveFront(G->arrList[v]);
-   }
-   //if u is bigger than back element, append
-   else if(back(G->arrList[v]) < u){
-      append(G->arrList[v], u);
-      moveFront(G->arrList[v]);
-      }
-   //go through list and when v > cursor, insertBefore
-   else{
-      for(int i = 0; i < G->arrList[v]->length; i++){
-         if(u > get(G->arrList[v])){
-            insertBefore(G->arrList[v], u);
-            moveFront(G->arrList[v]);
-            break;
-         }
-         moveNext(G->arrList[v]);
-      }
-   }
-};
-//adds a directional edge to u, not to v
-void addArc(Graph G, int u, int v){
-   if(u > G->order || v > G->order || u < 1 || v < 1){
-      printf("out of graph bounds");
-      return;
-   }
-   //adding v to u
-   //if list empty prepend
-   if(G->arrList[u]->length == 0){
-      prepend(G->arrList[u], v);
-      moveFront(G->arrList[u]);
-      ++G->size;
-   }
-   //if new edge is bigger than current largest, append
-   else if(back(G->arrList[u]) < v){
-      append(G->arrList[u], v);
-      moveFront(G->arrList[u]);
-      ++G->size;
-   }
-   //go through list and insertbefore
-   else{
-      for(int i = 0; i < G->arrList[u]->length; i++){
-         if(v > get(G->arrList[u])){
+      for(int i = 0; i < length(G->arrList[u]); i++){
+         if(v < get(G->arrList[u])){
             insertBefore(G->arrList[u], v);
             moveFront(G->arrList[u]);
             ++G->size;
@@ -198,9 +152,10 @@ void BFS(Graph G, int s){
    moveFront(Queue);
    while(!isEmpty(Queue)){
       int x = get(Queue);
-      int y = front(G->arrList[x]);
+      moveFront(G->arrList[x]);
       deleteFront(Queue);
-      while ((int)Queue->index != -1){
+      for(int i = 1; i <= length(G->arrList[x]); i++){
+         int y = get(G->arrList[x]);
          if(G->color[y] == 'w'){
             G->color[y] = 'g';
             G->dist[y] = G->dist[x] + 1;
@@ -208,6 +163,7 @@ void BFS(Graph G, int s){
             append(Queue,y);
          }
          G->color[x] = 'b';
+         moveNext(G->arrList[x]);
       }
       moveFront(Queue);
    }
