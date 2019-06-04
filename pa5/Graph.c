@@ -30,11 +30,12 @@ typedef struct ListObj{
 
 typedef struct GraphObj{
     int size;
-    int source;
     int order;
+    int time;
     List* arrList;
     int* parent;
-    int* dist;
+    int* discover;
+    int* finish;
     char* color;
 } GraphObj;
 
@@ -44,16 +45,20 @@ Graph newGraph(int n){
    Graph g = malloc(sizeof(GraphObj));
    g->order = n;
    g->size = 0;
-   g->source = NIL;
+   g->time = 0;
    g->arrList = malloc(sizeof(ListObj)*(n+1));
    g->parent = malloc(sizeof(int)*(n+1));
-   g->dist = malloc(sizeof(int)*(n+1));
+   g->discover = malloc(sizeof(int)*(n+1));
+   g->finish = malloc(sizeof(int)*(n+1));
    g->color = malloc(sizeof(char)*(n+1));
    for(int i = 1; i <= n+1; i++){
       g->arrList[i] = newList();
    }
    for(int i = 1; i <= n+1; i++){
-      g->dist[i] = INF;
+      g->discover[i] = INF;
+   }
+   for(int i = 1; i <= n+1; i++){
+      g->finish[i] = INF;
    }
    for(int i = 1; i <= n+1; i++){
       g->parent[i] = NIL;
@@ -63,8 +68,8 @@ Graph newGraph(int n){
 void freeGraph(Graph* pG){
    free((*pG)->arrList);
    free((*pG)->parent);
-   free((*pG)->color);
-   free((*pG)->dist);
+   free((*pG)->finish);
+   free((*pG)->discover);
    free(*pG);
    return;
 };
@@ -75,31 +80,14 @@ int getOrder(Graph G){
 int getSize(Graph G){
    return (int)G->size;
 };
-int getSource(Graph G){
-   return (int)G->source;
-};
 int getParent(Graph G, int u){
    return (int)(G->parent[u]);
 };
-int getDist(Graph G, int u){
-   return (int)(G->dist[u]);
+int getDiscover(Graph G, int u){
+   return (int)(G->discover[u]);
 };
-void getPath(List L, Graph G, int u){
-   if(u == getSource(G)){
-      append(L, u);
-      return;
-   }
-   else if(getParent(G, u) == NIL){
-      printf("value not in graph\n");
-      clear(L);
-      append(L, NIL);
-      return;
-   }
-   else{
-      int temp = getParent(G, u);
-      getPath(L, G, temp);
-      append(L, u);
-   }
+int getFinish(Graph G, int u){
+   return (int)(G->finish[u]);
 };
 /*** Manipulation procedures ***/
 void makeNull(Graph G){
@@ -149,37 +137,66 @@ void addArc(Graph G, int u, int v){
       }
    }
 };
-void BFS(Graph G, int s){
-   List Queue = malloc(sizeof(int)*(G->order+1));
-   Queue = newList();
-   G->source = s;
+
+Graph transpose(Graph G){
+   Graph Tpose = newGraph(G->order);
+   for(int i = 1; i <= G->order; i++){
+      moveFront(G->arrList[i]);
+      while(get(G->arrList[i]) != NIL){
+         int x = get(G->arrList[i]);
+         append(Tpose->arrList[x], i);
+         moveNext(G->arrList[i]);
+      }
+   }
+   return Tpose;
+};
+void DFS(Graph G, List S){
+   if(length(S) != getOrder(G)){
+      printf("DFS initial condition");
+   }
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
-      G->dist[x] = INF;
-      G->parent[x] = NIL;
+      G->discover[x] = INF;
+      G->finish[x] = INF;
+      G->parent[x] = 0;
    }
-   G->color[s] = 'g';
-   G->dist[s] = 0;
-   append(Queue, s);
-   moveFront(Queue);
-   while(!isEmpty(Queue)){
-      int x = get(Queue);
-      moveFront(G->arrList[x]);
-      deleteFront(Queue);
-      for(int i = 1; i <= length(G->arrList[x]); i++){
-         int y = get(G->arrList[x]);
-         if(G->color[y] == 'w'){
-            G->color[y] = 'g';
-            G->dist[y] = G->dist[x] + 1;
-            G->parent[y] = x;
-            append(Queue,y);
-         }
-         G->color[x] = 'b';
-         moveNext(G->arrList[x]);
+   moveFront(S);
+   for(int i = 0; i < G->order; i++){
+      if(get(S) == -1){
+         printf("sleep");
       }
-      moveFront(Queue);
+      int s = get(S);
+      if(G->color[s] == 'w'){
+         printf("visit %d\n", s);
+         visit(G, S, s);
+      }
+      moveNext(S);
    }
-   free(Queue);
+   for(int i = 0; i < G->order; i++){
+      deleteBack(S);
+   }
+};
+void visit(Graph G, List S, int x){
+   ++G->time;
+   G->discover[x] = G->time;
+   if(G->color[x] == 'w' && length(G->arrList[x]) == 0){
+      G->color[x] = 'b';
+      G->finish[x] = ++G->time;
+      prepend(S, x);
+      return;
+   }
+   moveFront(G->arrList[x]);
+   for(int i = 0; i < length(G->arrList[x]); i++){
+      int y = get(G->arrList[x]);
+      if(G->color[y] == 'w'){
+         G->parent[y] = x;
+         visit(G, S, y);
+      }
+      moveNext(G->arrList[x]);
+   }
+   G->color[x] = 'b';
+   G->finish[x] = ++G->time;
+   prepend(S, x);
 };
 /*** Other operations ***/
 void printGraph(FILE* out, Graph G){
@@ -187,4 +204,17 @@ void printGraph(FILE* out, Graph G){
       fprintf(out, "%d: ", i);
       printList(out, G->arrList[i]);
    }
+};
+
+Graph copyGraph(Graph G){
+   Graph C = newGraph(G->order);
+   C->size = G->size;
+   for(int i = 1; i <= G->order; i++){
+      C->arrList[i] = G->arrList[i];
+      C->parent[i] = G->parent[i];
+      C->discover[i] = G->discover[i];
+      C->finish[i] = G->finish[i];
+      C->color[i] = G->color[i];
+   } 
+   return C;
 };

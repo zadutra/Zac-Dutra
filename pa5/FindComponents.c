@@ -53,35 +53,26 @@ int main(int argc, char * argv[]){
       if(V1 == 0 && V2 == 0){
           break;
       }
-      addEdge(G,V1,V2);
+      addArc(G,V1,V2);
    }
    //print out the graph
+    fprintf(out, "Adjacency list representation of G:\n");
     printGraph(out, G);
     fprintf(out, "\n");
+
+    //get transpose of G
+    Graph Tpose = transpose(G);
+    List GList = newList();
+    for(int i=1; i <= size; i++){
+        append(GList, i);
+    }
+
+    //run DFS on new graphs
+    DFS(G, GList);
+    DFS(Tpose, GList);
    
-   //now go through file and get pairs to search paths for
-   for(int j = 0; fgets(line, MAX_LEN, in) != NULL; j++){
-      List GList = newList();
-      token = strtok(line, " \n");
-      V1 = atoi(token);
-      token = strtok(NULL, " ");
-      V2 = atoi(token);
-      if(V1 == 0 && V2 == 0){
-          break;
-      }
-      BFS(G, V1);
-      getPath(GList, G, V2);
-      if(getDist(G,V2) == INF){
-         fprintf(out, "The distance from %d to %d is infinity\n", V1, V2);
-         fprintf(out, "No %d-%d path exists\n", V1, V2);
-         continue;
-      }
-      fprintf(out, "The distance from %d to %d is %d\n", V1, V2, getDist(G,V2));
-      fprintf(out, "A shortest %d-%d path is: ", V1, V2);
-      printList(out, GList);
-      fprintf(out, "\n");
-   }
-   freeGraph(&(G));
+   freeList(&GList);
+   freeGraph(&G);
    /* close files */
    fclose(in);
    fclose(out);
