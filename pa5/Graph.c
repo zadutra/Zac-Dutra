@@ -55,13 +55,9 @@ Graph newGraph(int n){
       g->arrList[i] = newList();
    }
    for(int i = 1; i <= n+1; i++){
-      g->discover[i] = UNDEF;
-   }
-   for(int i = 1; i <= n+1; i++){
-      g->finish[i] = UNDEF;
-   }
-   for(int i = 1; i <= n+1; i++){
       g->parent[i] = NIL;
+      g->discover[i] = UNDEF;
+      g->finish[i] = UNDEF;
    }
    return g;
 };
@@ -151,6 +147,7 @@ Graph transpose(Graph G){
    return Tpose;
 };
 void DFS(Graph G, List S){
+   
    if(length(S) != getOrder(G)){
       printf("DFS initial condition");
    }
@@ -162,14 +159,23 @@ void DFS(Graph G, List S){
    }
    moveFront(S);
    for(int i = 0; i < G->order; i++){
-      if(get(S) == -1){
-         printf("sleep");
-      }
+      int c = get(S);
+      printf("%d\n", c);
+      moveNext(S);
+   }
+   moveFront(S);
+   for(int i = 0; i < G->order; i++){
       int s = get(S);
       if(G->color[s] == 'w'){
-         printf("visit %d\n", s);
          visit(G, S, s);
       }
+      moveNext(S);
+   }
+   moveFront(S);
+   printf("After List\n");
+   for(int i = 0; i < G->order; i++){
+      int c = get(S);
+      printf("%d\n", c);
       moveNext(S);
    }
    for(int i = 0; i < G->order; i++){
@@ -179,12 +185,6 @@ void DFS(Graph G, List S){
 void visit(Graph G, List S, int x){
    ++G->time;
    G->discover[x] = G->time;
-   if(G->color[x] == 'w' && length(G->arrList[x]) == 0){
-      G->color[x] = 'b';
-      G->finish[x] = ++G->time;
-      prepend(S, x);
-      return;
-   }
    moveFront(G->arrList[x]);
    for(int i = 0; i < length(G->arrList[x]); i++){
       int y = get(G->arrList[x]);

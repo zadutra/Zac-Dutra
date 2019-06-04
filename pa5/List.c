@@ -402,7 +402,7 @@ void deleteBack(List L){
    }
    else{ 
       L->front = L->back = NULL; 
-       L->length--;
+      L->length--;
       freeNode(&N);
       return;
    }
