@@ -10,7 +10,7 @@
 #include "List.h"
 #include "Graph.h"
 #define NIL -1
-#define INF -2
+#define UNDEF -2
 typedef struct NodeObj{
    int data;
    struct NodeObj* next;
@@ -55,10 +55,10 @@ Graph newGraph(int n){
       g->arrList[i] = newList();
    }
    for(int i = 1; i <= n+1; i++){
-      g->discover[i] = INF;
+      g->discover[i] = UNDEF;
    }
    for(int i = 1; i <= n+1; i++){
-      g->finish[i] = INF;
+      g->finish[i] = UNDEF;
    }
    for(int i = 1; i <= n+1; i++){
       g->parent[i] = NIL;
@@ -156,8 +156,8 @@ void DFS(Graph G, List S){
    }
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
-      G->discover[x] = INF;
-      G->finish[x] = INF;
+      G->discover[x] = UNDEF;
+      G->finish[x] = UNDEF;
       G->parent[x] = 0;
    }
    moveFront(S);

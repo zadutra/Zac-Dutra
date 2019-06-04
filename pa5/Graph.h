@@ -9,7 +9,7 @@
 #define _Graph_H_INCLUDE
 #include "List.h"
 #define NIL -1
-#define INF -2
+#define UNDEF -2
 
 typedef struct GraphObj* Graph;
 /*** Constructors-Destructors ***/
