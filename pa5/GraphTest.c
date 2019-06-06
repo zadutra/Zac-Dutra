@@ -18,36 +18,34 @@
 #define NIL -1
 
 int main(int argc, char * argv[]){
-int temp = 100;
-Graph A = newGraph(temp);
+int temp = 10;
+Graph G = newGraph(temp);
 List L = newList();
-List C = newList();
-  //UG getpath test 4
-  addEdge(A, 64, 4);
-        addEdge(A, 64, 3);
-        addEdge(A, 42, 2);
-        addEdge(A, 2, 64);
-        addEdge(A, 4, 2);
-        addEdge(A, 3, 42);
-        BFS(A, 3);
-        getPath(L, A, 64);
-        append(C, 3);
-        append(C, 64);
-        if (!equals(L, C)) return 1;
-        moveFront(L);
-        BFS(A, 2);
-        getPath(L, A, 2);
-        append(C, 2);
-        if (!equals(L, C)) return 2;
-        getPath(L, A, 99);
-        if (equals(L, C)) return 3;
-        clear(L);
-        clear(C);
-        append(C, NIL);
-        BFS(A, 99);
-        getPath(L, A, 2);
-        if (!equals(C, L)){
-          printf("4");
-        };
-        return 0;
+//List C = newList();
+   addArc(G, 1,2);
+   addArc(G, 1,5);
+   addArc(G, 2,5);
+   addArc(G, 2,6);
+   addArc(G, 3,2);
+   addArc(G, 3,4);
+   addArc(G, 3,6);
+   addArc(G, 3,7);
+   addArc(G, 3,8);
+   addArc(G, 6,5);
+   addArc(G, 6,7);
+   addArc(G, 8,4);
+   addArc(G, 8,7);
+   addArc(G, 6, 4);
+   addArc(G, 5, 2);
+   addArc(G, 4, 1);
+   for(int i = 1; i <= 10; i++){
+     append(L, i);
+   }
+   DFS(G, L);
+   printf("Before Transpose List\n");
+   printList(stdout, L);
+   Graph TPose = transpose(G);
+   printf("After Transpose List\n");
+   printList(stdout, L);;
+
 }

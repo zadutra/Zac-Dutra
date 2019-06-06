@@ -53,8 +53,6 @@ Graph newGraph(int n){
    g->color = malloc(sizeof(char)*(n+1));
    for(int i = 1; i <= n+1; i++){
       g->arrList[i] = newList();
-   }
-   for(int i = 1; i <= n+1; i++){
       g->parent[i] = NIL;
       g->discover[i] = UNDEF;
       g->finish[i] = UNDEF;
@@ -138,16 +136,17 @@ Graph transpose(Graph G){
    Graph Tpose = newGraph(G->order);
    for(int i = 1; i <= G->order; i++){
       moveFront(G->arrList[i]);
-      while(get(G->arrList[i]) != NIL){
+      for(int j = 0; j < length(G->arrList[i]); j++){
          int x = get(G->arrList[i]);
-         append(Tpose->arrList[x], i);
+         addArc(Tpose, x, i);
          moveNext(G->arrList[i]);
       }
+      moveFront(G->arrList[i]);
    }
    return Tpose;
 };
 void DFS(Graph G, List S){
-   
+   List temp = newList();
    if(length(S) != getOrder(G)){
       printf("DFS initial condition");
    }
@@ -158,29 +157,26 @@ void DFS(Graph G, List S){
       G->parent[x] = 0;
    }
    moveFront(S);
-   for(int i = 0; i < G->order; i++){
+   for(int i = 0; index(S) != -1; i++){
       int c = get(S);
-      printf("%d\n", c);
       moveNext(S);
    }
    moveFront(S);
    for(int i = 0; i < G->order; i++){
       int s = get(S);
       if(G->color[s] == 'w'){
-         visit(G, S, s);
+         visit(G, temp, s);
       }
       moveNext(S);
    }
-   moveFront(S);
-   printf("After List\n");
+   clear(S);
+   moveFront(temp);
    for(int i = 0; i < G->order; i++){
-      int c = get(S);
-      printf("%d\n", c);
-      moveNext(S);
+      append(S, get(temp));
+      moveNext(temp);
    }
-   for(int i = 0; i < G->order; i++){
-      deleteBack(S);
-   }
+   clear(temp);
+   free(temp);
 };
 void visit(Graph G, List S, int x){
    ++G->time;
@@ -209,7 +205,7 @@ void printGraph(FILE* out, Graph G){
 Graph copyGraph(Graph G){
    Graph C = newGraph(G->order);
    C->size = G->size;
-   for(int i = 1; i <= G->order; i++){
+   for(int i = 1; i <= G->order ; i++){
       C->arrList[i] = G->arrList[i];
       C->parent[i] = G->parent[i];
       C->discover[i] = G->discover[i];

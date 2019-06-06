@@ -40,9 +40,14 @@ int main(int argc, char* argv[]){
    fprintf(stdout, "\n");
    printList(stdout, S);
    fprintf(stdout, "\n");
-
-   T = transpose(G);
+   printf("before TC\n");
+   printList(stdout, S);
    C = copyGraph(G);
+   printf("after C\n");
+   printList(stdout, S);
+   T = transpose(G);
+   fprintf(stdout, "\n");
+   printList(stdout, S);
    fprintf(stdout, "\n");
    printGraph(stdout, C);
    fprintf(stdout, "\n");

@@ -70,6 +70,8 @@ int main(int argc, char * argv[]){
     //run DFS on new graphs
     DFS(G, GList);
     DFS(Tpose, GList);
+
+    //find strongly connected components
    
    freeList(&GList);
    freeGraph(&G);
