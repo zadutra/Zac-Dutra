@@ -61,7 +61,8 @@ int main(int argc, char * argv[]){
     fprintf(out, "\n");
 
     //get transpose of G
-    Graph Tpose = transpose(G);
+    Graph Tpose = newGraph(size);
+    Tpose = transpose(G);
     List GList = newList();
     for(int i=1; i <= size; i++){
         append(GList, i);
@@ -72,9 +73,10 @@ int main(int argc, char * argv[]){
     DFS(Tpose, GList);
 
     //find strongly connected components
-   
+
    freeList(&GList);
    freeGraph(&G);
+   freeGraph(&Tpose);
    /* close files */
    fclose(in);
    fclose(out);

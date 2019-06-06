@@ -25,6 +25,9 @@ GraphClient : GraphClient.o $(BASE_OBJECTS)
 GraphTest: GraphTest.o $(BASE_OBJECTS)
 	$(LINK) GraphTest GraphTest.o $(BASE_OBJECTS)
 
+ModelGraphTest: ModelGraphTest.o $(BASE_OBJECTS)
+	$(LINK) ModelGraphTest ModelGraphTest.o $(BASE_OBJECTS)
+
 FindComponents.o : FindComponents.c $(HEADERS)
 	$(COMPILE) FindComponents.c
 
@@ -33,6 +36,9 @@ GraphClient.o : GraphClient.c $(HEADERS)
 
 GraphTest.o: GraphTest.c $(HEADERS)
 	$(COMPILE) GraphTest.c
+
+ModelGraphTest.o: ModelGraphTest.c $(HEADERS)
+	$(COMPILE) ModelGraphTest.c
 
 $(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
 	$(COMPILE) $(BASE_SOURCES)
