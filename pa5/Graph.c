@@ -51,7 +51,7 @@ Graph newGraph(int n){
    g->discover = malloc(sizeof(int)*(n+1));
    g->finish = malloc(sizeof(int)*(n+1));
    g->color = malloc(sizeof(char)*(n+1));
-   for(int i = 1; i <= n+1; i++){
+   for(int i = 0; i <= n+1; i++){
       g->arrList[i] = newList();
       g->parent[i] = NIL;
       g->discover[i] = UNDEF;
@@ -155,11 +155,6 @@ void DFS(Graph G, List S){
       G->discover[x] = UNDEF;
       G->finish[x] = UNDEF;
       G->parent[x] = 0;
-   }
-   moveFront(S);
-   for(int i = 0; index(S) != -1; i++){
-      int c = get(S);
-      moveNext(S);
    }
    moveFront(S);
    for(int i = 0; i < G->order; i++){
