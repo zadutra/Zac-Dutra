@@ -252,12 +252,12 @@ void abrupt_termination_handler(int signal) { // program killed externally
 
 int main (int argc, char **argv) {
   if (argc > 2 || (argc == 2 && strcmp(argv[1], "-v") != 0)) {
-    fprintf(stdout, "Usage: %s [-v]", (argc > 0 ? argv[0] : "./GraphTest"));
+    printf("Usage: %s [-v]", (argc > 0 ? argv[0] : "./GraphTest"));
     exit(1);
   }
 
   printf("\n"); // more spacing
-  if (argc == 2) fprintf(stdout, "\n"); // consistency in verbose mode
+  if (argc == 2) printf("\n"); // consistency in verbose mode
 
   testsPassed = 0;
   disable_exit_handler = 0;
@@ -274,20 +274,20 @@ int main (int argc, char **argv) {
       freeList(&L);
     }
     if (argc == 2) { // it's verbose mode
-      fprintf(stdout,"Test %s %s", testName(i),
+      printf("Test %s %s", testName(i),
           testStatus == 0 ? "PASSED" : "FAILED");
       if (testStatus == 255) {
-        fprintf(stdout, ": due to a %s\n", fail_type == 1 ? "segfault" : fail_type == 2 ?
+        printf(": due to a %s\n", fail_type == 1 ? "segfault" : fail_type == 2 ?
             "program exit" : "program interruption");
-        fprintf(stdout, "\nWARNING: Program will now stop running tests\n\n");
+        printf("\nWARNING: Program will now stop running tests\n\n");
         break;
 
       } else if (testStatus == 254) {
-        fprintf(stdout, ": undefined test\n");
+        printf(": undefined test\n");
       } else if (testStatus != 0) {
-        fprintf(stdout, ": test %d\n", testStatus);
+        printf(": test %d\n", testStatus);
       } else {
-        fprintf(stdout, "\n");
+        printf("\n");
       }
     }
     if (testStatus == 0) {
@@ -302,13 +302,13 @@ int main (int argc, char **argv) {
   if (argc == 2) {
     if (testStatus == 255) {
       totalScore = 10;
-      fprintf(stdout, "\nYou will recieve charity points due to a program crash\n");
+      printf("\nYou will recieve charity points due to a program crash\n");
     } else {
-      fprintf(stdout, "\nYou passed %d out of %d tests\n", testsPassed,
+      printf("\nYou passed %d out of %d tests\n", testsPassed,
           NUM_TESTS);
     }
   }
-  fprintf(stdout, "\nYou will receive %d out of %d possible points on the GraphTest\n\n",
+  printf("\nYou will receive %d out of %d possible points on the GraphTest\n\n",
       totalScore, MAXSCORE);
 
   return 0;

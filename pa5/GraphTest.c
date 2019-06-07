@@ -18,34 +18,30 @@
 #define NIL -1
 
 int main(int argc, char * argv[]){
-int temp = 10;
-Graph G = newGraph(temp);
+int temp = 100;
+Graph A = newGraph(temp);
 List L = newList();
-//List C = newList();
-   addArc(G, 1,2);
-   addArc(G, 1,5);
-   addArc(G, 2,5);
-   addArc(G, 2,6);
-   addArc(G, 3,2);
-   addArc(G, 3,4);
-   addArc(G, 3,6);
-   addArc(G, 3,7);
-   addArc(G, 3,8);
-   addArc(G, 6,5);
-   addArc(G, 6,7);
-   addArc(G, 8,4);
-   addArc(G, 8,7);
-   addArc(G, 6, 4);
-   addArc(G, 5, 2);
-   addArc(G, 4, 1);
-   for(int i = 1; i <= 10; i++){
-     append(L, i);
-   }
-   DFS(G, L);
-   printf("Before Transpose List\n");
-   printList(stdout, L);
-   Graph TPose = transpose(G);
-   printf("After Transpose List\n");
-   printList(stdout, L);;
-
+ for (uint8_t i = 1; i <= 100; i++){
+          if (getDiscover(A, i) != UNDEF) printf("1");
+ }
+        addEdge(A, 64, 4);
+        addEdge(A, 64, 3);
+        addEdge(A, 42, 2);
+        addEdge(A, 2, 64);
+        addEdge(A, 4, 2);
+        addEdge(A, 3, 42);
+        for (uint8_t i = 1; i <= 100; i++) {
+          prepend(L, i);
+        }
+        DFS(A, L);
+        if (getDiscover(A, 100) != 1)  printf("2");
+        if (getDiscover(A, 64) != 73)  printf("3");
+        if (getDiscover(A, 4) != 75)  printf("4");
+        DFS(A, L);
+        if (getDiscover(A, 4) != 121)  printf("5");
+        if (getDiscover(A, 63) != 117)  printf("6");
+        DFS(A, L);
+        if (getDiscover(A, 65) != 71) printf("7");
+        if (getDiscover(A, 1) != 199) printf("8");
+        return 0;
 }

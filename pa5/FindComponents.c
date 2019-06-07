@@ -19,6 +19,7 @@ int main(int argc, char * argv[]){
    int V1 = 0;
    int V2 = 0;
    int size = 0;
+   int count = 0;
    char* token;
    Graph G;
    // check command line for correct number of arguments
@@ -73,6 +74,15 @@ int main(int argc, char * argv[]){
     DFS(Tpose, GList);
 
     //find strongly connected components
+    moveFront(GList);
+   for(int i = 0; i < size; i++){
+      int x = get(GList);
+      if(getParent(G, x) == 0){
+         count++;
+      }
+      moveNext(GList);
+   }
+   fprintf(out, "G contains %d strongly connected components:\n", count);
 
    freeList(&GList);
    freeGraph(&G);

@@ -136,7 +136,7 @@ Graph transpose(Graph G){
    Graph Tpose = newGraph(G->order);
    for(int i = 1; i <= G->order; i++){
       moveFront(G->arrList[i]);
-      for(int j = 0; j < length(G->arrList[i]); j++){
+      for(int j = 0; j < G->arrList[i]->length; j++){
          int x = get(G->arrList[i]);
          addArc(Tpose, x, i);
          moveNext(G->arrList[i]);
@@ -145,16 +145,44 @@ Graph transpose(Graph G){
    }
    return Tpose;
 };
+void visit(Graph G, List S, int x){
+   if(length(G->arrList[x]) == 0){
+      G->discover[x] = ++G->time;
+      G->finish[x] = ++G->time;
+      G->color[x] = 'b';
+      prepend(S,x);
+      return;
+   }
+   G->discover[x] = ++G->time;
+   G->color[x] = 'g';
+   moveFront(G->arrList[x]);
+   for(int i = 0; i < G->arrList[x]->length; i++){
+      int y = get(G->arrList[x]);
+      if(G->color[y] == 'w'){
+         G->parent[y] = x;
+         G->color[y] = 'g';
+         visit(G, S, y);
+      }
+      if(i == G->arrList[x]->length - 1){
+         break;
+      }
+      moveNext(G->arrList[x]);
+   }
+   G->color[x] = 'b';
+   G->finish[x] = ++G->time;
+   prepend(S, x);
+};
 void DFS(Graph G, List S){
+   G->time = 0;
    List temp = newList();
    if(length(S) != getOrder(G)){
-      printf("DFS initial condition");
+      printf("DFS initial condition\n");
    }
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
       G->discover[x] = UNDEF;
       G->finish[x] = UNDEF;
-      G->parent[x] = 0;
+      G->parent[x] = NIL;
    }
    moveFront(S);
    for(int i = 0; i < G->order; i++){
@@ -162,32 +190,22 @@ void DFS(Graph G, List S){
       if(G->color[s] == 'w'){
          visit(G, temp, s);
       }
+      if(i == G->order - 1){
+         break;
+      }
       moveNext(S);
    }
    clear(S);
    moveFront(temp);
    for(int i = 0; i < G->order; i++){
       append(S, get(temp));
+      if(i == G->order- 1){
+         break;
+      }
       moveNext(temp);
    }
    clear(temp);
-   free(temp);
-};
-void visit(Graph G, List S, int x){
-   ++G->time;
-   G->discover[x] = G->time;
-   moveFront(G->arrList[x]);
-   for(int i = 0; i < length(G->arrList[x]); i++){
-      int y = get(G->arrList[x]);
-      if(G->color[y] == 'w'){
-         G->parent[y] = x;
-         visit(G, S, y);
-      }
-      moveNext(G->arrList[x]);
-   }
-   G->color[x] = 'b';
-   G->finish[x] = ++G->time;
-   prepend(S, x);
+   freeList(&temp);
 };
 /*** Other operations ***/
 void printGraph(FILE* out, Graph G){
