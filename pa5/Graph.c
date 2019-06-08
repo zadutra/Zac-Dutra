@@ -172,18 +172,21 @@ void visit(Graph G, List S, int x){
    G->finish[x] = ++G->time;
    prepend(S, x);
 };
+
 void DFS(Graph G, List S){
    G->time = 0;
    List temp = newList();
    if(length(S) != getOrder(G)){
       printf("DFS initial condition\n");
    }
+   printf("\n");
    for(int x = 1; x <= G->order; x++){
       G->color[x] = 'w';
       G->discover[x] = UNDEF;
       G->finish[x] = UNDEF;
       G->parent[x] = NIL;
    }
+   printf("\n");
    moveFront(S);
    for(int i = 0; i < G->order; i++){
       int s = get(S);

@@ -72,17 +72,79 @@ int main(int argc, char * argv[]){
     //run DFS on new graphs
     DFS(G, GList);
     DFS(Tpose, GList);
-
-    //find strongly connected components
     moveFront(GList);
-   for(int i = 0; i < size; i++){
-      int x = get(GList);
-      if(getParent(G, x) == 0){
-         count++;
-      }
-      moveNext(GList);
+    List SCC = newList();
+    for(int i = 1; i <= getOrder(G); i++){
+       int x = get(GList);
+       if(getParent(Tpose, x) == NIL){
+          count++;
+          prepend(SCC, x);
+       }
+       moveNext(GList);
    }
+   printList(stdout, GList);
+   printList(stdout, SCC);
+    //find strongly connected components
+    moveFront(SCC);
    fprintf(out, "G contains %d strongly connected components:\n", count);
+   for(int i = 1; i <= count; i++){
+      moveFront(GList);
+      int x = get(GList);
+      if(i == count){
+         fprintf(out, "Component %d:", i);
+         moveNext(SCC);
+         while(x != get(SCC)){
+            moveNext(GList);
+            x = get(GList);
+         }
+         movePrev(SCC);
+         while(x != get(SCC)){
+            fprintf(out, " %d", get(GList));
+            moveNext(GList);
+            x = get(GList);
+            if(x == get(SCC)){
+               break;
+            }
+         }
+         fprintf(out, "\n");
+      }
+      else if(i == 1){
+         while(x != get(SCC)){
+            moveNext(GList);
+            x = get(GList);
+         }
+         fprintf(out, "Component %d:", i);
+         while(x != -1){
+         fprintf(out, " %d", get(GList));
+         moveNext(GList);
+         x = get(GList);
+         if( x == -1){
+            break;
+         }
+         }
+      }
+      else{
+      moveNext(SCC);
+      while(x != get(SCC)){
+         moveNext(GList);
+         x = get(GList);
+      }
+      movePrev(SCC);
+      int y = get(SCC);
+      moveNext(SCC);
+      printf("%d\n", y);
+      fprintf(out, "Component %d:", i);
+      while(x != y){
+         fprintf(out, " %d", get(GList));
+         moveNext(GList);
+         x = get(GList);
+         if(x == -1 || x == y){
+            break;
+         }
+      }
+      }
+      fprintf(out, "\n");
+   }
 
    freeList(&GList);
    freeGraph(&G);
