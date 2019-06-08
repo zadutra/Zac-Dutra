@@ -1,1 +1,14 @@
-temp
+README
+Zachary Dutra
+zdutra
+1581789
+pa5
+
+This program will take in an input graph similar to pa4,
+but this time we will find the strongly connected components within
+the graph. Using and DFS and transpose, we can figure out the strongly connected
+components of the desired graph by checking which verticies have parents of NIL value
+after DFS is ran on the Transpose of the given graph.
+
+INCLUDED FILES:
+List.c List.h Graph.c Graph.h Makefile README FindComponents.c GraphTest.c
