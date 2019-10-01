@@ -1,0 +1,24 @@
+
+List of tests passed/failed:
+
+Empty_length PASSED
+Append_length PASSED
+Prepend_length PASSED
+InsertAfter_length PASSED
+InsertBefore_length PASSED
+DeleteFront_length PASSED
+
+Unfortunately your program crashed on test DeleteBack_length With an exception of:
+
+java.lang.NullPointerException
+	at List.deleteBack(List.java:223)
+	at ModelListTest.runTest(ModelListTest.java:159)
+	at ModelListTest.main(ModelListTest.java:585)
+
+DeleteBack_length FAILED: due to exception
+
+
+Receiving charity points because of an Exception
+
+This gives you a score of 5 out of 55 for this component of the assignment
+
