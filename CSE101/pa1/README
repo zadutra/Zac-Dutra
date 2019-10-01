@@ -1,1 +1,8 @@
-temp
+Zachary Dutra
+zdutra
+1581789
+pa1
+
+This program takes in a list of strings from the input text file,
+and sorts them alphabetically into a list, without changing the order of the input array.
+This program requires the list.h header file, which outlines all the functions in list.c.
