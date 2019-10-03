@@ -147,7 +147,6 @@ int get(List L){
    }
    return (L->cursor->data);
 }
-
 // equals()
 // returns true (1) if A is identical to B, false (0) otherwise
 int equals(List A, List B){
@@ -346,7 +345,6 @@ void insertAfter(List L, int data){
 // Pre: !isEmpty(L)
 void deleteFront(List L){
    Node N = NULL;
-
    if( L==NULL ){
       printf("List Error: calling deleteFront() on NULL List reference\n");
       exit(1);
