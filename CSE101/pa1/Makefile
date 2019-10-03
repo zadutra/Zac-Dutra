@@ -9,25 +9,17 @@ Lex : Lex.o List.o
 	gcc -o Lex Lex.o List.o
 
 Lex.o : Lex.c List.h
-	gcc -c -std=c99 -Wall -g Lex.c
+	gcc -c -std=c99 -Wall Lex.c
 
 ListClient: ListClient.o List.o
 	gcc -o ListClient ListClient.o List.o
 
 ListClient.o : ListClient.c List.h
-	gcc -c -std=c99 -Wall -g ListClient.c
-
-ModelListTest: ModelListTest.o List.o
-	gcc -o ModelListTest ModelListTest.o List.o
-
-ModelListTest.o : ModelListTest.c List.h
-	gcc -c -std=c99 -Wall -g ModelListTest.c
+	gcc -c -std=c99 -Wall ListClient.c
 
 List.o : List.c List.h
-	gcc -c -std=c99 -Wall -g List.c
-
-check:
-	 valgrind --leak-check=full --show leak-kinds=all Lex in1.txt out
+	gcc -c -std=c99 -Wall List.c
 
 clean :
 	rm -f Lex ListClient Lex.o ListClient.o List.o
+ 
