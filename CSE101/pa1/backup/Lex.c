@@ -11,7 +11,7 @@
 #include<string.h>
 #include "List.h"
 
-#define MAX_LEN 4000
+#define MAX_LEN 1000
 
 int main(int argc, char * argv[]){
 
