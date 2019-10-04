@@ -11,7 +11,7 @@
 #include<string.h>
 #include "List.h"
 
-#define MAX_LEN 4000
+#define MAX_LEN 5000
 
 int main(int argc, char * argv[]){
 
@@ -46,11 +46,10 @@ int main(int argc, char * argv[]){
    /* read each line of input file, then count and print tokens */
    for(int j = 0; fgets(line, MAX_LEN, in) != NULL; j++)  {
       linecount++;
-      token = strtok(line, " \n");
+      token = strtok(line, "\n");
       int length = strlen(token);
       in_list[j] = calloc(length, sizeof(char*));
       strcpy(in_list[j], token);
-      fprintf(stderr, "%d\n", linecount);
    }
    List Lex_list = newList();
    prepend(Lex_list, 0);
