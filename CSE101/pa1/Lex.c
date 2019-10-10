@@ -79,6 +79,7 @@ int main(int argc, char * argv[]){
       moveNext(Lex_list);
    }
    free(in_list);
+   free(Lex_list);
    /* close files */
    fclose(in);
    fclose(out);
