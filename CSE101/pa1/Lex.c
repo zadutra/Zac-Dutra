@@ -78,8 +78,10 @@ int main(int argc, char * argv[]){
       fprintf(out,"%s\n", in_list[get(Lex_list)]);
       moveNext(Lex_list);
    }
+   for(int i = 0; i < linecount; i++){
+      free(in_list[i]);
+   }
    free(in_list);
-   free(Lex_list);
    /* close files */
    fclose(in);
    fclose(out);
