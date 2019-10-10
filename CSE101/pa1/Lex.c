@@ -11,7 +11,7 @@
 #include<string.h>
 #include "List.h"
 
-#define MAX_LEN 5000
+#define MAX_LEN 6000
 
 int main(int argc, char * argv[]){
 
@@ -78,6 +78,7 @@ int main(int argc, char * argv[]){
       fprintf(out,"%s\n", in_list[get(Lex_list)]);
       moveNext(Lex_list);
    }
+   free(in_list);
    /* close files */
    fclose(in);
    fclose(out);
