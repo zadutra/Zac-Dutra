@@ -6,7 +6,7 @@
 #include<stdlib.h>
 #include"Matrix.h"
      
-int main(){
+int main(int argc, char* argv[]){
    int n=100000;
    Matrix A = newMatrix(n);
    Matrix B = newMatrix(n);

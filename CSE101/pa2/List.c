@@ -147,28 +147,6 @@ int get(List L){
    }
    return (L->cursor->data);
 }
-// equals()
-// returns true (1) if A is identical to B, false (0) otherwise
-int equals(List A, List B){
-   int eq = 0;
-   Node N = NULL;
-   Node M = NULL;
-
-   if( A==NULL || B==NULL ){
-      printf("List Error: calling equals() on NULL List reference\n");
-      exit(1);
-   }
-
-   eq = ( A->length == B->length );
-   N = A->front;
-   M = B->front;
-   while( eq && N!=NULL){
-      eq = (N->data==M->data);
-      N = N->next;
-      M = M->next;
-   }
-   return eq;
-}
 
 // isEmpty()
 // Returns true (1) if Q is empty, otherwise returns false (0)
@@ -434,6 +412,21 @@ void delete(List L){
          return;
       }
 }
+//deleteNext()
+//deletes element after the cursor
+void deleteNext(List L){
+   if(L->cursor == NULL || L->cursor == L->back){
+      return;
+   }
+   if(L->cursor->next == L->back){
+      deleteBack(L);
+      return;
+   }
+   else{
+      L->cursor->next = L->cursor->next->next;
+      return;
+   }
+};
 
 
 // Other Functions ------------------------------------------------------------

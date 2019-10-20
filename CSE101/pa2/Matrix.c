@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "List.h"
-#include "Matrix.h"
 typedef struct NodeObj{
    int data;
    struct NodeObj* next;
@@ -34,6 +33,12 @@ typedef struct MatrixObj{
 
 typedef MatrixObj* Matrix;
 
+Entry newEntry(int c, double d){
+    Entry e = malloc(sizeof(EntryObj));
+    e->column = c;
+    e->data = d;
+    return e;
+};
 Matrix newMatrix(int n){
     Matrix m = malloc(sizeof(MatrixObj));
     m->size = n;
@@ -42,6 +47,7 @@ Matrix newMatrix(int n){
     for(int i = 1; i <= n+1; i++){
         m->arrList[i] = newList();
     }
+    return m;
 };
 
 void freeMatrix(Matrix* pM){
@@ -52,11 +58,11 @@ void freeMatrix(Matrix* pM){
 
     int size(Matrix M){
         return (int)M->size;
-    }
+    };
 
     int NNZ(Matrix M){
         return (int)M->NNZ;
-    }
+    };
 
     int equals(Matrix A, Matrix B){
         if(A->size != B->size){
@@ -70,7 +76,7 @@ void freeMatrix(Matrix* pM){
             }
         }
         return 1;
-    }
+    };
 
     double dot(List P, List Q){
         double sum = 0;
@@ -97,7 +103,7 @@ void freeMatrix(Matrix* pM){
             moveNext(Q);
         }
         return sum;
-    }
+    };
 //manipulation procedures
     void makeZero(Matrix M){
         for(int i = 1; i <= M->size; i++ ){
@@ -105,20 +111,7 @@ void freeMatrix(Matrix* pM){
         }
         M->NNZ = 0;
         return;
-    }
-
-    Matrix copy(Matrix A){
-        Matrix newM = newMatrix(A->size);
-        for(int i = 1; i <= A->size; i++){
-            moveFront(A->arrList[i]);
-            for(int j = 1; j <= length(A->arrList[i]); j++){
-                Entry temp = (Entry) get(A->arrList[i]);
-                changeEntry(newM, i, temp->column, temp->data);
-                moveNext(A->arrList[i]);
-            }
-        }
-        return newM;
-    }
+    };
 
     void changeEntry(Matrix M, int i, int j, double x){
         if(i < 1 || i > M->size || j < 1 || j > M->size){
@@ -127,7 +120,7 @@ void freeMatrix(Matrix* pM){
         }
         if(length(M->arrList[i]) == 0 && x != 0){ //check for empty list
             Entry temp = newEntry(j, x);
-            prepend(M->arrList[i], temp);
+            prepend(M->arrList[i], (int)temp);
             moveFront(M->arrList[i]);
             M->NNZ++;
             return;
@@ -144,7 +137,7 @@ void freeMatrix(Matrix* pM){
                 }
                 else if( x != 0 && temp3->data != 0){ //change current NNZ data to new data
                     Entry temp = newEntry(j ,x);
-                    insertBefore(M->arrList[i], temp);
+                    insertBefore(M->arrList[i], (int)temp);
                     movePrev(M->arrList[i]);
                     deleteNext(M->arrList[i]);
                     return;
@@ -160,14 +153,14 @@ void freeMatrix(Matrix* pM){
                     for(int q = 0; q < length(M->arrList[i]); q++){
                         Entry temp2 = (Entry) get(M->arrList[i]);
                         if( j < temp2->column){
-                            insertBefore(M->arrList[i], temp);
+                            insertBefore(M->arrList[i], (int)temp);
                             M->NNZ++;
                             return;
                         }
                         moveNext(M->arrList[i]);
                     }
                     // did not meet condidions of for loop, append newest addition
-                    append(M->arrList[i], temp);
+                    append(M->arrList[i], (int)temp);
                     M->NNZ++;
                     return;
                 }
@@ -175,8 +168,20 @@ void freeMatrix(Matrix* pM){
             moveNext(M->arrList[i]);
           }
         }
-        
-    }
+    };
+    
+    Matrix copy(Matrix A){
+        Matrix newM = newMatrix(A->size);
+        for(int i = 1; i <= A->size; i++){
+            moveFront(A->arrList[i]);
+            for(int j = 1; j <= length(A->arrList[i]); j++){
+                Entry temp = (Entry) get(A->arrList[i]);
+                changeEntry(newM, i, temp->column, temp->data);
+                moveNext(A->arrList[i]);
+            }
+        }
+        return newM;
+    };
 
     Matrix scalarMult(double x, Matrix A){
         Matrix newM = newMatrix(A->size);
@@ -196,14 +201,14 @@ void freeMatrix(Matrix* pM){
             }
             return newM;
         }
-    }
+    };
 
     Matrix sum(Matrix A, Matrix B){
         if(A->size != B->size){
-            fprint("Adding Matricies of different sizes");
+            printf("Adding Matricies of different sizes");
             exit(1);
         }
-        if(A == B){
+        if(equals(A, B) == 1){
             return scalarMult(2.0, A);
         }
         double newVal;
@@ -219,7 +224,7 @@ void freeMatrix(Matrix* pM){
             else{
                 len = length(B->arrList[i]);
             }
-            for(int j = 0; j <= length; j++){
+            for(int j = 0; j <= len; j++){
                 if(A->arrList[i]->cursor == NULL){
                     if(B->arrList[i]->cursor != NULL){ // if reached the end of this.List and M.List has not reached the end
                         Entry temp = (Entry) get(B->arrList[i]);
@@ -267,23 +272,21 @@ void freeMatrix(Matrix* pM){
             }
         } 
         return newM;
-    }
+    };
 
     Matrix diff(Matrix A, Matrix B){
         if(A->size != B->size){
-            fprint("Subtracting Matricies of different sizes");
+            printf("Subtracting Matricies of different sizes");
             exit(1);
         }
         Matrix empty = newMatrix(A->size);
-        if(A == B){
+        if(equals(A,B) == 1){
             return empty;
         }
-        double newVal;
-        int length;
         Matrix temp = scalarMult(-1.0, B);
         Matrix newM = sum(A, temp);        
         return newM;
-    }
+    };
 
     Matrix transpose(Matrix M){
         Matrix newM = newMatrix(M->size);
@@ -305,11 +308,11 @@ void freeMatrix(Matrix* pM){
             moveFront(M->arrList[i]);
         }
         return newM;
-    }
+    };
 
     Matrix product(Matrix A, Matrix B){
         if(A->size != B->size){
-            fprint("Multiplying Matricies of different sizes");
+            printf("Multiplying Matricies of different sizes");
             exit(1);
         }
         Matrix newM = newMatrix(A->size);
@@ -325,7 +328,7 @@ void freeMatrix(Matrix* pM){
             
         }
         return newM;
-    }
+    };
 
     void printMatrix(FILE* out, Matrix M){
         if(M == NULL){
@@ -339,4 +342,4 @@ void freeMatrix(Matrix* pM){
             fprintf(out, "%d: ", i);
             printList(out, M->arrList[i]);
         }
-    }
+    };

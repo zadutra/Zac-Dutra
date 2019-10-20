@@ -48,10 +48,6 @@ int get(List L);
 //Returns value at the back of the List
 int back(List L);
 
-// equals()
-// returns true (1) if A is identical to B, false (0) otherwise
-int equals(List A, List B);
-
 //isEmpty()
 //returns true(1) if Q is empty, otherwise returns false(0)
 int isEmpty(List L);
@@ -98,6 +94,10 @@ void deleteBack(List L);
 //delete()
 //deletes current cursor node
 void delete(List L);
+
+//deleteNext()
+//deletes element after the cursor
+void deleteNext(List L);
 
 //insertBefore()
 //inserts new element before the cursor

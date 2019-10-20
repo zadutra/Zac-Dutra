@@ -6,7 +6,7 @@
 #  make memcheck            runs Matrix Client under valgrind
 #------------------------------------------------------------------------------
 
-CLIENT         = MatrixClient
+CLIENT         = Sparse
 ADT1           = Matrix
 ADT2           = List
 SOURCE         = $(CLIENT).c

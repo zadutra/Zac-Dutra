@@ -1,16 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"List.h"
 #include"Matrix.h"
 
 #define MAX_LEN 250
 
-int main(int argc, char * argv[]){
+int main(int argc, char* argv[]){
     FILE *in, *out;
     char line[MAX_LEN];
     int mSize;
-    int linenumber = 0;
     int A_NNZ;
     int B_NNZ;
     int row;
@@ -42,9 +40,9 @@ int main(int argc, char * argv[]){
            mSize = atoi(token);
            A = newMatrix(mSize);
            B = newMatrix(mSize);
-           token = (NULL, " ");
+           token = strtok(NULL, " ");
            A_NNZ = atoi(token);
-           token = (NULL, " ");
+           token = strtok(NULL, " ");
            B_NNZ = atoi(token);
            continue;
        }
@@ -53,7 +51,7 @@ int main(int argc, char * argv[]){
         row = atoi(token);
         token = strtok(NULL, " ");
         column = atoi(token);
-        token = (NULL, " ");
+        token = strtok(NULL, " ");
         data = atoi(token);
         changeEntry(A, row, column, data);
        }
@@ -62,7 +60,7 @@ int main(int argc, char * argv[]){
         row = atoi(token);
         token = strtok(NULL, " ");
         column = atoi(token);
-        token = (NULL, " ");
+        token = strtok(NULL, " ");
         data = atoi(token);
         changeEntry(B, row, column, data);
        }
@@ -73,7 +71,7 @@ int main(int argc, char * argv[]){
     printMatrix(out, B);
     fprintf(out, "(1.5)*A =\n");
     Matrix C = scalarMult(1.5, A);
-    printmatrix(C);
+    printMatrix(out, C);
     fprintf(out,"A+B =\n");
     C = sum(A,B);
     printMatrix(out, C);
