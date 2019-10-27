@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
       printf("Usage: %s <input file> <output file>\n", argv[0]);
       exit(1);
    }
-
+ 
    // open files for reading and writing 
    in = fopen(argv[1], "r");
    out = fopen(argv[2], "w");

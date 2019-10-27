@@ -109,10 +109,6 @@ void insertAfter(List L, void* data);
 
 // Other Functions ------------------------------------------------------------
 
-// printList()
-// Prints data elements in L on a single line to stdout.
-void printList(FILE* out, List L);
-
 //copyList()
 //returns a new list and copies input list to new list
 List copyList(List L);

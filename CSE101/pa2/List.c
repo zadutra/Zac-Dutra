@@ -182,7 +182,8 @@ void append(List L, void* data)
    }
    if( isEmpty(L) ) { 
       L->front = L->back = N; 
-   }else{ 
+   }
+   else{ 
       L->back->next = N; 
       L->back = N; 
    }
@@ -430,22 +431,6 @@ void deleteNext(List L){
 
 
 // Other Functions ------------------------------------------------------------
-
-// printList()
-// Prints data elements in L on a single line to out.
-void printList(FILE* out, List L){
-   Node N = NULL;
-
-   if( L==NULL ){
-      printf("List Error: calling printList() on NULL List reference\n");
-      exit(1);
-   }
-
-   for(N = L->front; N != NULL; N = N->next){
-      fprintf(out, "%d ", N->data);
-   }
-   fprintf(out, "\n");
-}
 
 //copyList()
 //returns a new list and copies input list to new list
