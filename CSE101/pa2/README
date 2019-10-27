@@ -1,1 +1,10 @@
-TEMP
+Zachary Dutra
+pa2
+CSE 101
+
+In this program , we take in a matrix from the input, and using a prvate class entry, 
+construct a list of entries which represents a matrix. We then add, subtract, multiply, divide
+and transpose these matricies to complete this assignment.
+
+Included files
+List.h List.c Matrix.h Matrix.c Sparse.c Makefile README MatrixClient.c ListClient.c

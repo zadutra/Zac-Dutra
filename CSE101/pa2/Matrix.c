@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include "List.h"
 typedef struct NodeObj{
-   int data;
+   void* data;
    struct NodeObj* next;
 } NodeObj;
 
@@ -39,6 +39,11 @@ Entry newEntry(int c, double d){
     e->data = d;
     return e;
 };
+
+void printEntry(FILE* out, Entry E){
+    fprintf(out, "(%d, %.1f) ", E->column, E->data);
+};
+
 Matrix newMatrix(int n){
     Matrix m = malloc(sizeof(MatrixObj));
     m->size = n;
@@ -114,15 +119,19 @@ void freeMatrix(Matrix* pM){
     };
 
     void changeEntry(Matrix M, int i, int j, double x){
+       // fprintf(stdout, "%d, %d\n", i, j);
         if(i < 1 || i > M->size || j < 1 || j > M->size){
             printf("change entry location not within matrix bounds");
             return;
         }
         if(length(M->arrList[i]) == 0 && x != 0){ //check for empty list
             Entry temp = newEntry(j, x);
-            prepend(M->arrList[i], (int)temp);
+            prepend(M->arrList[i], temp);
             moveFront(M->arrList[i]);
             M->NNZ++;
+            return;
+        }
+        if(length(M->arrList[i]) == 0 && x == 0){ //if empty list and x == 0, return
             return;
         }
         else{
@@ -137,7 +146,7 @@ void freeMatrix(Matrix* pM){
                 }
                 else if( x != 0 && temp3->data != 0){ //change current NNZ data to new data
                     Entry temp = newEntry(j ,x);
-                    insertBefore(M->arrList[i], (int)temp);
+                    insertBefore(M->arrList[i], temp);
                     movePrev(M->arrList[i]);
                     deleteNext(M->arrList[i]);
                     return;
@@ -153,15 +162,16 @@ void freeMatrix(Matrix* pM){
                     for(int q = 0; q < length(M->arrList[i]); q++){
                         Entry temp2 = (Entry) get(M->arrList[i]);
                         if( j < temp2->column){
-                            insertBefore(M->arrList[i], (int)temp);
+                            insertBefore(M->arrList[i], temp);
                             M->NNZ++;
                             return;
                         }
                         moveNext(M->arrList[i]);
                     }
                     // did not meet condidions of for loop, append newest addition
-                    append(M->arrList[i], (int)temp);
+                    append(M->arrList[i], temp);
                     M->NNZ++;
+                    moveFront(M->arrList[i]);
                     return;
                 }
             }
@@ -224,9 +234,9 @@ void freeMatrix(Matrix* pM){
             else{
                 len = length(B->arrList[i]);
             }
-            for(int j = 0; j <= len; j++){
+            for(int j = 0; j < len; j++){
                 if(A->arrList[i]->cursor == NULL){
-                    if(B->arrList[i]->cursor != NULL){ // if reached the end of this.List and M.List has not reached the end
+                    if(B->arrList[i]->cursor != NULL){ // if reached the end of A->List and B->List has not reached the end
                         Entry temp = (Entry) get(B->arrList[i]);
                         changeEntry(newM, i, temp->column, temp->data);
                         moveNext(B->arrList[i]);
@@ -264,7 +274,9 @@ void freeMatrix(Matrix* pM){
                 }
                 //none of previous statements were true, add the two columns and insert
                 else{
+                    fprintf(stdout, "in add condition\n");
                     newVal = a_ent->data + b_ent->data;
+                     fprintf(stdout, "before change entry\n");
                     changeEntry(newM, i, a_ent->column, newVal);
                     moveNext(A->arrList[i]);
                     moveNext(B->arrList[i]);
@@ -284,7 +296,8 @@ void freeMatrix(Matrix* pM){
             return empty;
         }
         Matrix temp = scalarMult(-1.0, B);
-        Matrix newM = sum(A, temp);        
+         fprintf(stdout, "In diff\n");
+        Matrix newM = sum(A, temp);     
         return newM;
     };
 
@@ -340,6 +353,13 @@ void freeMatrix(Matrix* pM){
                 continue;
             }
             fprintf(out, "%d: ", i);
-            printList(out, M->arrList[i]);
+            moveFront(M->arrList[i]);
+            for(int j = 0; j < length(M->arrList[i]); j++){
+                Entry ugh = get(M->arrList[i]);
+                printEntry(out, ugh);
+                moveNext(M->arrList[i]);
+            }
+            fprintf(out, "\n");
         }
+        fprintf(out, "\n");
     };

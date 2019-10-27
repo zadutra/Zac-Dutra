@@ -14,7 +14,7 @@
 
 // private NodeObj type
 typedef struct NodeObj{
-   int data;
+   void* data;
    struct NodeObj* next;
 } NodeObj;
 
@@ -36,7 +36,7 @@ typedef struct ListObj{
 // newNode()
 // Returns reference to new Node object. Initializes next and data fields.
 // Private.
-Node newNode(int data){
+Node newNode(void* data){
    Node N = malloc(sizeof(NodeObj));
    N->data = data;
    N->next = NULL;
@@ -83,7 +83,7 @@ void freeList(List* pL){
 // getFront()
 // Returns the value at the front of L.
 // Pre: !isEmpty(L)
-int front(List L){
+void* front(List L){
    if( L == NULL ){
       printf("List Error: calling front() on NULL List reference\n");
       exit(1);
@@ -97,7 +97,7 @@ int front(List L){
 
 //back()
 //Returns value at the back of the List
-int back(List L){
+void* back(List L){
    if( L == NULL ){
       printf("List Error: calling back() on NULL List reference\n");
       exit(1);
@@ -137,13 +137,13 @@ int index (List L){
 
 // get()
 // returns data at current cursor node
-int get(List L){
+void* get(List L){
    if( L==NULL ){
       printf("List Error: calling get() on NULL List reference\n");
       exit(1);
    }
    else if( L->cursor == NULL){
-      return -1;
+      return (void*)-1;
    }
    return (L->cursor->data);
 }
@@ -172,7 +172,7 @@ void clear(List L){
 
 // append()
 // Places new data element at the end of L
-void append(List L, int data)
+void append(List L, void* data)
 {
    Node N = newNode(data);
 
@@ -192,7 +192,7 @@ void append(List L, int data)
 
 // prepend()
 // Places new data element at the beginning of L
-void prepend(List L, int data)
+void prepend(List L, void* data)
 {
    Node N = newNode(data);
 
@@ -274,7 +274,7 @@ void moveNext(List L){
 
 //insertBefore()
 //inserts new element before the cursor
-void insertBefore(List L, int data){
+void insertBefore(List L, void* data){
    if(L->length == 0 || L->cursor == L->front){
       prepend(L, data);
       return;
@@ -298,7 +298,7 @@ void insertBefore(List L, int data){
 
 //insertAfter()
 //insert new element after the cursor
-void insertAfter(List L, int data){
+void insertAfter(List L, void* data){
    if(L->length == 0){
       prepend(L, data);
       return;

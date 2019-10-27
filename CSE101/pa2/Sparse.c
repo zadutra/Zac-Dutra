@@ -35,8 +35,9 @@ int main(int argc, char* argv[]){
       exit(1);
    }
    for(int j = 0; fgets(line, MAX_LEN, in) != NULL; j++){
+       fprintf(stdout, "%s\n", line);
+       token = strtok(line, " \n");
        if(j == 0){
-           token = strtok(line, " \n");
            mSize = atoi(token);
            A = newMatrix(mSize);
            B = newMatrix(mSize);
@@ -46,8 +47,7 @@ int main(int argc, char* argv[]){
            B_NNZ = atoi(token);
            continue;
        }
-       if(j < A_NNZ+1){
-        token = strtok(line, " \n");
+       if(j <= A_NNZ+1 && j >= 2){
         row = atoi(token);
         token = strtok(NULL, " ");
         column = atoi(token);
@@ -55,8 +55,7 @@ int main(int argc, char* argv[]){
         data = atoi(token);
         changeEntry(A, row, column, data);
        }
-       else{
-        token = strtok(line, " \n");
+       if(j >= A_NNZ+3 && j <= A_NNZ+B_NNZ+2){
         row = atoi(token);
         token = strtok(NULL, " ");
         column = atoi(token);
