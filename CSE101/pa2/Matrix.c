@@ -224,19 +224,11 @@ void freeMatrix(Matrix* pM){
             return scalarMult(2.0, A);
         }
         double newVal;
-        int len;
         Matrix newM = newMatrix(A->size);
         for(int i = 1; i <= A->size; i++){
             moveFront(B->arrList[i]);
             moveFront(A->arrList[i]);
-            //get bigger array size for for loop
-            if(length(A->arrList[i]) >= length(B->arrList[i])){
-                len = length(A->arrList[i]);
-            }
-            else{
-                len = length(B->arrList[i]);
-            }
-            for(int j = 0; j <= len; j++){
+            for(int j = 0; j <= A->size; j++){
                 if(A->arrList[i]->cursor == NULL){
                     if(B->arrList[i]->cursor != NULL){ // if reached the end of A->List and B->List has not reached the end
                         Entry temp = (Entry) get(B->arrList[i]);
