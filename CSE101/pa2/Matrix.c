@@ -143,6 +143,9 @@ void freeMatrix(Matrix* pM){
                     M->NNZ--;
                     return;
                 }
+                else if( x == temp3->data){//trying to change to same value, do nothing
+                    return;
+                }
                 else if( x != 0 && temp3->data != 0){ //change current NNZ data to new data
                     Entry temp = newEntry(j ,x);
                     insertBefore(M->arrList[i], temp);
@@ -273,9 +276,7 @@ void freeMatrix(Matrix* pM){
                 }
                 //none of previous statements were true, add the two columns and insert
                 else{
-                    fprintf(stdout, "in add condition\n");
                     newVal = a_ent->data + b_ent->data;
-                     fprintf(stdout, "before change entry\n");
                     changeEntry(newM, i, a_ent->column, newVal);
                     moveNext(A->arrList[i]);
                     moveNext(B->arrList[i]);
