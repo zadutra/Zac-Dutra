@@ -51,8 +51,9 @@ int main(int argc, char* argv[]){
         row = atoi(token);
         token = strtok(NULL, " ");
         column = atoi(token);
-        token = strtok(NULL, " ");
-        data = atoi(token);
+        token = strtok(NULL, "");
+        data = atof(token);
+        fprintf(stdout, "%.1f\n", data);
         changeEntry(A, row, column, data);
        }
        if(j >= A_NNZ+3 && j <= A_NNZ+B_NNZ+2){
@@ -60,7 +61,7 @@ int main(int argc, char* argv[]){
         token = strtok(NULL, " ");
         column = atoi(token);
         token = strtok(NULL, " ");
-        data = atoi(token);
+        data = atof(token);
         changeEntry(B, row, column, data);
        }
    }

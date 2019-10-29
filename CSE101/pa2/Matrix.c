@@ -119,7 +119,6 @@ void freeMatrix(Matrix* pM){
     };
 
     void changeEntry(Matrix M, int i, int j, double x){
-       // fprintf(stdout, "%d, %d\n", i, j);
         if(i < 1 || i > M->size || j < 1 || j > M->size){
             printf("change entry location not within matrix bounds");
             return;
@@ -136,7 +135,7 @@ void freeMatrix(Matrix* pM){
         }
         else{
         moveFront(M->arrList[i]);
-        for(int k = 1; k <= M->size; k++){
+        for(int k = 1; k <= length(M->arrList[i]); k++){
             Entry temp3 = (Entry) get(M->arrList[i]);
             if(temp3->column == j){ //current entry exists, change data value
                 if(x == 0 && temp3->data != 0){//deletes current entry to make it zero
@@ -152,7 +151,7 @@ void freeMatrix(Matrix* pM){
                     return;
                 }
             }
-            if(j > temp3->column){ //if entered this loop, that means the value at that column is 0
+            if(j > temp3->column || k == length(M->arrList[i])){ //if entered this loop, that means the value at that column is 0
                 if(x == 0){ //if trying to change to zero, do nothing
                     return;
                 }
@@ -234,7 +233,7 @@ void freeMatrix(Matrix* pM){
             else{
                 len = length(B->arrList[i]);
             }
-            for(int j = 0; j < len; j++){
+            for(int j = 0; j <= len; j++){
                 if(A->arrList[i]->cursor == NULL){
                     if(B->arrList[i]->cursor != NULL){ // if reached the end of A->List and B->List has not reached the end
                         Entry temp = (Entry) get(B->arrList[i]);
@@ -260,7 +259,7 @@ void freeMatrix(Matrix* pM){
                 }
                 Entry a_ent = (Entry) get(A->arrList[i]);
                 Entry b_ent = (Entry) get(B->arrList[i]);
-                //if there was a zero in this this.List, insert data from M.list
+                //if there was a zero in A->List, insert data from B->list
                 if(a_ent->column > b_ent->column){
                     changeEntry(newM, i, b_ent->column, b_ent->data);
                     moveNext(B->arrList[i]);
