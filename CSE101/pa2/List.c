@@ -368,6 +368,7 @@ void deleteBack(List L){
    if(L->cursor == L->back){
       L->cursor = NULL;
       L->index = -1;
+      L->length--;
    }
    if( length(L)>1 ) { 
       while(N->next != L->back){
