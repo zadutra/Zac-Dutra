@@ -69,8 +69,8 @@ int compare(BigInteger A, BigInteger B){
     if(equals(A,B) == 1){
         return 0;
     }
-    movefront(A->nums);
-    movefront(B->nums);
+    moveFront(A->nums);
+    moveFront(B->nums);
     for(int i = 0; i < length(A->nums); i++){
         if(get(A->nums) > get(B->nums)){
             return 1;
@@ -222,16 +222,16 @@ void add(BigInteger S, BigInteger A, BigInteger B){
     moveBack(B->nums);
     moveBack(S->nums);
     if(check == 1){ // a is greater than b, after b length, set raminder of S to A
-        for(int i = 0; i < length(B); i++){
+        for(int i = 0; i < length(B->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
             moveprev(S->nums);
         }
         for(int i = 0; i < (length(A) - length(B)); i++){
-            set(S, get(A) + carry);
+            set(S->nums, get(A->nums) + carry);
             carry = 0;
             movePrev(S->nums);
             movePrev(A->nums);
@@ -239,16 +239,16 @@ void add(BigInteger S, BigInteger A, BigInteger B){
         return;
     }
     else if(check == 2){ //B is greater than A, after length A, set S to remainder of B
-        for(int i = 0; i < length(A); i++){
+        for(int i = 0; i < length(A->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
             moveprev(S->nums);
         }
-        for(int i = 0; i < (length(B) - length(A)); i++){
-            set(S, get(B) + carry);
+        for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
+            set(S->nums, get(B->nums) + carry);
             carry = 0;
             movePrev(S->nums);
             movePrev(B->nums);
@@ -256,9 +256,9 @@ void add(BigInteger S, BigInteger A, BigInteger B){
         return;
     }
     else{ //lengths are the same
-        for(int i = 0; i < length(A); i++){
+        for(int i = 0; i < length(A->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
@@ -315,16 +315,16 @@ BigInteger sum(BigInteger A, BigInteger B){
     moveBack(B->nums);
     moveBack(S->nums);
     if(check == 1){ // a is greater than b, after b length, set remainder of S to A
-        for(int i = 0; i < length(B); i++){
+        for(int i = 0; i < length(B->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
             moveprev(S->nums);
         }
-        for(int i = 0; i < (length(A) - length(B)); i++){
-            set(S, get(A) + carry);
+        for(int i = 0; i < (length(A->nums) - length(B->nums)); i++){
+            set(S->nums, get(A->nums) + carry);
             carry = 0;
             movePrev(S->nums);
             movePrev(A->nums);
@@ -332,16 +332,16 @@ BigInteger sum(BigInteger A, BigInteger B){
         return S;
     }
     else if(check == 2){ //B is greater than A, after length A, set S to remainder of B
-        for(int i = 0; i < length(A); i++){
+        for(int i = 0; i < length(A->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
             moveprev(S->nums);
         }
-        for(int i = 0; i < (length(B) - length(A)); i++){
-            set(S, get(B) + carry);
+        for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
+            set(S->nums, get(B->nums) + carry);
             carry = 0;
             movePrev(S->nums);
             movePrev(B->nums);
@@ -349,9 +349,9 @@ BigInteger sum(BigInteger A, BigInteger B){
         return S;
     }
     else{ //lengths are the same
-        for(int i = 0; i < length(A); i++){
+        for(int i = 0; i < length(A->nums); i++){
             temp = get(A->nums) + get(B->nums) + carry;
-            set(S, temp%100);
+            set(S->nums, temp%100);
             carry = temp/100;
             moveprev(A->nums);
             moveprev(B->nums);
@@ -397,24 +397,24 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
         return;
     }
     //check which has bigger length
-    if(length(A) > length(B)){
+    if(length(A->nums) > length(B->nums)){
         check = 1;
-        len = length(A);
+        len = length(A->nums);
         D->sign = 1;
     }
-    else if(length(B) > length(A)){
+    else if(length(B->nums) > length(A->nums)){
         check = 2;
-        len = length(B);
+        len = length(B->nums);
         D->sign = -1;
     }
     else{//lengths are the same
         check = 3;
-        len = length(B);
+        len = length(B->nums);
         for(int i = 0; i < len; i++){
-            if(get(A) > get(B)){
+            if(get(A->nums) > get(B->nums)){
                 D->sign = 1;
             }
-            if(get(A) < get(B)){
+            if(get(A->nums) < get(B->nums)){
                 D->sign = -1;
             }
             moveNext(A->nums);
@@ -427,7 +427,7 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
     moveBack(D->nums);
     if(check == 1){//A is larger than B, fill D with rest of A after B length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -440,8 +440,8 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
             movePrev(B->nums);
             movePrev(D->nums);
         }
-        for(int i = 0; i < (length(A) - length(B)); i++){
-            set(D->nums, get(A) + carry);
+        for(int i = 0; i < (length(A->nums) - length(B->nums)); i++){
+            set(D->nums, get(A->nums) + carry);
             carry = 0;
             movePrev(D->nums);
             movePrev(A->nums);
@@ -450,7 +450,7 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
     }
     if(check == 2){//B is larger than A, fill D with rest of B after A length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -463,8 +463,8 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
             movePrev(B->nums);
             movePrev(D->nums);
         }
-        for(int i = 0; i < (length(B) - length(A)); i++){
-            set(D->nums, get(B) + carry);
+        for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
+            set(D->nums, get(B->nums) + carry);
             carry = 0;
             movePrev(D->nums);
             movePrev(B->nums);
@@ -473,7 +473,7 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
     }
     else{//A and B are the same length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -526,24 +526,24 @@ BigInteger diff(BigInteger A, BigInteger B){
         return D;
     }
     //check which has bigger length
-    if(length(A) > length(B)){
+    if(length(A->nums) > length(B->nums)){
         check = 1;
-        len = length(A);
+        len = length(A->nums);
         D->sign = 1;
     }
-    else if(length(B) > length(A)){
+    else if(length(B->nums) > length(A->nums)){
         check = 2;
-        len = length(B);
+        len = length(B->nums);
         D->sign = -1;
     }
     else{//lengths are the same
         check = 3;
-        len = length(B);
+        len = length(B->nums);
         for(int i = 0; i < len; i++){
-            if(get(A) > get(B)){
+            if(get(A->nums) > get(B->nums)){
                 D->sign = 1;
             }
-            if(get(A) < get(B)){
+            if(get(A->nums) < get(B->nums)){
                 D->sign = -1;
             }
             moveNext(A->nums);
@@ -556,7 +556,7 @@ BigInteger diff(BigInteger A, BigInteger B){
     moveBack(D->nums);
     if(check == 1){//A is larger than B, fill D with rest of A after B length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -569,8 +569,8 @@ BigInteger diff(BigInteger A, BigInteger B){
             movePrev(B->nums);
             movePrev(D->nums);
         }
-        for(int i = 0; i < (length(A) - length(B)); i++){
-            set(D->nums, get(A) + carry);
+        for(int i = 0; i < (length(A->nums) - length(B->nums)); i++){
+            set(D->nums, get(A->nums) + carry);
             carry = 0;
             movePrev(D->nums);
             movePrev(A->nums);
@@ -579,7 +579,7 @@ BigInteger diff(BigInteger A, BigInteger B){
     }
     if(check == 2){//B is larger than A, fill D with rest of B after A length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -592,8 +592,8 @@ BigInteger diff(BigInteger A, BigInteger B){
             movePrev(B->nums);
             movePrev(D->nums);
         }
-        for(int i = 0; i < (length(B) - length(A)); i++){
-            set(D->nums, get(B) + carry);
+        for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
+            set(D->nums, get(B->nums) + carry);
             carry = 0;
             movePrev(D->nums);
             movePrev(B->nums);
@@ -602,7 +602,7 @@ BigInteger diff(BigInteger A, BigInteger B){
     }
     else{//A and B are the same length
         for(int i = 0; i < length(B->nums); i++){
-            temp = get(A) - get(B) + carry;
+            temp = get(A->nums) - get(B->nums) + carry;
             if(temp < 0){
                 temp += 100;
                 carry = -1;
@@ -628,7 +628,7 @@ void multiply(BigInteger P, BigInteger A, BigInteger B){
     int new;
     int b;
     long sum;
-    if(length(B) > length(A)){
+    if(length(B->nums) > length(A->nums)){
         multiply(P,B,A);
         return;
     }
@@ -644,14 +644,14 @@ void multiply(BigInteger P, BigInteger A, BigInteger B){
     clear(P->nums);
     moveBack(A->nums);
     moveback(B->nums);
-    for(int i = 0; i < length(B)*2; i++){
+    for(int i = 0; i < length(B->nums)*2; i++){
         if(i == 0 || i%2 == 0){
             b = get(B->nums)%10;
         }
         else{
             b = get(B->nums)/10;
         }
-        for(int j = 0; j < length(A)*2; j++){
+        for(int j = 0; j < length(A->nums)*2; j++){
             int a = get(A->nums)%10;
             temp = (b*a) + carry;
             carry = temp/10;
@@ -676,7 +676,7 @@ BigInteger prod(BigInteger A, BigInteger B){
     int new;
     int b;
     long sum;
-    if(length(B) > length(A)){
+    if(length(B->nums) > length(A->nums)){
         multiply(P,B,A);
         return;
     }
@@ -692,14 +692,14 @@ BigInteger prod(BigInteger A, BigInteger B){
     clear(P->nums);
     moveBack(A->nums);
     moveback(B->nums);
-    for(int i = 0; i < length(B)*2; i++){
+    for(int i = 0; i < length(B->nums)*2; i++){
         if(i == 0 || i%2 == 0){
             b = get(B->nums)%10;
         }
         else{
             b = get(B->nums)/10;
         }
-        for(int j = 0; j < length(A)*2; j++){
+        for(int j = 0; j < length(A->nums)*2; j++){
             int a = get(A->nums)%10;
             temp = (b*a) + carry;
             carry = temp/10;

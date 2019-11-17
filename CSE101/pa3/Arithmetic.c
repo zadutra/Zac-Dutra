@@ -57,14 +57,14 @@ int main(int argc, char* argv[]){
             continue;
        }
        if(j == 1){
-           BigInteger A = stringToBigInteger(token);
+           A = stringToBigInteger(token);
        }
        if(j == 4){
-           BigInteger B = stringToBigInteger(token);
+           B = stringToBigInteger(token);
        }
    }
 
-   printBingInteger(out, A);
+   printBigInteger(out, A);
    fprintf(out, "\n");
    printBigInteger(out, B);
    fprintf(out, "\n");
@@ -77,25 +77,25 @@ int main(int argc, char* argv[]){
    C = diff(A,A);
    printBigInteger(out, C);
    fprintf(out, "\n");
-   C = product(A, 3);
-   D = product(B,2);
+   C = prod(A, 3);
+   D = prod(B,2);
    E = diff(C,D);
    printBigInteger(out, E);
    fprintf(out, "\n");
-   E = product(A,B);
+   E = prod(A,B);
    printBigInteger(out, E);
    fprintf(out, "\n");
-   C = product(A,A);
+   C = prod(A,A);
    printBigInteger(out, C);
    fprintf(out, "\n");
-   D = product(B,B);
+   D = prod(B,B);
    printBigInteger(out, D);
    fprintf(out, "\n");
-   C = product(C,C);
-   C = product(C, 9);
-   D = product(D,D);
-   D = product(D,B);
-   D = product(D,16);
+   C = prod(C,C);
+   C = prod(C, 9);
+   D = prod(D,D);
+   D = prod(D,B);
+   D = prod(D,16);
    E = sum(C,D);
    printBigInteger(out, E);
    fprintf(out, "\n");
