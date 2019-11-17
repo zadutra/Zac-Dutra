@@ -22,7 +22,9 @@ int main(int argc, char* argv[]){
     char* token;
     BigInteger A = newBigInteger();
     BigInteger B = newBigInteger();
-    BigInteger output = newBigInteger();
+    BigInteger C = newBigInteger();
+    BigInteger D = newBigInteger();
+    BigInteger E = newBigInteger();
 
     // check command line for correct number of arguments
    if( argc != 3 ){
@@ -61,6 +63,43 @@ int main(int argc, char* argv[]){
            BigInteger B = stringToBigInteger(token);
        }
    }
-   
+
+   printBingInteger(out, A);
+   fprintf(out, "\n");
+   printBigInteger(out, B);
+   fprintf(out, "\n");
+   C = sum(A, B);
+   printBigInteger(out, C);
+   fprintf(out,"\n");
+   C = diff(A,B);
+   printBigInteger(out, C);
+   fprintf(out, "\n");
+   C = diff(A,A);
+   printBigInteger(out, C);
+   fprintf(out, "\n");
+   C = product(A, 3);
+   D = product(B,2);
+   E = diff(C,D);
+   printBigInteger(out, E);
+   fprintf(out, "\n");
+   E = product(A,B);
+   printBigInteger(out, E);
+   fprintf(out, "\n");
+   C = product(A,A);
+   printBigInteger(out, C);
+   fprintf(out, "\n");
+   D = product(B,B);
+   printBigInteger(out, D);
+   fprintf(out, "\n");
+   C = product(C,C);
+   C = product(C, 9);
+   D = product(D,D);
+   D = product(D,B);
+   D = product(D,16);
+   E = sum(C,D);
+   printBigInteger(out, E);
+   fprintf(out, "\n");
+
+
 
 }
