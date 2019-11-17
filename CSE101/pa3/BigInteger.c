@@ -243,9 +243,9 @@ void add(BigInteger S, BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
         for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
             set(S->nums, get(B->nums) + carry);
@@ -260,9 +260,9 @@ void add(BigInteger S, BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
         return;
     }
@@ -319,9 +319,9 @@ BigInteger sum(BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
         for(int i = 0; i < (length(A->nums) - length(B->nums)); i++){
             set(S->nums, get(A->nums) + carry);
@@ -336,9 +336,9 @@ BigInteger sum(BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
         for(int i = 0; i < (length(B->nums) - length(A->nums)); i++){
             set(S->nums, get(B->nums) + carry);
@@ -353,9 +353,9 @@ BigInteger sum(BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
         return S;
     }
@@ -497,8 +497,8 @@ BigInteger diff(BigInteger A, BigInteger B){
     int check = -1;
     int carry = 0;
     BigInteger D = newBigInteger();
-    movefront(A->nums);
-    movefront(B->nums);
+    moveFront(A->nums);
+    moveFront(B->nums);
     if(equals(A,B)){
         makeZero(D);
         return D;
@@ -691,7 +691,7 @@ BigInteger prod(BigInteger A, BigInteger B){
     }
     clear(P->nums);
     moveBack(A->nums);
-    moveback(B->nums);
+    moveBack(B->nums);
     for(int i = 0; i < length(B->nums)*2; i++){
         if(i == 0 || i%2 == 0){
             b = get(B->nums)%10;
