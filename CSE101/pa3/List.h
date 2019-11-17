@@ -59,11 +59,11 @@ void clear(List L);
 
 // append()
 // Places new data element at the end of L
-void append(List L, int data);
+void append(List L, long data);
 
 //prepend()
 // places new data element at the beginning lf L
-void prepend(List L, int data);
+void prepend(List L, long data);
 
 //moveFront()
 // moves cursor to the front

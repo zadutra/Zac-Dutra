@@ -226,11 +226,11 @@ void add(BigInteger S, BigInteger A, BigInteger B){
             temp = get(A->nums) + get(B->nums) + carry;
             set(S->nums, temp%100);
             carry = temp/100;
-            moveprev(A->nums);
-            moveprev(B->nums);
-            moveprev(S->nums);
+            movePrev(A->nums);
+            movePrev(B->nums);
+            movePrev(S->nums);
         }
-        for(int i = 0; i < (length(A) - length(B)); i++){
+        for(int i = 0; i < (length(A->nums) - length(B->nums)); i++){
             set(S->nums, get(A->nums) + carry);
             carry = 0;
             movePrev(S->nums);
@@ -368,17 +368,17 @@ void subtract(BigInteger D, BigInteger A, BigInteger B){
     int temp;
     int check = -1;
     int carry = 0;
-    movefront(A->nums);
-    movefront(B->nums);
+    moveFront(A->nums);
+    moveFront(B->nums);
     if(equals(A,B)){
         makeZero(D);
         return;
     }
     //check A and B to see if you can call add
     if(A->sign == 1 && B->sign == -1){
-        B->sign == 1;
+        B->sign = 1;
         add(D, A, B);
-        B->sign == -1;
+        B->sign = -1;
         return;
     }
     if(A->sign == -1 && B->sign == 1){
@@ -505,9 +505,9 @@ BigInteger diff(BigInteger A, BigInteger B){
     }
     //check A and B to see if you can call add
     if(A->sign == 1 && B->sign == -1){
-        B->sign == 1;
+        B->sign = 1;
         add(D, A, B);
-        B->sign == -1;
+        B->sign = -1;
         return D;
     }
     if(A->sign == -1 && B->sign == 1){
@@ -643,7 +643,7 @@ void multiply(BigInteger P, BigInteger A, BigInteger B){
     }
     clear(P->nums);
     moveBack(A->nums);
-    moveback(B->nums);
+    moveBack(B->nums);
     for(int i = 0; i < length(B->nums)*2; i++){
         if(i == 0 || i%2 == 0){
             b = get(B->nums)%10;
@@ -678,7 +678,7 @@ BigInteger prod(BigInteger A, BigInteger B){
     long sum;
     if(length(B->nums) > length(A->nums)){
         multiply(P,B,A);
-        return;
+        return P;
     }
     if(A->sign == -1 && B->sign == 1){
         P->sign = -1;

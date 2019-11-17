@@ -438,7 +438,7 @@ void printList(FILE* out, List L){
    }
 
    for(N = L->front; N != NULL; N = N->next){
-      fprintf(out, "%d", N->data);
+      fprintf(out, "%ld", N->data);
    }
    fprintf(out, "\n");
 }
