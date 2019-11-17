@@ -59,21 +59,29 @@ int sign(BigInteger N){
 // compare()
 // Returns -1 if A<B, 1 if A>B, and 0 if A=B.
 int compare(BigInteger A, BigInteger B){
-    if(length(A) > length(B)){
+    if(length(A->nums) > length(B->nums)){
         return 1;
     }
-    if(length(B) > length(A)){
+    if(length(B->nums) > length(A->nums)){
         return -1;
     }
     //if here A and B are same length
     if(equals(A,B) == 1){
         return 0;
     }
-    long a = front(A->nums);
-    long b = front(B->nums);
+    movefront(A->nums);
+    movefront(B->nums);
     for(int i = 0; i < length(A->nums); i++){
-
+        if(get(A->nums) > get(B->nums)){
+            return 1;
+        }
+        if(get(A->nums) < get(B->nums)){
+            return -1;
+        }
+        moveNext(A->nums);
+        moveNext(B->nums);
     }
+    return 0;
 };
 // equals()
 // Return true (1) if A and B are equal, false (0) otherwise.
@@ -88,11 +96,11 @@ int equals(BigInteger A, BigInteger B){
     moveFront(A->nums);
     moveFront(B->nums);
     for(int i = 0; i < length(A->nums); i++){
-        if(get(A) != get(B)){
+        if(get(A->nums) != get(B->nums)){
             return 0;
         }
-        moveNext(A);
-        moveNext(B);
+        moveNext(A->nums);
+        moveNext(B->nums);
     }
     return 1;
 };
@@ -157,6 +165,7 @@ BigInteger copy(BigInteger N){
             prepend(temp->nums, get(N->nums));
             moveFront(temp->nums);
             moveNext(N->nums);
+            continue;
         }
         insertAfter(temp->nums, get(N->nums));
         moveNext(temp->nums);

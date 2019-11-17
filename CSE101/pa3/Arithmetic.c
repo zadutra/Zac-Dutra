@@ -10,7 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "Biginteger.h"
+#include "BigInteger.h"
 
 #define MAX_LEN 250
 
@@ -99,7 +99,4 @@ int main(int argc, char* argv[]){
    E = sum(C,D);
    printBigInteger(out, E);
    fprintf(out, "\n");
-
-
-
 }
