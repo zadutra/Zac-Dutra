@@ -3,7 +3,7 @@
 // Zachary Dutra
 // zdutra
 // 1581789
-// pa1
+// pa3
 //-----------------------------------------------------------------------------
 
 #include<stdio.h>
@@ -14,7 +14,7 @@
 
 // private NodeObj type
 typedef struct NodeObj{
-   int data;
+   long data;
    struct NodeObj* next;
 } NodeObj;
 
@@ -83,7 +83,7 @@ void freeList(List* pL){
 // getFront()
 // Returns the value at the front of L.
 // Pre: !isEmpty(L)
-int front(List L){
+long front(List L){
    if( L == NULL ){
       printf("List Error: calling front() on NULL List reference\n");
       exit(1);
@@ -97,7 +97,7 @@ int front(List L){
 
 //back()
 //Returns value at the back of the List
-int back(List L){
+long back(List L){
    if( L == NULL ){
       printf("List Error: calling back() on NULL List reference\n");
       exit(1);
@@ -137,7 +137,7 @@ int index (List L){
 
 // get()
 // returns data at current cursor node
-int get(List L){
+long get(List L){
    if( L==NULL ){
       printf("List Error: calling get() on NULL List reference\n");
       exit(1);
@@ -146,28 +146,6 @@ int get(List L){
       return -1;
    }
    return (L->cursor->data);
-}
-// equals()
-// returns true (1) if A is identical to B, false (0) otherwise
-int equals(List A, List B){
-   int eq = 0;
-   Node N = NULL;
-   Node M = NULL;
-
-   if( A==NULL || B==NULL ){
-      printf("List Error: calling equals() on NULL List reference\n");
-      exit(1);
-   }
-
-   eq = ( A->length == B->length );
-   N = A->front;
-   M = B->front;
-   while( eq && N!=NULL){
-      eq = (N->data==M->data);
-      N = N->next;
-      M = M->next;
-   }
-   return eq;
 }
 
 // isEmpty()
@@ -194,7 +172,7 @@ void clear(List L){
 
 // append()
 // Places new data element at the end of L
-void append(List L, int data)
+void append(List L, long data)
 {
    Node N = newNode(data);
 
@@ -214,7 +192,7 @@ void append(List L, int data)
 
 // prepend()
 // Places new data element at the beginning of L
-void prepend(List L, int data)
+void prepend(List L, long data)
 {
    Node N = newNode(data);
 
@@ -435,6 +413,17 @@ void delete(List L){
       }
 }
 
+void set(List L, long x){
+   if(length(L) <= 0 || index(L) < 0){
+      printf("List Error: calling set() on out of bounds List dimensions\n");
+      exit(1);
+   }
+   if (get(L) == x){
+      return;
+   }
+   L->cursor->data = x;
+   return;
+}
 
 // Other Functions ------------------------------------------------------------
 
@@ -449,7 +438,7 @@ void printList(FILE* out, List L){
    }
 
    for(N = L->front; N != NULL; N = N->next){
-      fprintf(out, "%d ", N->data);
+      fprintf(out, "%d", N->data);
    }
    fprintf(out, "\n");
 }

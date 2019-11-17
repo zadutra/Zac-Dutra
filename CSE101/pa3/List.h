@@ -3,7 +3,7 @@
 // Zachary Dutra
 // zdutra
 // 1581789
-// pa1
+// pa3
 //-----------------------------------------------------------------------------
 
 #ifndef _List_H_INCLUDE_
@@ -30,7 +30,7 @@ void freeList(List* pL);
 // Front()
 // Returns the value at the front of L.
 // Pre: !isEmpty(Q)
-int front(List L);
+long front(List L);
 
 // Length()
 // Returns the length of L.
@@ -42,15 +42,11 @@ int index(List L);
 
 // get()
 // Returns value at List element
-int get(List L);
+long get(List L);
 
 //back()
 //Returns value at the back of the List
-int back(List L);
-
-// equals()
-// returns true (1) if A is identical to B, false (0) otherwise
-int equals(List A, List B);
+long back(List L);
 
 //isEmpty()
 //returns true(1) if Q is empty, otherwise returns false(0)
@@ -106,6 +102,11 @@ void insertBefore(List L, int data);
 //insertAfter()
 //insert new element after the cursor
 void insertAfter(List L, int data);
+
+//set()
+//Overwrites cursor element with x
+
+void set(List L, long x);
 
 // Other Functions ------------------------------------------------------------
 

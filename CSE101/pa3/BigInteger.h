@@ -1,33 +1,46 @@
+
+#ifndef _BigInteger_H_INCLUDE_
+#define _BigInteger_H_INCLUDE_
+
+#include "List.h"
+
 // Exported type -------------------------------------------------------------
 // BigInteger reference type
 typedef struct BigIntegerObj* BigInteger;
+
 // Constructors-Destructors ---------------------------------------------------
 // newBigInteger()
 // Returns a reference to a new BigInteger object in the zero state.
-BigInteger newBigInteger();
+BigInteger newBigInteger(void);
+
 // freeBigInteger()
 // Frees heap memory associated with *pN, sets *pN to NULL.
 void freeBigInteger(BigInteger* pN);
+
 // Access functions -----------------------------------------------------------
 // sign()
 // Returns -1 if N is negative, 1 if N is positive, and 0 if N is in the zero
 // state.
 int sign(BigInteger N);
+
 // compare()
 // Returns -1 if A<B, 1 if A>B, and 0 if A=B.
 int compare(BigInteger A, BigInteger B);
+
 // equals()
 // Return true (1) if A and B are equal, false (0) otherwise.
 int equals(BigInteger A, BigInteger B);
-4
+
 // Manipulation procedures ----------------------------------------------------
 // makeZero()
 // Re-sets N to the zero state.
 void makeZero(BigInteger N);
+
 // negate()
 // Reverses the sign of N: positive <--> negative. Does nothing if N is in the
 // zero state.
 void negate(BigInteger N);
+
 // BigInteger Arithmetic operations -----------------------------------------------
 // stringToBigInteger()
 // Returns a reference to a new BigInteger object representing the decimal integer
@@ -63,3 +76,5 @@ BigInteger prod(BigInteger A, BigInteger B);
 // printBigInteger()
 // Prints a base 10 string representation of N to filestream out.
 void printBigInteger(FILE* out, BigInteger N);
+
+#endif
