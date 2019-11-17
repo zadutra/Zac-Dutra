@@ -1,1 +1,3 @@
-temp
+This program reads in 2 Big Integers from the input file. The using sum,diff, mult, and the BigInt ADT we created,
+we can perforam arithemtic operations on our BigInt ADT. The BigInt ADT is represented by in sign and a List of
+Longs, representative of our large numbers.
