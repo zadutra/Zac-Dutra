@@ -10,6 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "List.h"
 #include "BigInteger.h"
 
 #define MAX_LEN 250
@@ -25,7 +26,6 @@ int main(int argc, char* argv[]){
     BigInteger C = newBigInteger();
     BigInteger D = newBigInteger();
     BigInteger E = newBigInteger();
-
     // check command line for correct number of arguments
    if( argc != 3 ){
       printf("Usage: %s <input file> <output file>\n", argv[0]);
@@ -77,8 +77,9 @@ int main(int argc, char* argv[]){
    C = diff(A,A);
    printBigInteger(out, C);
    fprintf(out, "\n");
-   C = prod(A, 3);
-   D = prod(B,2);
+   C = sum(A,A);
+   C = sum (C,A);
+   D = sum(B,B);
    E = diff(C,D);
    printBigInteger(out, E);
    fprintf(out, "\n");
@@ -92,10 +93,14 @@ int main(int argc, char* argv[]){
    printBigInteger(out, D);
    fprintf(out, "\n");
    C = prod(C,C);
-   C = prod(C, 9);
+   for(int i = 0; i < 8; i++){
+       C = sum(C,C);
+   }
    D = prod(D,D);
    D = prod(D,B);
-   D = prod(D,16);
+   for(int i = 0; i < 15; i++){
+       D = sum(D,D);
+   }
    E = sum(C,D);
    printBigInteger(out, E);
    fprintf(out, "\n");
