@@ -88,7 +88,8 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 			for (c = 0; c < SIZE; c++) {
 						for (r = 0; r < SIZE; r++) {
 										if (C[r][c] != D [r][c]) {
-															printf("error!\n");
+											printf("%d %d\n", C[r][c], D[r][c]);
+											printf("error!\n");
 																			return -1;
 																						}
 													
