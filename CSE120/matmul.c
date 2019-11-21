@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 									C[i][j] = 0;
 								}
 							}
-							matmul(D, E);
+							matmul(E, A);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", C[i][j]);
