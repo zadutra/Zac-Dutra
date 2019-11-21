@@ -12,6 +12,17 @@ volatile __uint64_t C[SIZE][SIZE];
 volatile __uint64_t D[SIZE][SIZE];
 volatile __uint64_t E[SIZE][SIZE];
 
+void transpose(volatile __uint64_t D[][SIZE], volatile __uint64_t A[][SIZE])
+{
+		int r, c;
+
+			for (c = 0; c < SIZE; c++) {
+						for (r = 0; r < SIZE; r++) {
+										D[r][c] = A[c][r];
+								}
+							}
+}
+
 void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
 		int r, c;
@@ -25,16 +36,7 @@ void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 			transpose(D,A);
 			transpose(E,B);
 }
-void transpose(volatile __uint64_t D[][SIZE], volatile __uint64_t A[][SIZE])
-{
-		int r, c;
 
-			for (c = 0; c < SIZE; c++) {
-						for (r = 0; r < SIZE; r++) {
-										D[r][c] = A[c][r];
-								}
-							}
-}
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 {
 		int r, c;
