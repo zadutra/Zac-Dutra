@@ -82,14 +82,6 @@ int main(int argc, char **argv)
 								}
 								printf("\n");
 							}
-							printf("\n");
-							matmul(D, E);
-							for(int i = 0; i < SIZE; i++){
-								for(int j = 0; j < SIZE; j++){
-									printf("%d ", C[i][j]);
-								}
-								printf("\n");
-							}
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
