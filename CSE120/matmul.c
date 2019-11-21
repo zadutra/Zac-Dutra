@@ -66,6 +66,19 @@ void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 							}
 }
 
+void T_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
+{
+		int rowA, colB, idx;
+
+			for (rowA = 0; rowA < SIZE; rowA++) {
+						for (colB = 0; colB < SIZE; colB++) {
+										for (idx = 0; idx < SIZE; idx++) {
+												C[colB][rowA] += A[rowA][idx] * B[idx][colB];
+													}
+												}
+							}
+}
+
 int main(int argc, char **argv)
 {
 		clock_t t;
@@ -88,7 +101,7 @@ int main(int argc, char **argv)
 									C[i][j] = 0;
 								}
 							}
-							matmul(E, A);
+							T_matmul(E, D);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", C[i][j]);
