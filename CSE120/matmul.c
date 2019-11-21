@@ -48,6 +48,18 @@ void Trans_init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 			transpose(D,A);
 			transpose(E,B);
 }
+void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
+{
+	int rowA, colB, idx;
+
+	for (rowA = 0; rowA < SIZE; rowA++) {
+		for (colB = 0; colB < SIZE; colB++) {
+			for (idx = 0; idx < SIZE; idx++) {
+				D[rowA][colB] += A[rowA][idx] * B[idx][colB];
+			}
+		}
+	}
+}
 void Til_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
 	int acc00, acc01, acc10, acc11;
 	for (int i = 0; i < SIZE; i += 2)
@@ -119,7 +131,9 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
+							matmul(A,B);
 							Til_matmul(A, B);
+							verify(C,D);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
