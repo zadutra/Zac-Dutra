@@ -33,10 +33,42 @@ void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 										B[r][c] = rand();
 								}
 							}
+}
+
+void Trans_init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
+{
+		int r, c;
+
+			for (c = 0; c < SIZE; c++) {
+						for (r = 0; r < SIZE; r++) {
+										A[r][c] = rand();
+										B[r][c] = rand();
+								}
+							}
 			transpose(D,A);
 			transpose(E,B);
 }
-
+void Til_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
+	int acc00, acc01, acc10, acc11;
+	for (int i = 0; i < SIZE; i += 2)
+{
+    for (int j = 0; j < SIZE; j += 2)
+    {
+        acc00 = acc01 = acc10 = acc11 = 0;
+        for (int k = 0; k < SIZE; k++)
+        {
+            acc00 += B[k][j + 0] * A[i + 0][k];
+            acc01 += B[k][j + 1] * A[i + 0][k];
+            acc10 += B[k][j + 0] * A[i + 1][k];
+            acc11 += B[k][j + 1] * A[i + 1][k];
+        }
+        C[i + 0][j + 0] = acc00;
+        C[i + 0][j + 1] = acc01;
+        C[i + 1][j + 0] = acc10;
+        C[i + 1][j + 1] = acc11;
+    	}
+	}
+}
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 {
 		int r, c;
@@ -66,7 +98,7 @@ void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 							}
 }
 
-void T_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
+void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
 		int rowA, colB, idx;
 
@@ -87,7 +119,7 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							T_matmul(E, D);
+							Til_matmul(A, B);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
