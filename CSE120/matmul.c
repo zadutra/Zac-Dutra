@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SIZE 4
+#define SIZE 32
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
@@ -88,8 +88,7 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 			for (c = 0; c < SIZE; c++) {
 						for (r = 0; r < SIZE; r++) {
 										if (C[r][c] != D [r][c]) {
-											printf("%d %d\n", C[r][c], D[r][c]);
-											printf("HEINER\n");
+											printf("error\n");
 											return -1;
 										}
 													
