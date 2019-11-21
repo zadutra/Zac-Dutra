@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SIZE 8
+#define SIZE 4
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
@@ -82,6 +82,7 @@ int main(int argc, char **argv)
 								}
 								printf("\n");
 							}
+							printf("\n");
 							matmul(D, E);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
