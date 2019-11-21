@@ -76,26 +76,26 @@ int main(int argc, char **argv)
 						
 						t = clock();
 						matmul(A,B);
-							printf("\n");
-							for(int i = 0; i < SIZE; i++){
-								for(int j = 0; j < SIZE; j++){
-									C[i][j] = 0;
-								}
-							}
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", C[i][j]);
 								}
 								printf("\n");
 							}
-							/*matmul(D, E);
+							printf("\n");
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
-									printf("%d ", E[i][j]);
+									C[i][j] = 0;
+								}
+							}
+							matmul(D, E);
+							for(int i = 0; i < SIZE; i++){
+								for(int j = 0; j < SIZE; j++){
+									printf("%d ", C[i][j]);
 								}
 								printf("\n");
 							}
-							*/
+							
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
