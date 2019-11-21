@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						
 						t = clock();
-						matmul(A,B);
+						matmul(D,E);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", C[i][j]);
