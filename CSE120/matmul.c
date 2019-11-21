@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						
 						t = clock();
-							matmul(D, E);
+							matmul(D, B);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
