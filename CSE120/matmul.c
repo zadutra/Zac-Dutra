@@ -97,19 +97,6 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 				return 0;
 }
 
-void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
-{
-		int rowA, colB, idx;
-
-			for (rowA = 0; rowA < SIZE; rowA++) {
-						for (colB = 0; colB < SIZE; colB++) {
-										for (idx = 0; idx < SIZE; idx++) {
-												C[rowA][colB] += A[rowA][idx] * B[idx][colB];
-													}
-												}
-							}
-}
-
 void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
 		int rowA, colB, idx;
