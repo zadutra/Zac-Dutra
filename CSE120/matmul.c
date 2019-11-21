@@ -67,7 +67,7 @@ void Til_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
     for (int j = 0; j < SIZE; j += 2)
     {
         acc00 = acc01 = acc10 = acc11 = 0;
-        for (int k = 0; k < SIZE; k+=4)
+        for (int k = 0; k < SIZE; k+=8)
         {
             acc00 += B[k][j + 0] * A[i + 0][k];
             acc01 += B[k][j + 1] * A[i + 0][k];
