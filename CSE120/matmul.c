@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 							Til_matmul(A, B);
 								for(int i = 0; i < SIZE; i++){
 									for(int j = 0; j < SIZE; j++){
-										printf("%d " C[i][j]);
+										printf("%d ", C[i][j]);
 									}
 									printf("\n");
 								}
