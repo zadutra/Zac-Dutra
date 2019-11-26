@@ -104,7 +104,7 @@ void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 			for (rowA = 0; rowA < SIZE; rowA++) {
 						for (rowB = 0; rowB < SIZE; rowB++) {
 										for (idx = 0; idx < SIZE; idx++) {
-												C[rowB][rowA] += A[rowA][idx] * B[rowB][idx];
+												C[rowA][rowB] += A[rowA][idx] * B[rowB][idx];
 													}
 												}
 							}
