@@ -99,12 +99,12 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 
 void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
-		int rowA, colB, idx;
+		int rowA, rowB, idx;
 
 			for (rowA = 0; rowA < SIZE; rowA++) {
-						for (colB = 0; colB < SIZE; colB++) {
+						for (rowB = 0; rowB < SIZE; rowB++) {
 										for (idx = 0; idx < SIZE; idx++) {
-												C[colB][rowA] += A[rowA][idx] * B[idx][colB];
+												C[rowB][rowA] += A[rowA][idx] * B[rowB][idx];
 													}
 												}
 							}
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							Til_matmul(A, B);
+							Trans_matmul(A, E);
 								for(int i = 0; i < SIZE; i++){
 									for(int j = 0; j < SIZE; j++){
 										printf("%d ", C[i][j]);
