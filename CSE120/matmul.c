@@ -114,12 +114,13 @@ int main(int argc, char **argv)
 {
 		clock_t t;
 			double time_taken;
-
 				init(A, B);
 				transpose(E, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
+							matmul(A,B);
 							Trans_matmul(A, E);
+							verify(C,D);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
