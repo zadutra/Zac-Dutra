@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 			double time_taken;
 
 				init(A, B);
+				transpose(E, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
 							Trans_matmul(A, E);
