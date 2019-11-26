@@ -11,6 +11,7 @@ volatile __uint64_t B[SIZE][SIZE];
 volatile __uint64_t C[SIZE][SIZE];
 volatile __uint64_t D[SIZE][SIZE];
 volatile __uint64_t E[SIZE][SIZE];
+volatile __uint64_t Tile_result[SIZE][SIZE];
 
 void transpose(volatile __uint64_t D[][SIZE], volatile __uint64_t A[][SIZE])
 {
@@ -60,26 +61,30 @@ void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 		}
 	}
 }
-void Til_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
-	int acc00, acc01, acc10, acc11;
-	for (int i = 0; i < SIZE; i += 2)
-{
-    for (int j = 0; j < SIZE; j += 2)
-    {
-        acc00 = acc01 = acc10 = acc11 = 0;
-        for (int k = 0; k < SIZE; k+=32)
-        {
-            acc00 += B[k][j + 0] * A[i + 0][k];
-            acc01 += B[k][j + 1] * A[i + 0][k];
-            acc10 += B[k][j + 0] * A[i + 1][k];
-            acc11 += B[k][j + 1] * A[i + 1][k];
+void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], int tile_size) {
+    for (int i0 = 0; i0 < SIZE; i0 += tile_size) {
+        int imax = i0 + tile_size > SIZE ? SIZE : i0 + tile_size;
+        for (int j0 = 0; j0 < M; j0 += tile_size) {
+            int jmax = j0 + tile_size > SIZE ? SIZE : j0 + tile_size
+            for (int k0 = 0; k0 < SIZE; k0 += tile_size) {
+                int kmax = k0 + tile_size > SIZE ? SIZE : k0 + tile_size;
+
+                for (int j1 = j0; j1 < jmax; ++j1) {
+                    int sj = SIZE * j1;
+
+                    for (int i1 = i0; i1 < imax; ++i1) {
+                        int mi = SIZE * i1;
+                        int ki = SIZE * i1;
+                        int kij = ki + j1;
+
+                        for (int k1 = k0; k1 < kmax; ++k1) {
+                            C[kij] += A[mi + k1] * B[sj + k1];
+                        }
+                    }
+                }
+            }
         }
-        C[i + 0][j + 0] = acc00;
-        C[i + 0][j + 1] = acc01;
-        C[i + 1][j + 0] = acc10;
-        C[i + 1][j + 1] = acc11;
-    	}
-	}
+    }
 }
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 {
@@ -115,12 +120,9 @@ int main(int argc, char **argv)
 		clock_t t;
 			double time_taken;
 				init(A, B);
-				transpose(E, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							matmul(A,B);
-							Trans_matmul(A, E);
-							verify(C,D);
+							Tile_Matmul(A,B,1);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
