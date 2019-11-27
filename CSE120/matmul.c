@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SIZE 4
+#define SIZE 1024
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
@@ -100,22 +100,9 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							Tile_matmul(A,B,2);
-							for(int i = 0; i < SIZE; i++){
-								for(int j = 0; j < SIZE; j++){
-									printf("%d ", tile_result[i][j]);
-								}
-								printf("\n");
-							}
-							printf("\n");
+							Tile_matmul(A,B,8);
 							matmul(A,B);
-							for(int i = 0; i < SIZE; i++){
-								for(int j = 0; j < SIZE; j++){
-									printf("%d ", D[i][j]);
-								}
-								printf("\n");
-							}
-							printf("\n");
+							verify(D, tile_result);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
