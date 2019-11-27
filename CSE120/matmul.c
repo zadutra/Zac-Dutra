@@ -8,6 +8,7 @@
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
+volatile __uint64_t C[SIZE][SIZE];
 volatile __uint64_t matmul_result[SIZE][SIZE];
 volatile __uint64_t trans_b[SIZE][SIZE];
 volatile __uint64_t trans_result[SIZE][SIZE];
