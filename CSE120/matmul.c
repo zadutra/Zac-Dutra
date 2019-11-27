@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SIZE 4
+#define SIZE 2
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
@@ -51,7 +51,7 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 	int idx = 0;
     for(int i = 0; i < SIZE; i += tile_size){
 		for(int j = 0; j < SIZE; j += tile_size){
-			while(idx < tile_size){
+			while(idx < SIZE){
 				tile_result[i][j] += A[i][j + idx] * B[i + idx][j];
 				idx++;
 			}
