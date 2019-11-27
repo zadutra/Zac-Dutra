@@ -35,20 +35,6 @@ void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 								}
 							}
 }
-
-void Trans_init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
-{
-		int r, c;
-
-			for (c = 0; c < SIZE; c++) {
-						for (r = 0; r < SIZE; r++) {
-										A[r][c] = rand();
-										B[r][c] = rand();
-								}
-							}
-			transpose(D,A);
-			transpose(E,B);
-}
 void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
 	int rowA, colB, idx;
@@ -66,17 +52,28 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 		for(int j = 0; j < SIZE; j += tile_size){
 				for(int k = 0; k < tile_size; k++){
 					for(int l = 0; l < tile_size; l++){
-						if(k == 0 && l == 0){
-							tile_result[i][j] = A[i][j] * B[i][j];
-							continue;
+						for(int idx = 0; idx < tile_size; idx++){
+							tile_result[i + k][j + l] = A[i + k][j + l + idx] * B[i + k + idx][j + l];
 						}
-						printf("gets out of if condition \n");	
-						tile_result[i + k][j + l] = A[i + k][j + l] * B[i + k][j + l];
 					}
 				}
 			}
 		}
 	}
+
+void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
+{
+		int rowA, rowB, idx;
+
+			for (rowA = 0; rowA < SIZE; rowA++) {
+						for (rowB = 0; rowB < SIZE; rowB++) {
+										for (idx = 0; idx < SIZE; idx++) {
+												C[rowA][rowB] += A[rowA][idx] * B[rowB][idx];
+													}
+												}
+							}
+}
+
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 {
 		int r, c;
@@ -91,19 +88,6 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 								}
 							}
 				return 0;
-}
-
-void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
-{
-		int rowA, rowB, idx;
-
-			for (rowA = 0; rowA < SIZE; rowA++) {
-						for (rowB = 0; rowB < SIZE; rowB++) {
-										for (idx = 0; idx < SIZE; idx++) {
-												C[rowA][rowB] += A[rowA][idx] * B[rowB][idx];
-													}
-												}
-							}
 }
 
 int main(int argc, char **argv)
