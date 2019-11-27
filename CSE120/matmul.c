@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 								printf("\n");
 							}
 							printf("\n");
-							Tile_matmul(A,B,4);
+							Tile_matmul(A,B,2);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", tile_result[i][j]);
