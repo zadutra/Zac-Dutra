@@ -66,7 +66,7 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 		for(int j = 0; j < SIZE; j += tile_size){
 				for(int k = 0; k < tile_size; k++){
 					if(k == 0){
-						tile_result[i + k][j] = A[i + k][j] * B[i + k][j];
+						tile_result[i][j] = A[i][j] * B[i][j];
 						continue;
 					}
 					printf("gets out of if condition \n");
