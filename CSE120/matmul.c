@@ -8,9 +8,9 @@
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
-volatile __uint64_t C[SIZE][SIZE];
-volatile __uint64_t D[SIZE][SIZE];
-volatile __uint64_t E[SIZE][SIZE];
+volatile __uint64_t matmul_result[SIZE][SIZE];
+volatile __uint64_t trans_b[SIZE][SIZE];
+volatile __uint64_t trans_result[SIZE][SIZE];
 volatile __uint64_t tile_result[SIZE][SIZE];
 
 void transpose(volatile __uint64_t D[][SIZE], volatile __uint64_t A[][SIZE])
@@ -42,7 +42,7 @@ void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 	for (rowA = 0; rowA < SIZE; rowA++) {
 		for (colB = 0; colB < SIZE; colB++) {
 			for (idx = 0; idx < SIZE; idx++) {
-				D[rowA][colB] += A[rowA][idx] * B[idx][colB];
+				matmul_result[rowA][colB] += A[rowA][idx] * B[idx][colB];
 			}
 		}
 	}
@@ -71,7 +71,7 @@ void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 			for (rowA = 0; rowA < SIZE; rowA++) {
 						for (rowB = 0; rowB < SIZE; rowB++) {
 										for (idx = 0; idx < SIZE; idx++) {
-												C[rowA][rowB] += A[rowA][idx] * B[rowB][idx];
+												trans_result[rowA][rowB] += A[rowA][idx] * B[rowB][idx];
 													}
 												}
 							}
@@ -100,7 +100,9 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							Tile_matmul(A,B,64);
+							Tile_matmul(A,B,128);
+							matmul(A,B);
+							verify(tile_result, matmul_result);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
