@@ -54,7 +54,7 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 			for(int k = 0; k < tile_size; k++){
 				for(int l = 0; l < tile_size; i++){
 					while(idx < SIZE){
-						tile_result[i + k][j + l] += A[i + k][j + l + idx] * B[i + k + idx][j + l];
+						tile_result[i + k][j + l] += A[i + k][idx] * B[idx][j + l];
 						idx++;
 					}
 					idx = 0;
