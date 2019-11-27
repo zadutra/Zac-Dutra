@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SIZE 2
+#define SIZE 4
 
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
