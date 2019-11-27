@@ -66,17 +66,16 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 		for(int j = 0; j < SIZE; j += tile_size){
 				for(int k = 0; k < tile_size; k++){
 					if(k == 0){
-						tile_result[i + k] = A[i + k][j] * B[i + k][j];
+						tile_result[i + k][j] = A[i + k][j] * B[i + k][j];
 						continue;
 					}
-					tile_result[i + k] = A[i + k][j] * B[i + k][j];
+					tile_result[i + k][j] = A[i + k][j] * B[i + k][j];
 					tile_result[i][j + k] = A[i][j + k] * B[i][j + k];
 					tile_result[i + k][j + k] = A[i + k][j + k] * B[i + k][j + k];
 				}
 			}
 		}
 	}
-}
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 {
 		int r, c;
@@ -113,7 +112,7 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							Tile_Matmul(A,B,2);
+							Tile_matmul(A,B,2);
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
