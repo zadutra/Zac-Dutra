@@ -51,14 +51,14 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 	int idx = 0;
     for(int i = 0; i < SIZE; i += tile_size){
 		for(int j = 0; j < SIZE; j += tile_size){
-						while(idx < tile_size){
-							tile_result[i][j] += A[i][j + idx] * B[i + idx][j];
-							idx++;
-						}
-						idx = 0;
-					}
+			while(idx < tile_size){
+				tile_result[i][j] += A[i][j + idx] * B[i + idx][j];
+				idx++;
+			}
+			idx = 0;
 		}
 	}
+}
 
 void Trans_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE])
 {
@@ -96,7 +96,13 @@ int main(int argc, char **argv)
 				init(A, B);
 					memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
 						t = clock();
-							matmul(A,B);
+							Tile_matmul(A,B,1);
+							for(int i = 0; i < SIZE; i++){
+								for(int j = 0; j < SIZE; j++){
+									printf("%d ", tile_result[i][j]);
+								}
+								printf("\n");
+								matmul(A,B);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", D[i][j]);
@@ -104,12 +110,6 @@ int main(int argc, char **argv)
 								printf("\n");
 							}
 							printf("\n");
-							Tile_matmul(A,B,1);
-							for(int i = 0; i < SIZE; i++){
-								for(int j = 0; j < SIZE; j++){
-									printf("%d ", tile_result[i][j]);
-								}
-								printf("\n");
 							}
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
