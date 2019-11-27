@@ -101,8 +101,9 @@ int main(int argc, char **argv)
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", tile_result[i][j]);
 								}
-								printf("\n");
-								matmul(A,B);
+							}
+							printf("\n");
+							matmul(A,B);
 							for(int i = 0; i < SIZE; i++){
 								for(int j = 0; j < SIZE; j++){
 									printf("%d ", D[i][j]);
@@ -110,7 +111,6 @@ int main(int argc, char **argv)
 								printf("\n");
 							}
 							printf("\n");
-							}
 								t = clock() - t;
 									time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 										
