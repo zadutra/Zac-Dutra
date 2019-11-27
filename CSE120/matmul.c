@@ -57,8 +57,6 @@ void Tile_matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE], i
 						}
 						idx = 0;
 					}
-				}
-			}
 		}
 	}
 
