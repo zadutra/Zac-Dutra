@@ -1,1 +1,12 @@
-temp
+//-----------------------------------------------------------------------------
+// README
+// Zachary Dutra
+// zdutra
+// 1581789
+// pa4
+//-----------------------------------------------------------------------------
+
+In this program, we are required to make a Graph ADT in C and take from the
+input sets of pairs that represent edges in the graph. Once all the edges have been taken, we then
+print out the resulting graph. After that, we are given sets of pairs to find the shortest path to using the search 
+algorithim BFS. We then print out the shortest distance and the path between the two edges.
