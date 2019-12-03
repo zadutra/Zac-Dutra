@@ -93,7 +93,7 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE])
 							}
 				return 0;
 }
-
+ssh zdutra
 int main(int argc, char **argv)
 {
 		clock_t t;

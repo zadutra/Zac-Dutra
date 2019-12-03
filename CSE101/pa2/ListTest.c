@@ -4,11 +4,11 @@ zdutra
 1581789
 pa2
 */ 
-
-class ListTest{
-    public static void main(String[] args){
-        List testList = new List();
+#include<stdio.h>
+#include<stdlib.h>
+#include"List.h"
+int main(int argc, char* argv[]){
+        List testList = newList();
         int temp = 1;
-        testList.append(temp);
-    }
+        append(testList, temp);
 }
