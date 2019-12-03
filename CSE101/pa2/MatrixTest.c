@@ -1,0 +1,24 @@
+A = new Matrix(10);
+        A.changeEntry(2, 1, 2);
+        A.changeEntry(3, 1, 5);
+        A.changeEntry(1, 2, 2);
+        A.changeEntry(1, 3, 5);
+        A.changeEntry(1, 1, 4);
+        A.changeEntry(2, 2, 2);
+        A.changeEntry(2, 5, 0);
+        A.changeEntry(2, 3, 0);
+        A.changeEntry(3, 3, 5);
+        if (A.getNNZ() != 7) return 1;
+        A.changeEntry(1, 3, 0);
+        A.changeEntry(3, 1, 0);
+        A.changeEntry(3, 3, 0);
+        if (A.getNNZ() != 4) return 2;
+        A.changeEntry(7, 6, 42);
+        A.changeEntry(10, 1, 24);
+        if (A.getNNZ() != 6) return 3;
+        A.changeEntry(7, 6, 0);
+        if (A.getNNZ() != 5) return 4;
+        A.makeZero();
+        A.changeEntry(5, 5, 5);
+        if (A.getNNZ() != 1) return 5;
+      }
