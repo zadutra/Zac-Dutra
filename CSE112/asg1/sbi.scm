@@ -25,7 +25,6 @@
 (for-each
     (lambda(vars) (hash-set! *variables* (car vars) (cadr vars)))
     '(
-        (e 2.718281828459045235360287471352662497757247093)
        (pi 3.141592653589793238462643383279502884197169399)
     )))
 
@@ -75,10 +74,11 @@
         (if (hash-has-key? *variables* (first expr))
             (vector-ref (hash-ref *variables* (first expr))
             (- (exact-round (eval-expression (second expr))) 1))
-                (display-list '(Invalid expression)))))))
+                (display-func '(Invalid expression)))))))
+
+;;Functions to interpret let/goto/dim/if/print
 
 (define (interpret-let var expr)
-
     (cond ((symbol? var)
         (hash-set! *variables* var (eval-expression expr)))
         ((pair? var)
@@ -97,7 +97,7 @@
 (define (interpret-goto label)
     (if(hash-has-key? *labels* label)
         (interpret-prog (hash-ref *labels* label))
-        (display-list '("Error: jump to undeclared label."))))
+        (display-func '("Error: jump to undeclared label."))))
 
 (define (interpret-if arglist label)
     (when ((hash-ref *functions (first arglist))
@@ -173,9 +173,10 @@
         (path->string basepath)))
 
 (define (usage-exit)
-    (display-list  `("Usage: " ,*run-file* " filename")))
+    (display-func  `("Usage: " ,*run-file* " filename")))
 
-(define (display-list list)
+;;displays a given list
+(define (display-func list)
     ((for-each)(lambda(item)(display item *stderr*)) list)
     (newline *stderr*)
     (exit 1))
@@ -183,7 +184,7 @@
 (define (read-input filename)
     (let((inputfile (open-input filename)))
         (if (not (intput-port? inputfile))
-        (display-list '(,*run-file* ": ", filename ": open failed"))
+        (display-func '(,*run-file* ": ", filename ": open failed"))
         (let ((program (read inpnutfile)))
         (close-input-port inputfile)
         program))))
