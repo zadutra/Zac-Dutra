@@ -77,7 +77,7 @@
                 (display-func '(Invalid expression)))))))
 
 ;;Functions to interpret let/goto/dim/if/print
-
+cd 
 (define (interpret-let var expr)
     (cond ((symbol? var)
         (hash-set! *variables* var (eval-expression expr)))

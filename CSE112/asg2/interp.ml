@@ -8,29 +8,61 @@ let no_stmt reason continuation = raise (Unimplemented reason)
 
 let want_dump = ref false
 
+let helper (memref: Absyn.memref) (expr: Absyn.expr) :float = match memref with 
+    | Absyn.Variable ident -> Hashtbl.find Tables.variable_table ident
+    | Absyn.Arrayref (ident, expr)-> 
+(*
+		let arr = Hashtbl.find Tables.array_table ident
+
+	(*	Array.get arr (eval_expr expr) *)
+		in Array.get arr (eval_expr expr)
+		(*Hashtbl.find Tables.array_table ident *)
+*)
+
 let rec eval_expr (expr : Absyn.expr) : float = match expr with
     | Number number -> number
-    | Memref memref -> no_expr "eval_expr Memref"
-    | Unary (oper, expr) -> no_expr "eval_expr Unary"
-    | Binary (oper, expr1, expr2) -> no_expr "eval_expr Binary"
+    | Memref memref -> 
+        ( match memref with
+			| Variable ident-> (helpfun memref expr) 
+			| Arrayref (ident,expr) -> Array.get (Hashtbl.find Tables.array_table ident) (int_of_float(eval_expr expr))
+		)
+    | Unary (oper, expr) -> (Hashtbl.find Tables.unary_fn_table oper) (eval_expr expr)
+    | Binary (oper, expr1, expr2) -> (Hashtbl.find Tables.binary_fn_table oper) (eval_expr expr1) (eval_expr expr2)
+
+let interpret_dim ident (expr: Absyn.expr) = 
+	Hashtbl.add Tables.array_table ident (Array.make(int_of_float (eval_expr expr)) 0.0)
+
+
+	(*print_string "in in-dim\n"*)
 
 let rec interpret (program : Absyn.program) = match program with
     | [] -> ()
     | firstline::continuation -> match firstline with
       | _, _, None -> interpret continuation
-      | _, _, Some stmt -> (interp_stmt stmt continuation)
+      | _, _, Some stmt -> (interpret (interp_stmt stmt lines))
 
-and interp_stmt (stmt : Absyn.stmt) (continuation : Absyn.program) =
+      (* | _,_, Some stmt -> ( let next_line = interp_stmt stmt in (match next_line with
+					| None -> interpret lines
+					| Some line -> interpret line
+								))*)
+
+let interpret_label (label: Absyn.label) = (*match label with*)
+    Hashtbl.find Tables.label_table label
+
+let interp_let (memref : Absyn.memref) (expr: Absyn.expr) : unit  = match memref with
+  | Absyn.Variable ident -> (Hashtbl.add Tables.variable_table ident (eval_expr expr))
+  | Absyn.Arrayref (ident,exprr) -> Array.set (Hashtbl.find Tables.array_table ident) (int_of_float(eval_expr exprr)) (eval_expr expr ) 
+
+let interp_stmt (stmt : Absyn.stmt)=
     match stmt with
-    | Dim (ident, expr) -> no_stmt "Dim (ident, expr)" continuation
-    | Let (memref, expr) -> no_stmt "Let (memref, expr)" continuation
-    | Goto label -> no_stmt "Goto label" continuation
-    | If (expr, label) -> no_stmt "If (expr, label)" continuation
-    | Print print_list -> interp_print print_list continuation
-    | Input memref_list -> interp_input memref_list continuation
+    | Dim (ident, expr) -> (interpret_dim ident expr; lines)
+    | Let (memref, expr) -> (interpret_let memref expr; lines)
+    | Goto label -> interpret_label label
+    | If (expr, label) -> interpret_if label expr lines
+    | Print print_list -> (interp_print print_list; lines)
+    | Input memref_list -> (interp_input memref_list; lines)
 
-and interp_print (print_list : Absyn.printable list)
-                 (continuation : Absyn.program) =
+let interp_print (print_list : Absyn.printable list)=
     let print_item item =
         (print_string " ";
          match item with
@@ -40,18 +72,27 @@ and interp_print (print_list : Absyn.printable list)
          | Printexpr expr ->
            print_float (eval_expr expr))
     in (List.iter print_item print_list; print_newline ());
-    interpret continuation
 
-
-and interp_input (memref_list : Absyn.memref list)
-                 (continuation : Absyn.program)  =
+let interpret_if (label) (expr : Absyn.expr) (lines) =
+	if( (eval_expr expr)=1.0)
+	  then interpret_label label 
+	  else lines
+
+
+let interp_input (memref_list : Absyn.memref list) =
     let input_number memref =
         try  let number = Etc.read_number ()
-             in (print_float number; print_newline ())
+            (* in (print_float number; print_newline ())*)
+        in  match memref with
+            | Absyn.Variable ident -> ( 
+                (Hashtbl.add Tables.variable_table ident number)
+            )
+            | Absyn.Arrayref (ident,exprr) -> ( 
+                Array.set (Hashtbl.find Tables.array_table ident) (int_of_float(eval_expr exprr)) (number);
+            )             
         with End_of_file -> 
              (print_string "End_of_file"; print_newline ())
     in List.iter input_number memref_list;
-    interpret continuation
 
 let interpret_program program =
     (Tables.init_label_table program; 
