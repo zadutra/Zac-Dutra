@@ -11,4 +11,5 @@ function main() {
      // Draw a blue rectangle <- (3)
      ctx.fillStyle = 'rgba(0, 0, 255, 1.0)'; // Set a blue color
      ctx.fillRect(120, 10, 150, 150); // Fill a rectangle with the color
+     var v1 = Vector3(0,0,0);
     }
