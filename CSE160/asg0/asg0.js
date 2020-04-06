@@ -9,7 +9,18 @@ function main() {
      // Get the rendering context for 2DCG <- (2)
     var ctx = canvas.getContext('2d');
      // Draw a blue rectangle <- (3)
-     ctx.fillStyle = 'rgba(0, 0, 255, 1.0)'; // Set a blue color
+     ctx.fillStyle = 'rgba(0, 0, 0, 1.0)'; // Set a black color
      ctx.fillRect(120, 10, 150, 150); // Fill a rectangle with the color
-     var v1 = Vector3(0,0,0);
+    let v1 = new Vector3([2.25,2.25,0]);
+    drawVector(v1, "red");
     }
+
+function drawVector(v, color){
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.moveTo(canvas.height/2,canvas.width/2);
+    ctx.lineTo(200+v.elements[0]*20, 200-v.elements[1]*20);
+    ctx.stroke();
+}
