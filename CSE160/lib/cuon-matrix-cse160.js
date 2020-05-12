@@ -7,134 +7,169 @@
  */
 
 class Vector3 {
-    constructor(opt_src) {
-        var v = new Float32Array(3);
-        if (opt_src && typeof opt_src === 'object') {
-          v[0] = opt_src[0];
-          v[1] = opt_src[1];
-          v[2] = opt_src[2];
-        }
-        this.elements = v;
-    }
+  constructor(opt_src) {
+      var v = new Float32Array(3);
+      if (opt_src && typeof opt_src === 'object') {
+        v[0] = opt_src[0];
+        v[1] = opt_src[1];
+        v[2] = opt_src[2];
+      }
+      this.elements = v;
+  }
 
-    /**
-     * Copy vector.
-     * @param src source vector
-     * @return this
-     */
-    set(src) {
-        var i, s, d;
+  /**
+   * Copy vector.
+   * @param src source vector
+   * @return this
+   */
+  set(v1) {
+      var i, s, d;
 
-        s = src.elements;
-        d = this.elements;
+      s = v1.elements;
+      d = this.elements;
 
-        if (s === d) {
-          return;
-        }
+      if (s === d) {
+        return;
+      }
 
-        for (i = 0; i < 3; ++i) {
-          d[i] = s[i];
-        }
+      for (i = 0; i < 3; ++i) {
+        d[i] = s[i];
+      }
 
-        return this;
-    }
+      return this;
+  }
 
-    /**
-      * Add other to this vector.
-      * @return this
-      */
-    add(other) {
-        // Insert your code here.
-        // This function should change this vector (this.elements) and not create a new vector.
+  /**
+    * Add other to this vector.
+    * @return this
+    */
+  add(v1, v2) {
+      // Insert your code here.
+      // This function should change this vector (this.elements) and not create a new vector.
+      var i = 0;
+      var s = v1.elements;
+      var t = v2.elements;
+      for(i = 0; i < 3; i++){
+        this.elements[i] = s[i] + t[i];
+      }
+      // Don't delete the return statement.
+      return this;
+  };
 
-        // Don't delete the return statement.
-        return this;
-    };
+  /**
+    * Subtract other from this vector.
+    * @return this
+    */
+  sub(v1,v2) {
+    
+      // Insert your code here.
+      // This function should change this vector (this.elements) and not create a new vector.
+      var i = 0;
+      var s = v1.elements;
+      var t = v2.elements;
+      for(i = 0; i < 3; i++){
+        this.elements[i] = s[i] - t[i];
+      }
+      // Don't delete the return statement.
+      return this;
+  };
 
-    /**
-      * Subtract other from this vector.
-      * @return this
-      */
-    sub(other) {
-        // Insert your code here.
-        // This function should change this vector (this.elements) and not create a new vector.
+  /**
+    * Divide this vector by a scalar.
+    * @return this
+    */
+  div(v1, Scalar) {
+      // Insert your code here.
+      // This function should change this vector (this.elements) and not create a new vector.
+      var i = 0;
+      var s = v1.elements;
+      for(i = 0; i < 3; i++){
+        this.elements[i] = s[i]/Scalar;
+      }
+      // Don't delete the return statement.
+      return this;
+  };
 
-        // Don't delete the return statement.
-        return this;
-    };
+  /**
+    * Multiply this vector by a scalar.
+    * @return this
+    */
+  mul(v1, Scalar) {
+      // Insert your code here.
+      // This function should change this vector (this.elements) and not create a new vector.
+      var i = 0;
+      var s = v1.elements;
+      for(i = 0; i < 3; i++){
+        this.elements[i] = s[i] * Scalar;
+      }
+      // Don't delete the return statement.
+      return this;
+  };
 
-    /**
-      * Divide this vector by a scalar.
-      * @return this
-      */
-    div(scalar) {
-        // Insert your code here.
-        // This function should change this vector (this.elements) and not create a new vector.
+  /**
+    * Calcualte the dop product between this vector and other.
+    * @return scalar
+    */
+  static dot(v1, v2) {
+      // Insert your code here.
+      let d = 0; // Modify this line to calculate this vector's magnitude.
+      var s = v1.elements;
+      var t = v2.elements;
+      var m0 = s[0] * t[0];
+      var m1 = s[1] * t[1];
+      var m2 = s[2] * t[2];
+      d = m0 + m1 + m2;
+      // Don't delete the return statement.
+      return d;
+  }
 
-        // Don't delete the return statement.
-        return this;
-    };
+  /**
+    * Calcualte the cross product between this vector and other.
+    * @return new vector
+    */
+  static cross(v1, v2) {
+      // Insert your code here.
+      // This function should create and return a new vector.
+      var s = v1.elements;
+      var t = v2.elements;
+      var x0 = (s[1]*t[2]) - (s[2]*t[1]);
+      var x1 = (s[2]*t[0]) - (s[0]*t[2]);
+      var x2 = (s[0]*t[1]) - (s[1]*t[0]);
+      let v3 = new Vector3([x0, x1, x2]); // Modify this line to calculate cross product between other1 and other2.
 
-    /**
-      * Multiply this vector by a scalar.
-      * @return this
-      */
-    mul(scalar) {
-        // Insert your code here.
-        // This function should change this vector (this.elements) and not create a new vector.
+      // Don't delete the return statement.
+      return v3;
+  }
 
-        // Don't delete the return statement.
-        return this;
-    };
+  /**
+    * Calculate the magnitude (or length) of this vector.
+    * @return scalar
+    */
+  magnitude() {
+      // Insert your code here.
+      let m = 0; // Modify this line to calculate this vector's magnitude.
+      var sum = 0;
+      var s0 = this.elements[0]*this.elements[0];
+      var s1 = this.elements[1]*this.elements[1];
+      var s2 = this.elements[2]*this.elements[2];
+      sum = s0+s1+s2;
+      m = Math.sqrt(sum);
+      // Don't delete the return statement.
+      return m;
+  };
 
-    /**
-      * Calcualte the dop product between this vector and other.
-      * @return scalar
-      */
-    static dot(other1, other2) {
-        // Insert your code here.
-        let d = 0; // Modify this line to calculate this vector's magnitude.
-
-        // Don't delete the return statement.
-        return d;
-    }
-
-    /**
-      * Calcualte the cross product between this vector and other.
-      * @return new vector
-      */
-    static cross(other1, other2) {
-        // Insert your code here.
-        // This function should create and return a new vector.
-        let v3 = new Vector3(); // Modify this line to calculate cross product between other1 and other2.
-
-        // Don't delete the return statement.
-        return v3;
-    }
-
-    /**
-      * Calculate the magnitude (or length) of this vector.
-      * @return scalar
-      */
-    magnitude() {
-        // Insert your code here.
-        let m = 0; // Modify this line to calculate this vector's magnitude.
-
-        // Don't delete the return statement.
-        return m;
-    };
-
-    /**
-      * Normalize this vector.
-      * @return this
-      */
-    normalize() {
-        // Insert your code here.
-        // This function should change this vector (this.elements) and not create a new vector.
-
-        // Don't delete the return statement.
-        return this;
-    };
+  /**
+    * Normalize this vector.
+    * @return this
+    */
+  normalize(v1) {
+      // Insert your code here.
+      // This function should change this vector (this.elements) and not create a new vector.
+      var mag = v1.magnitude();
+      this.div(v1,mag);
+      // Don't delete the return statement.
+      return this;
+  };
 }
 
 class Vector4 {

@@ -285,7 +285,13 @@ function keydown(ev){
     g_eye.elements[0] -= 0.2;
   }
   else if(ev.keyCode == 87){//forward
-    g_eye.elements[2] -= 0.2;
+    var f = new Vector3();
+    var g= new Vector3();
+    f.sub(g_at, g_eye);
+    g.normalize(f);
+    g_eye.add(g, g_eye);
+    g_at.add(g, g_at);
+
   }
   else if (ev.keyCode == 83){ //back
     g_eye.elements[2] += 0.2;
@@ -373,6 +379,7 @@ function renderAllShapes(){
     var viewMat = new Matrix4();
     viewMat.setLookAt(g_eye.elements[0], g_eye.elements[1], g_eye.elements[2],  g_at.elements[0], g_at.elements[1], g_at.elements[2],  g_up.elements[0], g_up.elements[1], g_up.elements[2]);
     gl.uniformMatrix4fv(u_ViewMatrix, false, viewMat.elements);
+    console.log(g_eye.elements[0], g_eye.elements[1], g_eye.elements[2],);
 
     var globalRotMat = new Matrix4().rotate(g_globalAngle,0,1,0);
     gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
