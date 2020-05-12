@@ -282,26 +282,50 @@ function keydown(ev){
     g_eye.elements[0] += 0.2;
   }
   else if(ev.keyCode == 65){ //left
-    g_eye.elements[0] -= 0.2;
+    var f = new Vector3();
+    var g = new Vector3();
+    f.set(g_at);
+    f.sub(g_at, g_eye);
+    g = cross(f, g_up);
+    g_eye.sub(g_eye, g);
   }
   else if(ev.keyCode == 87){//forward
     var f = new Vector3();
     var g= new Vector3();
     f.set(g_at);
     f.sub(g_at, g_eye);
-    console.log(f);
     g.normalize(f);
     g_eye.add(g, g_eye);
     g_at.add(g, g_at);
   }
   else if (ev.keyCode == 83){ //back
-    g_eye.elements[2] += 0.2;
+    var f = new Vector3();
+    var g= new Vector3();
+    f.set(g_at);
+    f.sub(g_at, g_eye);
+    g.normalize(f);
+    g_eye.sub(g_eye, g);
+    g_at.sub(g_at, g);
   }
   else if(ev.keyCode == 69){//rotate right
-    g_at.elements[0] += 5;
+    var f = new Vector3();
+        f.set(g_at);
+        f.sub(g_at, g_eye);
+        let rotMatrix = new Matrix4();
+        rotMatrix.setRotate(-10, g_up.elements[0], g_up.elements[1], g_up.elements[2]);
+        let f2 = new Vector3();
+        f2 = rotMatrix.multiplyVector3(f);
+        g_at.add(f2, g_eye);
   }
   else if(ev.keyCode == 81){//rotate left
-    g_at.elements[0] -= 5;
+    var f = new Vector3();
+        f.set(g_at);
+        f.sub(g_at, g_eye);
+        let rotMatrix = new Matrix4();
+        rotMatrix.setRotate(10, g_up.elements[0], g_up.elements[1], g_up.elements[2]);
+        let f2 = new Vector3();
+        f2 = rotMatrix.multiplyVector3(f);
+        g_at.add(f2, g_eye);
   }
   else if(ev.keyCode == 38){ //jump
     g_eye.elements[1] += 0.5;

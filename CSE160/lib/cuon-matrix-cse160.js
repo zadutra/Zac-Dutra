@@ -61,7 +61,6 @@ class Vector3 {
     * @return this
     */
   sub(v1,v2) {
-      console.log('in sub function');
       // Insert your code here.
       // This function should change this vector (this.elements) and not create a new vector.
       var i = 0;

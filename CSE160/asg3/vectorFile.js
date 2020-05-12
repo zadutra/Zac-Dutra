@@ -23,7 +23,6 @@ class Vector3 {
    * @return this
    */
   set(v1) {
-    console.log('in set function');
       var i, s, d;
 
       s = v1.elements;
@@ -127,9 +126,10 @@ class Vector3 {
     * Calcualte the cross product between this vector and other.
     * @return new vector
     */
-  static cross(v1, v2) {
+  cross(v1, v2) {
       // Insert your code here.
       // This function should create and return a new vector.
+      console.log('in cross function');
       var s = v1.elements;
       var t = v2.elements;
       var x0 = (s[1]*t[2]) - (s[2]*t[1]);
