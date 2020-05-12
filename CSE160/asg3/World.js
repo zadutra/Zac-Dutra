@@ -279,14 +279,31 @@ function convertCoordinatesEventToGL(ev){
 
 function keydown(ev){
   if(ev.keyCode == 68){ //right
-    g_eye.elements[0] += 0.2;
+    var f = new Vector3();
+    var g = new Vector3();
+    f.set(g_at);
+    f.sub(g_at, g_eye);
+    var s = f.elements;
+      var t = g_up.elements;
+      var x0 = (-s[1]*t[2]) - (-s[2]*t[1]);
+      var x1 = (-s[2]*t[0]) - (-s[0]*t[2]);
+      var x2 = (-s[0]*t[1]) - (-s[1]*t[0]);
+    g.elements = [x0, x1, x2];
+    g.normalize(g);
+    g_eye.sub(g_eye, g);
   }
   else if(ev.keyCode == 65){ //left
     var f = new Vector3();
     var g = new Vector3();
     f.set(g_at);
     f.sub(g_at, g_eye);
-    g = cross(f, g_up);
+    var s = f.elements;
+      var t = g_up.elements;
+      var x0 = (s[1]*t[2]) - (s[2]*t[1]);
+      var x1 = (s[2]*t[0]) - (s[0]*t[2]);
+      var x2 = (s[0]*t[1]) - (s[1]*t[0]);
+    g.elements = [x0, x1, x2];
+    g.normalize(g);
     g_eye.sub(g_eye, g);
   }
   else if(ev.keyCode == 87){//forward
