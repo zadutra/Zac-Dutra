@@ -449,7 +449,7 @@ function renderAllShapes(){
    skybox.matrix.scale(50, 50, 50);
    skybox.matrix.translate(-0.5, -0.5, -0.5);
    skybox.render();
-
+    /*
    //head
    var head = new Cube();
    head.color = [1, 1, 1, 1];
@@ -566,6 +566,7 @@ function renderAllShapes(){
    smileRight.matrix.scale(0.03, 0.03, 0.03);
    smileRight.render();
 
+   */
 
    drawMap();
 
