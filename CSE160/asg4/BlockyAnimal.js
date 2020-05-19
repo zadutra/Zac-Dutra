@@ -196,6 +196,13 @@ function renderAllShapes(){
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
+    var skybox = new Cube();
+    skybox.color = [1, 1, 1, 1];
+    skybox.textureNum = 0;
+    skybox.matrix.scale(50, 50, 50);
+    skybox.matrix.translate(-0.5, -0.5, -0.5);
+    skybox.render();
+
     //head
     var head = new Cube();
     head.color = [1, 1, 1, 1];
