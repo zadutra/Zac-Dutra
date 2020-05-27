@@ -166,7 +166,7 @@ if (!u_whichTexture) {
 function addActionsForHtmlUI(){
 
    //camera slider
-   document.getElementById('angleSlide').addEventListener('mousemove', function() { g_globalAngle = this.value; renderAllShapes(); });
+   //document.getElementById('angleSlide').addEventListener('mousemove', function() { g_globalAngle = this.value; renderAllShapes(); });
 }
 
 

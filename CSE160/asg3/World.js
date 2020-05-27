@@ -449,5 +449,4 @@ function renderAllShapes(){
 
     drawMap();
 
-
 }
