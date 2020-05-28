@@ -26,31 +26,31 @@ class Cube{
 
       
       // Top of cube
-      draw3DTriangle([1.0, 1.0, 0.0,  1.0, 1.0, 1.0,  0.0, 1.0, 1.0 ]);
-      draw3DTriangle([1.0, 1.0, 0.0,  0.0, 1.0, 1.0,  0.0, 1.0, 0.0 ]);
+      draw3DTriangleUVNormal([0,1,0, 0,1,1, 1,1,1], [0,0, 0,1, 1,1], [0,1,0, 0,1,0, 0,1,0]);
+      draw3DTriangleUVNormal([0,1,0, 1,1,1, 1,1,0], [0,0, 1,1, 1,0], [0,1,0, 0,1,0, 0,1,0]);
       
       //left of cube
-      draw3DTriangle([0.0, 1.0, 0.0,  0.0, 1.0, 1.0,  0.0, 0.0, 1.0 ]);
-      draw3DTriangle([0.0, 1.0, 0.0,  0.0, 0.0, 1.0,  0.0, 0.0, 0.0 ]);
+      draw3DTriangleUVNormal([0,1,0, 0,1,1, 0,0,0], [0,0, 0,1, 1,1], [-1,0,0, -1,0,0, -1,0,0]);
+      draw3DTriangleUVNormal([0,0,0, 0,1,1, 0,0,1], [0,0, 1,1, 1,0], [-1,0,0, -1,0,0, -1,0,0]);
 
       //bottom of cube
-      draw3DTriangle([0.0, 0.0, 1.0,  1.0, 0.0, 1.0,  1.0, 0.0, 0.0 ]);
-      draw3DTriangle([0.0, 0.0, 1.0,  1.0, 0.0, 0.0,  0.0, 0.0, 0.0 ]);
+      draw3DTriangleUVNormal([0,0,0, 0,0,1, 1,0,1], [0,0, 0,1, 1,1], [0,-1,0, 0,-1,0, 0,-1,0]);
+      draw3DTriangleUVNormal([0,0,0, 1,0,1, 1,0,0], [0,0, 1,1, 1,0], [0,-1,0, 0,-1,0, 0,-1,0]);
 
       //front of cube
-      draw3DTriangleUV([1.0, 1.0, 0.0,  0.0, 1.0, 0.0,  0.0, 0.0, 0.0 ], [0,0, 1,0, 1,1]);
-      draw3DTriangleUV([1.0, 1.0, 0.0,  0.0, 0.0, 0.0,  1.0, 0.0, 0.0 ], [1,0, 1,1, 0,1]);
+      draw3DTriangleUVNormal([0,0,0, 0,1,0, 1,1,0], [0,0, 0,1, 1,1], [0,0,-1, 0,0,-1, 0,0,-1]);
+      draw3DTriangleUVNormal([0,0,0, 1,1,0, 1,0,0], [0,0, 1,1, 1,0], [0,0,-1, 0,0,-1, 0,0,-1]);
 
       //back of cube
-      draw3DTriangleUV([1.0, 0.0, 1.0,  0.0, 0.0, 1.0,  0.0, 1.0, 1.0 ], [0,0, 1,0, 1,1]);
-      draw3DTriangleUV([1.0, 0.0, 1.0,  0.0, 1.0, 1.0,  1.0, 1.0, 1.0 ], [1,0, 1,1, 0,1]);
+      draw3DTriangleUVNormal([1,0,1, 0,0,1, 0,1,1 ], [0,0, 1,0, 1,1], [0,0,1, 0,0,1, 0,0,1]);
+      draw3DTriangleUVNormal([1,0,1, 0,1,1, 1,1,1 ], [1,0, 1,1, 0,1], [0,0,1, 0,0,1, 0,0,1]);
       
       //pass the color of a point to u_FragColor uniform variable
-      gl.uniform4f(u_FragColor, rgba[0]*.9, rgba[1]*.9, rgba[2]*.9, rgba[3]);
+      //gl.uniform4f(u_FragColor, rgba[0]*.9, rgba[1]*.9, rgba[2]*.9, rgba[3]);
 
       //right of cube
-      draw3DTriangle([1.0, 1.0, 0.0,  1.0, 0.0, 0.0,  1.0, 0.0, 1.0 ]);
-      draw3DTriangle([1.0, 1.0, 0.0,  1.0, 0.0, 1.0,  1.0, 1.0, 1.0 ]);
+      draw3DTriangleUVNormal([1,1,0, 1,1,1, 1,0,0], [0,0, 0,1, 1,1], [1,0,0, 1,0,0, 1,0,0]);
+      draw3DTriangleUVNormal([1,0,0, 1,1,1, 1,0,1], [0,0, 1,1, 1,0], [1,0,0, 1,0,0, 1,0,0]);
 
       }
 }

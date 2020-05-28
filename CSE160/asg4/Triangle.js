@@ -76,7 +76,7 @@ function draw3DTriangle(vertices) {
   return n;
 }
 
-function draw3DTriangleUV(vertices, uv) {
+function draw3DTriangleUVNormal(vertices, uv, normals) {
 
   var n = 3; // The number of vertices
 
@@ -112,6 +112,19 @@ function draw3DTriangleUV(vertices, uv) {
   gl.vertexAttribPointer(a_UV, 2, gl.FLOAT, false, 0, 0);
 
   gl.enableVertexAttribArray(a_UV);
+
+  var normalBuffer = gl.createBuffer();
+  if(!normalBuffer){
+    console.log('Failed to create Normal Buffer object');
+    return -1;
+  }
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.DYNAMIC_DRAW);
+
+  gl.vertexAttribPointer(a_Normal, 3, gl.FLOAT, false, 0, 0);
+
+  gl.enableVertexAttribArray(a_Normal);
 
   gl.drawArrays(gl.TRIANGLES, 0, n);
 
