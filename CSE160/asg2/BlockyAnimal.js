@@ -32,9 +32,9 @@
  let g_leftArmAngle;
  let g_leftHandAngle;
  let g_mouthAngle;
- let g_armAnimation = false;
- let g_mouthAnimation = false;
+ let g_laserAnimation = false;
  let controlVal = 0;
+ let g_laserPos = new Vec3(controlVal, -0.75, 0);
 
 function setupWebGL(){
  // Retrieve canvas element
@@ -123,51 +123,44 @@ function main() {
 
   //specify the color for clearing canvas
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
+  canvas.onmousedown = click;
+  document.onkeydown = keydown;
   //clear canvas
   //gl.clear(gl.COLOR_BUFFER_BIT);
   renderAllShapes();
-  //requestAnimationFrame(tick);
+  requestAnimationFrame(tick);
   }
   
 
-var g_startTime = performance.now()/1000;
-var g_seconds = performance.now()/1000-g_startTime;
+var g_startTime = performance.now()/500;
+var g_seconds = performance.now()/500-g_startTime;
  
 function tick(){
-    g_seconds = performance.now()/1000-g_startTime;
+    g_seconds = performance.now()/500-g_startTime;
     animationAngles();
     renderAllShapes();
     requestAnimationFrame(tick);
 }
 
-
-  function click(ev) {
-
-    //Extract the event click and return it in WebGL coordinates
-    let [x,y] = convertCoordinatesEventToGL(ev);
-
-    // Create and store new point
-    let point;
-    if(g_selectedType == POINT){
-        point = new Point();
-    }
-    else if(g_selectedType == TRIANGLE){
-        point = new Triangle();
-    }
-    else{
-        point = new Circle();
-    }
-    point.position = [x,y];
-    point.color = g_selectedColor.slice();
-    point.size = g_selectedSize;
-    point.segment = g_segments;
-    g_shapesList.push(point);
-
-    //draw every shape that is supposed to be on the canvas
-    renderAllShapes();
+function click(ev){
+    let laser;
+    laser.matrix.translate(controlVal, -0.75, 0);
+    animationAngles();
 }
 
+function keydown(ev){
+    if(ev.keyCode == 68){ //right
+      controlVal += 0.12;
+    }
+    else if(ev.keyCode == 65){ //left
+      controlVal -= 0.12;
+    }
+    else if(ev.keyCode == 32){ //shoot
+      shoot();
+    }
+
+    renderAllShapes();
+}
 //Extract the event click and return it in WebGL coordinates
 function convertCoordinatesEventToGL(ev){
     var x = ev.clientX; // x coordinate of a mouse pointer
@@ -179,14 +172,16 @@ function convertCoordinatesEventToGL(ev){
     return([x,y]);
 }
 
-
+function shoot(){
+    var laser = new Cube();
+   laser.color = [1, 0, 0, 1];
+   laser.textureNum = 2;
+    laser.matrix.translate( 0 + controlVal , 0 , 0);
+    laser.matrix.scale(0.1, 2, 0.1);
+    laser.render();
+}
 function animationAngles(){
-    if(g_armAnimation == true){
-        g_leftArmAngle = 45*Math.sin(g_seconds);
-    }
-    if(g_mouthAnimation == true){
-        g_mouthAngle = Math.abs(90*Math.sin(g_seconds));
-    }
+    g_laserPos += (0, g_seconds, 0);
 }
 //draw every shape that is supposed to be on the canvas
 function renderAllShapes(){
@@ -321,7 +316,7 @@ function renderAllShapes(){
    galaga.color = [1, 1, 1, 1];
    galaga.textureNum = 2;
    var template = galaga;
-   galaga.matrix.translate( 0 + controlVal, -0.5, 0)
+   galaga.matrix.translate( 0 + controlVal, -0.75, 0)
    galaga.matrix.scale(0.05, 0.05, 0.05);
    galaga.render();
 
@@ -361,4 +356,8 @@ function renderAllShapes(){
    var g10 = template;
    g10.matrix.translate(4, 0, 0);
    g10.render();
+
+    if(g_seconds%10 == 0){
+
+    }
 }
