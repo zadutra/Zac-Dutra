@@ -34,6 +34,7 @@
  let g_mouthAngle;
  let g_armAnimation = false;
  let g_mouthAnimation = false;
+ let controlVal = 0;
 
 function setupWebGL(){
  // Retrieve canvas element
@@ -91,7 +92,7 @@ function connectVariablestoGLSL(){
 }
 
 function addActionsForHtmlUI(){
-
+    /*
     //Button events
     document.getElementById('armOn').onclick = function() { g_armAnimation = true; };
     document.getElementById('armOff').onclick = function() { g_armAnimation = false; };
@@ -102,6 +103,7 @@ function addActionsForHtmlUI(){
     document.getElementById('leftArmSlide').addEventListener('mousemove', function() { g_leftArmAngle = this.value; renderAllShapes(); });
     document.getElementById('leftHandSlide').addEventListener('mousemove', function() { g_leftHandAngle = this.value; renderAllShapes(); });
     document.getElementById('mouthSlide').addEventListener('mousemove', function() { g_mouthAngle = this.value; renderAllShapes(); });
+    */
 
     //camera slider
     document.getElementById('angleSlide').addEventListener('mousemove', function() { g_globalAngle = this.value; renderAllShapes(); });
@@ -116,8 +118,8 @@ function main() {
   addActionsForHtmlUI();
 
   // Register function (event handler) to be called on a mouse press
-  canvas.onmousedown = click;
-  canvas.onmousemove = function(ev) { if(ev.buttons ==1){  click(ev)  } };
+  //canvas.onmousedown = click;
+  //canvas.onmousemove = function(ev) { if(ev.buttons ==1){  click(ev)  } };
 
   //specify the color for clearing canvas
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -125,7 +127,7 @@ function main() {
   //clear canvas
   //gl.clear(gl.COLOR_BUFFER_BIT);
   renderAllShapes();
-  requestAnimationFrame(tick);
+  //requestAnimationFrame(tick);
   }
   
 
@@ -195,7 +197,7 @@ function renderAllShapes(){
     // Clear <canvas>
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.clear(gl.COLOR_BUFFER_BIT);
-
+    /*
     //head
     var head = new Cube();
     head.color = [1, 1, 1, 1];
@@ -312,5 +314,51 @@ function renderAllShapes(){
     smileRight.matrix.scale(0.03, 0.03, 0.03);
     smileRight.render();
 
+    */
 
+    
+   var galaga = new Cube();
+   galaga.color = [1, 1, 1, 1];
+   galaga.textureNum = 2;
+   var template = galaga;
+   galaga.matrix.translate( 0 + controlVal, -0.5, 0)
+   galaga.matrix.scale(0.05, 0.05, 0.05);
+   galaga.render();
+
+
+   var g2 = template;
+   g2.matrix.translate(1, 0, 0);
+   g2.render();
+
+   var g3 = template;
+   g3.matrix.translate(-2, 0, 0);
+   g3.render();
+
+   var g4 = template;
+   g4.matrix.translate(0, -1, 0);
+   g4.render();
+
+   var g5 = template;
+   g5.matrix.translate(-1, 0, 0);
+   g5.render();
+
+   var g6 = template;
+   g6.matrix.translate(3, 0, 0);
+   g6.render();
+
+   var g7 = template;
+   g7.matrix.translate(1, 0, 0);
+   g7.render();
+
+   var g8 = template;
+   g8.matrix.translate(-2, 2, 0);
+   g8.render();
+
+   var g9 = template;
+   g9.matrix.translate(-2, -3, 0);
+   g9.render();
+
+   var g10 = template;
+   g10.matrix.translate(4, 0, 0);
+   g10.render();
 }
