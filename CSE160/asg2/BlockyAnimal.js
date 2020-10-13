@@ -32,9 +32,9 @@
  let g_leftArmAngle;
  let g_leftHandAngle;
  let g_mouthAngle;
- let g_laserAnimation = false;
  let controlVal = 0;
- let g_laserPos = new Vec3(controlVal, -0.75, 0);
+ let laser;
+
 
 function setupWebGL(){
  // Retrieve canvas element
@@ -117,6 +117,11 @@ function main() {
   //setup actoin for frontend UI
   addActionsForHtmlUI();
 
+ laser = new Cube();
+ laser.color = [1, 0, 0, 1];
+ laser.matrix.translate(0.023 + controlVal, -0.75, 0);
+ laser.matrix.scale(0.01, 0.2, 0.1);
+
   // Register function (event handler) to be called on a mouse press
   //canvas.onmousedown = click;
   //canvas.onmousemove = function(ev) { if(ev.buttons ==1){  click(ev)  } };
@@ -143,9 +148,12 @@ function tick(){
 }
 
 function click(ev){
-    let laser;
-    laser.matrix.translate(controlVal, -0.75, 0);
-    animationAngles();
+    while(laser.matrix.elements[5] < 2){
+        laser.matrix.elements[5] += 0.2;
+        laser.matrix.translate(0, laser.matrix.elements[5], 0);
+        console.log(laser.matrix.elements[5]);
+        laser.render();
+    }
 }
 
 function keydown(ev){
@@ -172,16 +180,9 @@ function convertCoordinatesEventToGL(ev){
     return([x,y]);
 }
 
-function shoot(){
-    var laser = new Cube();
-   laser.color = [1, 0, 0, 1];
-   laser.textureNum = 2;
-    laser.matrix.translate( 0 + controlVal , 0 , 0);
-    laser.matrix.scale(0.1, 2, 0.1);
-    laser.render();
-}
 function animationAngles(){
-    g_laserPos += (0, g_seconds, 0);
+    laser.matrix.translate(0, g_seconds, 0);
+    renderAllShapes();
 }
 //draw every shape that is supposed to be on the canvas
 function renderAllShapes(){
@@ -357,7 +358,16 @@ function renderAllShapes(){
    g10.matrix.translate(4, 0, 0);
    g10.render();
 
-    if(g_seconds%10 == 0){
+   
+   var e1 = new Cube();
+   e1.color = [0, 0, 1, 1]; 
+   e1.matrix.translate(0, 0.6, 0);
+   e1.matrix.scale(0.15, 0.15, 0.15);
+   e1.render();
 
-    }
+   var e2 = new Cube();
+   e2.color = [0, 0, 1, 1]; 
+   e2.matrix.translate(0.3, 0.6, 0);
+   e2.matrix.scale(0.15, 0.15, 0.15);
+   e2.render();
 }
