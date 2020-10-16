@@ -3,3 +3,27 @@
 
   CSS for Basic Requirement 
 */
+
+div{
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  font-family: Courier,"Lucida Console" monospace;
+  font-weight: bold;
+}
+
+.letters > div{
+  text-align: center;
+  background-color: yellow;
+  height: 60px;
+  width: 60px;
+  margin-left: 700px;
+}
+
+.numbers > div{
+  text-align: center;
+  background-color: yellow;
+  height: 60px;
+  width: 60px;
+  margin-left: 700px;
+}

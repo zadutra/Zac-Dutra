@@ -3,3 +3,96 @@
 
   CSS for Advanced Requirement 
 */
+
+div{
+  display: flex;
+  flex-direction: row;
+  font-family: Courier,"Lucida Console" monospace;
+}
+
+.letters > div{
+  background: navy;
+  color: white;
+  font-size: 60px;
+  height: 180px;
+  width: 100px;
+}
+
+C:hover{
+  background: white;
+  color: navy;
+  height: 180px;
+  width: 100px;
+}
+
+S:hover{
+  background: white;
+  color: navy;
+  height: 180px;
+  width: 100px;
+}
+
+E:hover{
+  background: white;
+  color: navy;
+  height: 180px;
+  width: 100px;
+}
+
+.numbers{
+  margin-left: 1300px;
+  margin-top: 450px;
+  background: black;
+  color:yellow;
+  font-size: 40px;
+  height: 80px;
+  width: 180px;
+}
+
+.class1{
+  height: 60px;
+  width: 60px;
+  border-style: solid;
+  border-width: 10px;
+  border-right-style: none;
+}
+
+n1:hover{
+  background: yellow;
+  color:black;
+  height: 60px;
+  width: 60px;
+}
+
+.class8{
+  height: 60px;
+  width: 60px;
+  border-style: solid;
+  border-width: 10px;
+  border-right-style: none;
+  border-left-style: none;
+}
+
+n8:hover{
+  border-color: black;
+  background: yellow;
+  color:black;
+  height: 60px;
+  width: 60px;
+}
+
+.class3{
+  height: 60px;
+  width: 60px;
+  border-style: solid;
+  border-width: 10px;
+  border-left-style: none;
+}
+
+n3:hover{
+  border-color: black;
+  background: yellow;
+  color:black;
+  height: 60px;
+  width: 60px;
+}
