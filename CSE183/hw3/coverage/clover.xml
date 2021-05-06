@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1603435254640" clover="3.2.0">
+  <project timestamp="1603435254641" name="All files">
+    <metrics statements="38" coveredstatements="38" conditionals="20" coveredconditionals="20" methods="2" coveredmethods="2" elements="60" coveredelements="60" complexity="0" loc="38" ncloc="38" packages="1" files="1" classes="1"/>
+    <file name="templater.js" path="C:\Users\dutra\Desktop\zadutra\CS101\CSE183\hw3\templater.js">
+      <metrics statements="38" coveredstatements="38" conditionals="20" coveredconditionals="20" methods="2" coveredmethods="2"/>
+      <line num="10" count="6" type="stmt"/>
+      <line num="11" count="6" type="stmt"/>
+      <line num="12" count="6" type="stmt"/>
+      <line num="13" count="6" type="stmt"/>
+      <line num="14" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="5" type="stmt"/>
+      <line num="16" count="5" type="stmt"/>
+      <line num="17" count="23" type="cond" truecount="6" falsecount="0"/>
+      <line num="18" count="2" type="stmt"/>
+      <line num="19" count="2" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="22" count="21" type="cond" truecount="4" falsecount="0"/>
+      <line num="23" count="12" type="stmt"/>
+      <line num="24" count="12" type="stmt"/>
+      <line num="27" count="5" type="stmt"/>
+      <line num="41" count="6" type="stmt"/>
+      <line num="42" count="6" type="stmt"/>
+      <line num="43" count="6" type="stmt"/>
+      <line num="44" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="45" count="5" type="stmt"/>
+      <line num="46" count="11" type="stmt"/>
+      <line num="47" count="11" type="stmt"/>
+      <line num="48" count="11" type="stmt"/>
+      <line num="49" count="11" type="stmt"/>
+      <line num="51" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="52" count="2" type="stmt"/>
+      <line num="54" count="5" type="stmt"/>
+      <line num="55" count="2" type="stmt"/>
+      <line num="56" count="2" type="stmt"/>
+      <line num="57" count="2" type="stmt"/>
+      <line num="59" count="5" type="cond" truecount="4" falsecount="0"/>
+      <line num="60" count="1" type="stmt"/>
+      <line num="62" count="4" type="stmt"/>
+      <line num="63" count="2" type="stmt"/>
+      <line num="65" count="4" type="stmt"/>
+      <line num="66" count="4" type="stmt"/>
+      <line num="67" count="4" type="stmt"/>
+      <line num="71" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

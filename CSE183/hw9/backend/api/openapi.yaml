@@ -1,0 +1,199 @@
+openapi: '3.0.3'
+
+info:
+  title: CSE183 Homework 9
+  version: 0.1.0
+
+servers:
+  - url: http://localhost:3010
+
+paths:
+  /v0/mail:
+    get:
+      description: Returns all Emails
+      parameters:
+      - name: mailbox
+        in: query
+        description: name of mailbox
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Email Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailResponse'
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      description: Creates a new Email
+      requestBody:
+        description: Put Email here
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEmail'
+      responses:
+        201:
+          description: Application response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewEmail'
+        400:
+          description: Unexpected component
+        409:
+          description: Conflict. Requested ID in use.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /v0/mail/{id}:
+    get:
+      description: Returns a single Email
+      parameters:
+      - name: id
+        in: path
+        description: ID of the email
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Email found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+        400:
+          description: Invalid ID
+        404:
+          description: Email not found
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      description: Move an email to a different mailbox
+      parameters:
+      - name: id
+        in: path
+        description: ID of the email
+        required: true
+        schema:
+          type: string
+      - name: mailbox
+        in: query
+        description: name of mailbox
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: succesfully transferred email
+        404:
+          description: email id not found
+        409:
+          description: email does not exist in Sent
+
+                
+components:
+  schemas:
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    EmailResponse:
+      type: array
+      properties:
+        emails: 
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxEmail'
+
+    Email:
+      type: object
+      properties:
+        id:
+          type: string
+        to-name:
+          type: string
+        to-email:
+          type: string
+        from-name:
+          type: string
+        from-email:
+          type: string
+        subject:
+          type: string
+        received:
+          type: string
+        content:
+          type: string
+      required:
+        - id
+        - to-name
+        - to-email
+        - from-name
+        - from-email
+        - subject
+        - received
+        - content
+      
+    MailboxEmail:
+      type: object
+      properties:
+        id:
+          type: string
+        to-name:
+          type: string
+        to-email:
+          type: string
+        from-name:
+          type: string
+        from-email:
+          type: string
+        subject:
+          type: string
+        received:
+          type: string
+      required:
+        - id
+        - to-name
+        - to-email
+        - from-name
+        - from-email
+        - subject
+        - received
+
+    NewEmail:
+      type: object
+      properties:
+        to-name:
+          type: string
+        to-email:
+          type: string
+        subject:
+          type: string
+        received:
+          type: string
+        content:
+          type: string
