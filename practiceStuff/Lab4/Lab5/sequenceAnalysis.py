@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Name: Avani Narayan
 # Group Members: None
+import sys
 
 class FastAreader :
     ''' 
