@@ -1,3 +1,34 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@zadutra 
+zadutra
+/
+Zac-Dutra
+Private
+0
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Settings
+Zac-Dutra/practiceStuff/Lab4/Lab5/NEWORF.py
+
+Zachary lab5
+Latest commit 393ebe4 yesterday
+ History
+ 0 contributors
+177 lines (163 sloc)  7.12 KB
+  
 #!/usr/bin/env python3
 # Name: Avani Narayan
 # Group Members: None
@@ -11,11 +42,9 @@ import sys
 class CommandLine() :
     '''
     Handle the command line, usage and help requests.
-
     CommandLine uses argparse, now standard in 2.7 and beyond. 
     it implements a standard command line argument parser with various argument options,
     a standard usage and help.
-
     attributes:
     all arguments received from the commandline using .add_argument will be
     avalable within the .args attribute of object instantiated from CommandLine.
@@ -56,88 +85,91 @@ def sortFunc(list):
 def findORF(seq, starts, stops, longGene, minGene):
     returnList = []
     startList = []
-    stopList = []
     myString = ''
     mySeq = ''
     for x in range(3):
-        stopCheck = False
-        checkStart = False
+        startList.append(0)
+        if seq[x:x+3] in starts:
+            startList.clear()
         for i in range(x, len(seq), 3):
             myString = seq[i:i+3]
             if myString in starts:
-                if i == 0 or i == 2:
-                    startList.append(1)
-                else:
-                    startList.append(i)
+                startList.append(i)
             elif myString in stops:
-                if startList == []:
-                    startList.append(1)
-                #print("{0} in stops".format(x+1))
-                stopCheck = True
                 if longGene == False:
                     for j in startList:
-                        temp = [(x+1), j, i + 3,  i + 3 - j + 1]
+                        start = j + 1
+                        stop = i + 3
+                        temp = [(x+1), start, stop,  stop - start + 1]
                         returnList.append(temp)
                     startList.clear()
                 else:
-                    temp = [(x+1), startList[0], i + 3,  i + 3 - startList[0] + 1]
-                    #print("with stop:{0}".format(temp))
+                    start = startList[0] + 1
+                    stop = i + 3
+                    temp = [(x+1), start, stop,  stop - start + 1]
                     returnList.append(temp)
                     startList.clear()
-        if stopCheck == False:
-            if startList == []:
-                startList.append(1)
-            for j in startList:
-                temp = [x+1, j, len(seq), len(seq) - j + 1]
-                #print("no stop:{0}".format(temp))
+        if startList != []:
+            if longGene == False:
+                for j in startList:
+                    start = j + 1
+                    stop = len(seq)
+                    temp = [(x+1), start, stop,  stop - start + 1]
+                    returnList.append(temp)
+                startList.clear()
+            else:
+                start = startList[0]
+                stop = len(seq)
+                temp = [(x+1), start, stop,  stop - start + 1]
                 returnList.append(temp)
-            startList.clear()
+                startList.clear()
     complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
     mySeq = ''.join([complement[base] for base in seq[::-1]])
     print(mySeq)
     for x in range(3):
-        stopCheck = False
+        startList.append(0)
+        if mySeq[x:x+3] in starts:
+            startList.clear()
         for i in range(x, len(mySeq), 3):
             myString = mySeq[i:i+3]
             if myString in starts:
-                print((x+1) * -1, i,  myString)
-                if i == 0 or i == 2:
-                    startList.append(1)
-                else:
-                    startList.append(i)
+                startList.append(i)
             elif myString in stops:
-                stopCheck = True
-                if startList == [] and (i != 0 or i != 2):
-                    print((x+1) * -1, i,  myString)
-                    startList.append(1)
                 if longGene == False:
                     for j in startList:
-                        start = len(mySeq) - j
+                        start = len(mySeq) - j + 1
                         stop =  len(mySeq) - j + 1
                         temp = [(x+1)*-1, start, stop,  stop - start + 1]
                         returnList.append(temp)
                     startList.clear()
                 else:
-                    print((x+1)*-1, startList)
-                    start = len(mySeq) - (startList[0] + 3) + 1
+                    start = len(mySeq) - (i + 3) + 1
                     stop =  len(mySeq) - startList[0] + 1
                     temp = [(x+1)*-1, start, stop,  stop - start + 1]
                     returnList.append(temp)
                     startList.clear()
-        if stopCheck == False:
-            if startList == [] and (i != 0 or i != 2):
-                startList.append(1)
-            for j in startList:
-                temp = [(x+1)*-1, j, len(seq), len(seq) - j + 1]
+        if startList != []:
+            if longGene == False:
+                for j in startList:
+                    start = j
+                    stop = len(seq)
+                    temp = [(x+1)*-1, start, stop, stop - start + 1]
+                    #print("no stop:{0}".format(temp))
+                    returnList.append(temp)
+                startList.clear()
+            else:
+                start = startList[0]
+                stop = len(seq)
+                temp = [(x+1)*-1, start, stop, stop - start + 1]
                 #print("no stop:{0}".format(temp))
                 returnList.append(temp)
-            startList.clear()
+                startList.clear()
             '''
     for item in list(returnList):
         if item[3] < minGene:
             returnList.remove(item)
             '''
-    returnList.sort(reverse = True, key=sortFunc)
+    returnList.sort(reverse = True, key = lambda x: (x[3], -x[1]))
     return returnList
             
 ########################################################################
@@ -151,7 +183,6 @@ def main(inFile = None, options = None):
     '''
     Find some genes.  
     '''
-    mySeq = ''
     thisCommandLine = CommandLine(options)
     myReader = FastAreader()
     longGene = thisCommandLine.args.longestGene
@@ -162,7 +193,8 @@ def main(inFile = None, options = None):
         print(head)
         resultList = findORF(seq, starts, stops, longGene, minGene)
         for element in resultList:
-            print('{:+d} {:>5d}..{:>5d} {:>5d}'.format(element[0], element[1], element[2], element[3]))
+            if element[3] >= minGene:
+                print('{:+d} {:>5d}..{:>5d} {:>5d}'.format(element[0], element[1], element[2], element[3]))
         #print(resultList)
     #print (mySeq)
     ###### replace the code between comments.
@@ -174,4 +206,4 @@ def main(inFile = None, options = None):
     #######
 
 if __name__ == "__main__":
-    main(inFile = sys.argv[0], options = ['-mG=300', '-lG']) # delete this stuff if running from commandline
+    main() # delete this stuff if running from commandline
