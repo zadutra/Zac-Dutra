@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@zadutra 
-zadutra
-/
-Zac-Dutra
-Private
-0
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-Settings
-Zac-Dutra/practiceStuff/Lab4/Lab5/NEWORF.py
-
-Zachary lab5
-Latest commit 393ebe4 yesterday
- History
- 0 contributors
-177 lines (163 sloc)  7.12 KB
-  
 #!/usr/bin/env python3
 # Name: Avani Narayan
 # Group Members: None
@@ -67,7 +36,7 @@ class CommandLine() :
                                              usage = '%(prog)s [options] -option1[default] <input >output'
                                              )
         self.parser.add_argument('-lG', '--longestGene', action = 'store', nargs='?', const=True, default=False, help='longest Gene in an ORF')
-        self.parser.add_argument('-mG', '--minGene', type=int, choices= (100,200,300,500,1000), default=100, action = 'store', help='minimum Gene length')
+        self.parser.add_argument('-mG', '--minGene', type=int, choices= (0,100,200,300,500,1000), default=100, action = 'store', help='minimum Gene length')
         self.parser.add_argument('-s', '--start', action = 'append', default = ['ATG'],nargs='?', 
                                  help='start Codon') #allows multiple list options
         self.parser.add_argument('-t', '--stop', action = 'append', default = ['TAG','TGA','TAA'],nargs='?', help='stop Codon') #allows multiple list options
@@ -96,6 +65,8 @@ def findORF(seq, starts, stops, longGene, minGene):
             if myString in starts:
                 startList.append(i)
             elif myString in stops:
+                if startList == []:
+                    continue
                 if longGene == False:
                     for j in startList:
                         start = j + 1
@@ -118,14 +89,13 @@ def findORF(seq, starts, stops, longGene, minGene):
                     returnList.append(temp)
                 startList.clear()
             else:
-                start = startList[0]
+                start = startList[0] + 1
                 stop = len(seq)
                 temp = [(x+1), start, stop,  stop - start + 1]
                 returnList.append(temp)
                 startList.clear()
     complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
     mySeq = ''.join([complement[base] for base in seq[::-1]])
-    print(mySeq)
     for x in range(3):
         startList.append(0)
         if mySeq[x:x+3] in starts:
@@ -135,6 +105,8 @@ def findORF(seq, starts, stops, longGene, minGene):
             if myString in starts:
                 startList.append(i)
             elif myString in stops:
+                if startList == []:
+                    continue
                 if longGene == False:
                     for j in startList:
                         start = len(mySeq) - j + 1
@@ -144,21 +116,21 @@ def findORF(seq, starts, stops, longGene, minGene):
                     startList.clear()
                 else:
                     start = len(mySeq) - (i + 3) + 1
-                    stop =  len(mySeq) - startList[0] + 1
+                    stop =  len(mySeq) - startList[0]
                     temp = [(x+1)*-1, start, stop,  stop - start + 1]
                     returnList.append(temp)
                     startList.clear()
         if startList != []:
             if longGene == False:
                 for j in startList:
-                    start = j
+                    start = j + 1
                     stop = len(seq)
                     temp = [(x+1)*-1, start, stop, stop - start + 1]
                     #print("no stop:{0}".format(temp))
                     returnList.append(temp)
                 startList.clear()
             else:
-                start = startList[0]
+                start = startList[0] + 1
                 stop = len(seq)
                 temp = [(x+1)*-1, start, stop, stop - start + 1]
                 #print("no stop:{0}".format(temp))
