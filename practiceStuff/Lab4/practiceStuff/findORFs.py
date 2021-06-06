@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 # Name: Avani Narayan
 # Group Members: None
+########################################################################
+# For my design, I used the psuedocode provided from Siddish
+# I will say after going to multiple tutoring sessions, I could never get
+#   the ouput for ;ab5test.fa to be exactly right. However, my output for
+#   tass2.fa works as it should.
+########################################################################
 
 from sequenceAnalysis import FastAreader, NucParams
 import sys
@@ -37,50 +43,55 @@ class CommandLine() :
                                              )
         self.parser.add_argument('-lG', '--longestGene', action = 'store', nargs='?', const=True, default=False, help='longest Gene in an ORF')
         self.parser.add_argument('-mG', '--minGene', type=int, choices= (0,100,200,300,500,1000), default=100, action = 'store', help='minimum Gene length')
-        self.parser.add_argument('-s', '--start', action = 'append', default = ['ATG'],nargs='?', 
-                                 help='start Codon') #allows multiple list options
-        self.parser.add_argument('-t', '--stop', action = 'append', default = ['TAG','TGA','TAA'],nargs='?', help='stop Codon') #allows multiple list options
+        self.parser.add_argument('-s', '--start', action = 'store', default = ['ATG'],nargs='?', help='start Codon') #allows multiple list options
+        self.parser.add_argument('-t', '--stop', action = 'store', default = ['TAG','TGA','TAA'],nargs='?', help='stop Codon') #allows multiple list options
         self.parser.add_argument('-v', '--version', action='version', version='%(prog)s 0.1')  
         if inOpts is None :
             self.args = self.parser.parse_args()
         else :
             self.args = self.parser.parse_args(inOpts)
-
-
-def sortFunc(list):
-    return list[3]
-
-
-def findORF(seq, starts, stops, longGene, minGene):
+'''
+findORf:
+    inputs:
+        seq: sequence inputted used to find ORF's
+        starts: what codons to be considered at start codons
+        stops: what codons to be considered as stop codons
+        longGene: Wether or not we want to consider ORF's inside of ORF's
+    
+    output:
+        A sorted list of lists. These lists contain the frame, start, stop and length
+        of each valid ORF.
+'''
+def findORF(seq, starts, stops, longGene):
     returnList = []
     startList = []
     myString = ''
     mySeq = ''
-    for x in range(3):
-        startList.append(0)
+    for x in range(3): # x is the current frame we are in
+        startList.append(0) #append 0 to the startList, unless the first codon in the frame is a start codon
         if seq[x:x+3] in starts:
             startList.clear()
-        for i in range(x, len(seq), 3):
+        for i in range(x, len(seq), 3): # for each codon in the current frame
             myString = seq[i:i+3]
-            if myString in starts:
+            if myString in starts: # append to start list
                 startList.append(i)
-            elif myString in stops:
+            elif myString in stops: # create the list element
                 if startList == []:
                     continue
-                if longGene == False:
+                if longGene == False: #stores all ORFS
                     for j in startList:
                         start = j + 1
                         stop = i + 3
                         temp = [(x+1), start, stop,  stop - start + 1]
                         returnList.append(temp)
                     startList.clear()
-                else:
+                else: #Stores only the first ORF
                     start = startList[0] + 1
                     stop = i + 3
                     temp = [(x+1), start, stop,  stop - start + 1]
                     returnList.append(temp)
                     startList.clear()
-        if startList != []:
+        if startList != []: #If there is start codons but no stop, setstop as the end of the sequence
             if longGene == False:
                 for j in startList:
                     start = j + 1
@@ -94,8 +105,12 @@ def findORF(seq, starts, stops, longGene, minGene):
                 temp = [(x+1), start, stop,  stop - start + 1]
                 returnList.append(temp)
                 startList.clear()
-    complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
-    mySeq = ''.join([complement[base] for base in seq[::-1]])
+    complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'} #setting the reverse compliment
+    mySeq = ''.join([complement[base] for base in seq[::-1]]) # I got this code from stack Overflow
+    '''
+    This is the same process as before, only the start and stop positions
+    are calculated differently to get their position in the original sequence
+    '''
     for x in range(3):
         startList.append(0)
         if mySeq[x:x+3] in starts:
@@ -126,29 +141,23 @@ def findORF(seq, starts, stops, longGene, minGene):
                     start = j + 1
                     stop = len(seq)
                     temp = [(x+1)*-1, start, stop, stop - start + 1]
-                    #print("no stop:{0}".format(temp))
                     returnList.append(temp)
                 startList.clear()
             else:
                 start = startList[0] + 1
                 stop = len(seq)
                 temp = [(x+1)*-1, start, stop, stop - start + 1]
-                #print("no stop:{0}".format(temp))
                 returnList.append(temp)
                 startList.clear()
-            '''
-    for item in list(returnList):
-        if item[3] < minGene:
-            returnList.remove(item)
-            '''
-    returnList.sort(reverse = True, key = lambda x: (x[3], -x[1]))
+    returnList.sort(reverse = True, key = lambda x: (x[3], -x[1])) #this lambda function sorts the list by length, and then start position
     return returnList
             
 ########################################################################
 # Main
 # Here is the main program
-# 
-#
+# I implimented the use of the command line
+# If you want to add multiple start/stop codons, please write it like this
+#               '-s=['ATG', 'GTG', 'TTG]'
 ########################################################################
    
 def main(inFile = None, options = None):
@@ -163,19 +172,11 @@ def main(inFile = None, options = None):
     stops = thisCommandLine.args.stop
     for head, seq in myReader.readFasta() :
         print(head)
-        resultList = findORF(seq, starts, stops, longGene, minGene)
+        resultList = findORF(seq, starts, stops, longGene)
         for element in resultList:
             if element[3] >= minGene:
                 print('{:+d} {:>5d}..{:>5d} {:>5d}'.format(element[0], element[1], element[2], element[3]))
-        #print(resultList)
-    #print (mySeq)
-    ###### replace the code between comments.
-    # thisCommandLine.args.longestGene is True if only the longest Gene is desired
-    # thisCommandLine.args.start is a list of start codons
-    # thisCommandLine.args.stop is a list of stop codons
-    # thisCommandLine.args.minGene is the minimum Gene length to include
-    #
-    #######
+       
 
 if __name__ == "__main__":
-    main() # delete this stuff if running from commandline
+    main()

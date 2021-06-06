@@ -1,0 +1,24 @@
+@action('edit_post', method=["GET", "POST"])
+@action.uses(db, auth.user, session, 'editpost.html')
+def edit_post():
+    pid = request.params.get('id')
+    p = db.posts[pid]
+    print(p)
+    form = Form(db.posts, record=p, csrf_session=session, formstyle=FormStyleBulma)
+    print("After form")
+    if form.accepted:
+        redirect(URL('profile'))
+    return dict(form=form)
+
+
+app.edit_post = function(p_idx){
+        let id = p_idx;
+        axios.get(edit_post_url, {params: {id: id}});
+    };
+
+
+     <button @click="edit_post(p.id)" class="button is-primary">
+                          <span class="icon is-small">
+                              <i class="fa fa-pencil-square-o"></i>
+                          </span>
+                      </button>
