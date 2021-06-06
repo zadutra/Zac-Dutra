@@ -1,9 +1,0 @@
-    Zachary Dutra
-    zdutra
-    1581789
-    pa3
-
-In this program, we are going to take in input from the main class Sparse, whihc will give us the size of the input matricies in n x n format,
-and then give us the non-zero entries to input into the matrix. The Matricies are made up by and array of Lists, with each array being a row of the
-matrix. The function changeEntry handles all the matrix input, including deletions when we are changing entries to zero. We then test multiplying,
-adding and subtracting these matrcies as well as Transposing.
