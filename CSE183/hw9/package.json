@@ -15,7 +15,7 @@
     "zip": "bestzip Assignment9.Submission.zip frontend/src/* frontend/test/* backend/sql/* backend/src/* backend/api/* backend/test/*"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "lint": "^0.7.0"
   }
 }
